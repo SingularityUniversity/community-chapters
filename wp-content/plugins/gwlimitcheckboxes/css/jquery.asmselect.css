@@ -1,0 +1,63 @@
+.asmContainer {
+	/* container that surrounds entire asmSelect widget */
+}
+
+.asmSelect {
+	/* the newly created regular 'select' */
+	display: inline; 
+}
+
+.asmOptionDisabled {
+	/* disabled options in new select */
+	color: #999; 
+}
+
+.asmHighlight {
+	/* the highlight span */
+	padding: 0;
+	margin: 0 0 0 1em;
+}
+
+.asmList {
+	/* html list that contains selected items */
+	margin: 0.25em 0 1em 0; 
+	position: relative;
+	display: block;
+	padding-left: 0; 
+	list-style: none; 
+}
+
+.asmListItem {
+	/* li item from the html list above */
+	position: relative;
+	list-style: none;
+	background: #f7f7f7;
+	border-bottom: 1px solid #eee !important; 
+	width: 100%; 
+	margin: 0 0 1px; 
+    padding: 0 !important;
+}
+
+.asmListItem:hover {
+	background-color: #efefef;
+    border-bottom-color: #ddd !important;
+}
+
+.asmListItemLabel {
+	/* this is a span that surrounds the text in the item, except for the remove link */
+    display: block;
+    padding: 0 10px;
+    line-height: 26px;
+}
+
+.asmListSortable .asmListItemLabel {
+	cursor: move; 
+}
+
+.asmListItemRemove {
+  line-height: 26px;
+  position: absolute;
+  right: 10px;
+  text-decoration: none;
+  top: 0;
+}
