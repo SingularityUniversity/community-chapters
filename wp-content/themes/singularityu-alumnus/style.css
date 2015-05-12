@@ -2502,22 +2502,28 @@ a#gform_save_8_link {
 
     #banner #callToAction {
         white-space: normal;
+        max-width: 100%;
+        margin: 0px auto;
     }
 
     #callToAction #description p {
         display: inline;
     }
-    #callToAction #description p:last-child {
-    }
+
 
     #calltoActionButton {
         display: block;
         margin-top: 20px;
     }
 
+    #banner .row #calltoActionButton .btn {
+        margin: 0px auto !important;
+    }
+
     #nav-links .nav-next {
         float: none;
     }
+
     #nav-links .nav-next .more-link {
         text-align:center;
         margin-bottom:20px;
@@ -2618,7 +2624,9 @@ a#gform_save_8_link {
     #brandingAndMenu nav ul li ul.sub-menu.container,
     #brandingAndMenu nav ul li ul.sub-menu,
     #brandingAndMenu nav ul li.about ul.sub-menu {
+        max-width: 100%;
         width: 100%;
+        min-width: 0px;
     }
 
     #brandingAndMenu nav ul li.search.menu-item-has-children.active ul {
@@ -3054,6 +3062,24 @@ a#gform_save_8_link {
     }
 }
 @media (max-width: 640px){
+    #brandingAndMenu #site-navigation .navbar-right .nav .participate{
+        width: 100%;
+    }
+    #brandingAndMenu nav ul li ul.sub-menu.container li,
+    #brandingAndMenu nav ul li ul.sub-menu li {
+        width: 200px;
+        min-width: 0px;
+    }
+    #brandingAndMenu nav ul li.menu-item-has-children.active ul li a {
+        /* width: 200px; */
+
+    }
+    #brandingAndMenu nav ul li ul.sub-menu.container li span.sub, #brandingAndMenu nav ul li ul.sub-menu li span.sub{
+        width: 100% !important;
+        min-width: 0px;
+
+        max-width: 175px;
+    }
     #banner #callToAction .gform_wrapper {
         max-width:100%;
     }
@@ -3076,10 +3102,6 @@ a#gform_save_8_link {
     #loginForm {
         padding: 5%;
         width: 100%;
-    }
-
-    #banner #callToAction #description {
-        max-width: 100%;
     }
 
     #loginWrapper {

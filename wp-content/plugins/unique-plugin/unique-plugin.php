@@ -81,7 +81,13 @@ function get_feedzy_items( $items, $feedURL ){
                     $content .= "<a class='rss_image' href='".esc_url($link)."' target='_blank' rel='nofollow'><img src='".esc_url($image)."' /></a>";
                 }
                 else{
-                    $content .= "<a class='rss_image' href='".esc_url($link)."' target='_blank' rel='nofollow'><img src='".jetpack_get_site_logo()."' /></a>";
+                    if ( function_exists( 'jetpack_the_site_logo' ) ){
+                        $content .= "<a class='rss_image' href='".esc_url($link)."' target='_blank' rel='nofollow'><img src='".jetpack_get_site_logo()."' /></a>";
+                    }
+                    else {
+                        $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+                        $content .= "<a class='rss_image' href='".esc_url($link)."' target='_blank' rel='nofollow'><img src='".$the_image."' /></a>";
+                    }
                 }
 
                 $content .= "<div class='caption'>";
