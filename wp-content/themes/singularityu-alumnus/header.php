@@ -112,4 +112,3 @@
     </header><!-- #masthead -->
 
     <div id="content" class="site-content">
-    test
