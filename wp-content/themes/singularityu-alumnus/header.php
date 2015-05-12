@@ -67,22 +67,46 @@
                             <div class="site-branding">
                                 <?php if ( is_front_page() ) : ?>
                                     <h1 class="site-title">
-                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ) jetpack_the_site_logo(); ?>
+                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ){
+                                            jetpack_the_site_logo();
+                                        }
+                                        else {
+                                            $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+                                        } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </h1>
                                 <?php elseif(is_archive()||is_category()|| is_tax()): ?>
                                     <h3 class="site-title">
-                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ) jetpack_the_site_logo(); ?>
+                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ){
+                                            jetpack_the_site_logo();
+                                        }
+                                        else {
+                                            $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+                                        } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </h3>
                                 <?php elseif (is_single() ||is_page()) : ?>
                                     <h4 class="site-title">
-                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ) jetpack_the_site_logo(); ?>
+                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ){
+                                            jetpack_the_site_logo();
+                                        }
+                                        else {
+                                            $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+                                        } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </h4>
                                 <?php else: ?>
                                     <p class="site-title">
-                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ) jetpack_the_site_logo(); ?>
+                                        <?php if ( function_exists( 'jetpack_the_site_logo' ) ){
+                                            jetpack_the_site_logo();
+                                        }
+                                        else {
+                                            $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+                                        } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </p>
                                 <?php endif;
