@@ -14,6 +14,7 @@ script:
 
 after_success:
   - chmod 600 travis_key_rsa.pem # this key should have push access
+  - eval $(ssh-agent)
   - ssh-add travis_key_rsa.pem
   - git remote add deploy git@git.wpengine.com:production/sucommunity.git
   - git push deploy master
