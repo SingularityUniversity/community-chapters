@@ -72,9 +72,13 @@
                                         }
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+<<<<<<< HEAD
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
                                             $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
+=======
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+>>>>>>> b87696531a7083448558103909819c5947632864
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </h1>
@@ -85,9 +89,13 @@
                                         }
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+<<<<<<< HEAD
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
                                             $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
+=======
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+>>>>>>> b87696531a7083448558103909819c5947632864
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </h3>
@@ -98,9 +106,13 @@
                                         }
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+<<<<<<< HEAD
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
                                             $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
+=======
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+>>>>>>> b87696531a7083448558103909819c5947632864
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </h4>
@@ -111,9 +123,13 @@
                                         }
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
+<<<<<<< HEAD
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
                                             $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
+=======
+                                            echo '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
+>>>>>>> b87696531a7083448558103909819c5947632864
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
                                     </p>
