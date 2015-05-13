@@ -20,10 +20,12 @@ jQuery(document).ready(function($){
                 "text"    : el.text()
             }).appendTo("#secondary .widget_nav_menu + select");
         }
-        $("<option />", {
-            "value"   : el.attr("href"),
-            "text"    : el.text()
-        }).appendTo("#secondary .widget_nav_menu + select");
+        else{
+            $("<option />", {
+                "value"   : el.attr("href"),
+                "text"    : el.text()
+            }).appendTo("#secondary .widget_nav_menu + select");
+        }
     });
 
     $("#secondary .widget_nav_menu + select").change(function() {

@@ -2498,6 +2498,15 @@ a#gform_save_8_link {
         margin-left: 0;
     }
 }
+
+@media (max-width: 1099px){
+    .row #callToAction {
+        margin-left: -15px;
+        width: 100%;
+        padding-left: 0px;
+    }
+}
+
 @media (max-width: 991px) {
 
     #banner #callToAction {
@@ -3011,6 +3020,19 @@ a#gform_save_8_link {
         width: 100%;
     }
 
+    .row #callToAction {
+        margin: 0px auto;
+        width: 100%;
+        padding: 0px;
+
+    }
+
+    .entry-content, #entry-sub-header, #nav-links, .row.cols-after-content {
+        margin: 0px auto;
+
+        padding-left: 10px;
+    }
+
     .footer .col {
         max-height: 100%;
         min-height: 100%;
@@ -3056,6 +3078,8 @@ a#gform_save_8_link {
 
     .page-content, .entry-content, .entry-summary {
         padding: 0px 2.5%;
+
+        margin: 20px 0px 0px;
     }
     #loginForm {
         max-width: none;
@@ -3085,6 +3109,11 @@ a#gform_save_8_link {
     }
 }
 @media (max-width: 480px){
+    #below-fold #calltoActionButton .btn, #below-fold .gform_button.btn {
+        display: inline-block;
+
+        white-space: normal;
+    }
     #secondary .atf-tweet-wrapper:first-child {
         width: 100%;
     }
@@ -3146,7 +3175,7 @@ a#gform_save_8_link {
     #banner #callToAction #calltoActionButton {
         line-height: normal;
         width: 95%;
-        margin: -10% auto 0;
+        margin: -35% auto 0;
     }
 
     #callToAction .small.link {
