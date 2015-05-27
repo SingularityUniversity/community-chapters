@@ -1,0 +1,26 @@
+# This script clones this repo and pushes it to the staging server on wpengine
+# In order to give Travis's build scripts access to the wpengine git, I generated a key.
+# We don't want to put a private key the repo, so I encrypted the private key with Travis's
+# credentials. When this script runs on the server it must decrypt the private key first.
+
+language: php
+php:
+  - 5.6
+
+addons:
+  ssh_known_hosts: git.wpengine.com #add wpengine to the known_hosts file
+
+before_install:
+  #this decrypts the private key used to deploy to wpengine
+  - openssl aes-256-cbc -K $encrypted_acb32be6362e_key -iv $encrypted_acb32be6362e_iv
+    -in travis_key_rsa.pem.enc -out travis_key_rsa.pem -d
+
+script:
+  - php test.php #this is actually meaningless since we're not currently using Travis for testing. We're only using Travis for deployment
+
+after_success:
+  - chmod 600 travis_key_rsa.pem # this key should have push access on wpengine
+  - eval $(ssh-agent) # start ssh-agent
+  - ssh-add travis_key_rsa.pem # add the private key to ssh-agent
+  - git remote add staging-deploy git@git.wpengine.com:staging/sucommunity.git # add remote for staging site
+  - git push staging-deploy master #deploy to staging site
