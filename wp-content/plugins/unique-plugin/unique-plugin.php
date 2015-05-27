@@ -111,7 +111,7 @@ function get_feedzy_items( $items, $feedURL ){
         echo '</div>';
     }
 
-    echo "<a class='more-link' href='".esc_url($feedURL)."' target='_blank' rel='nofollow'>". __('Read More Stories &raquo;','singularityu-alumnus') ."</a>";
+    echo "<a class='more-link' href='".esc_url(str_replace('rss','',$feedURL))."' target='_blank' rel='nofollow'>". __('Read More Stories &raquo;','singularityu-alumnus') ."</a>";
     //return null;
 }
 add_filter('feedzy_feed_items', 'get_feedzy_items', 9,2);
