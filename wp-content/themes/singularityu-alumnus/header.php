@@ -24,7 +24,6 @@
 
 <body <?php body_class(); ?>>
 <div id="page" class="hfeed site">
-  <!-- test change -->
     <a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'singularityu-alumnus' ); ?></a>
 
     <header id="masthead" class="site-header" role="banner">
@@ -74,7 +73,7 @@
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
-                                            $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
+                                            $link = '<a href="'.home_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
@@ -87,7 +86,7 @@
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
-                                            $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
+                                            $link = '<a href="'.home_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
@@ -100,7 +99,7 @@
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
-                                            $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
+                                            $link = '<a href="'.home_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>
@@ -113,7 +112,7 @@
                                         else {
                                             $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
                                             $the_image = '<img width="300" height="56" src="'.$the_image.'" class="site-logo attachment-medium" alt="SingularityU Global Logo" data-size="medium" itemprop="logo">';
-                                            $link = '<a href="'.site_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
+                                            $link = '<a href="'.home_url().'" class="site-logo-link" rel="home" itemprop="url">'.$the_image.'</a>';
                                             echo $link;
                                         } ?>
                                         <span class="text-hide"><?php bloginfo( 'name' ); ?></span>

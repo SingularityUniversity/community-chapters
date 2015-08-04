@@ -51,12 +51,11 @@ class Menu_With_Description extends Walker_Nav_Menu {
         $object_output = $args->before;
         $object_output .= '<a'. $attributes . $cetner_class . '>';
         $object_output .= $args->link_before . apply_filters( 'the_title', $object->title, $object->ID ) . $args->link_after;
-        $object_output .= '</a>';
 
         if ($args->theme_location === "primary" && $depth >= 1){
             $object_output .= '<span class="sub">' . $object->description . '</span>';
         }
-
+        $object_output .= '</a>';
         $object_output .= $args->after;
 
         $output .= apply_filters( 'walker_nav_menu_start_el', $object_output, $object, $depth, $args );

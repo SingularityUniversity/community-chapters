@@ -1,7 +1,7 @@
 <?php
 /***************************************************************
  * SECURITY : Exit if accessed directly
-***************************************************************/
+ ***************************************************************/
 if ( !defined( 'ABSPATH' ) ) {
 	die( 'Direct access not allowed!' );
 }
@@ -11,7 +11,7 @@ if ( !defined( 'ABSPATH' ) ) {
  * Enqueue feedzy CSS
  ***************************************************************/
 function feedzy_register_custom_style() {
-	wp_register_style( 'feedzy-style', plugins_url('css/feedzy-rss-feeds.css', __FILE__ ), NULL, NULL );
+	wp_register_style( 'feedzy-style', plugins_url( 'css/feedzy-rss-feeds.css', __FILE__ ), NULL, NULL );
 }
 function feedzy_print_custom_style() {
 	global $feedzyStyle;
@@ -25,14 +25,27 @@ add_action( 'wp_footer', 'feedzy_print_custom_style' );
 
 
 /***************************************************************
+ * Padding ratio based on image size
+ ***************************************************************/
+function feedzy_add_item_padding( $itemAttr, $sizes ){
+	$paddinTop = number_format( (15 / 150) * $sizes['height'], 0 );
+	$paddinBottom = number_format( (25 / 150) * $sizes['height'], 0 );
+	$stylePadding = ' style="padding: ' . $paddinTop . 'px 0 ' . $paddinBottom . 'px"';
+	return $itemAttr . $stylePadding;
+}
+add_filter( 'feedzy_item_attributes', 'feedzy_add_item_padding', 10, 2 );
+
+
+/***************************************************************
  * Feed item container class
  ***************************************************************/
-function feedzy_classes_item(){
+function feedzy_classes_item( $itemAttr ){
 	$classes = array( 'rss_item' );
 	$classes = apply_filters( 'feedzy_add_classes_item', $classes );
-	$classes = implode( ' ', $classes );
-	return $classes;
+	$classes = ' class="' . implode( ' ', $classes ) . '"';
+	return $itemAttr . $classes;
 }
+add_filter( 'feedzy_item_attributes', 'feedzy_classes_item' );
 
 
 /***************************************************************
@@ -43,6 +56,7 @@ function feedzy_retrieve_image( $item ) {
 	if ( $enclosures = $item->get_enclosures() ) {
 		
 		foreach( (array) $enclosures as $enclosure ){
+			
 
 			//item thumb
 			if ( $thumbnail = $enclosure->get_thumbnail() ) {
@@ -60,7 +74,8 @@ function feedzy_retrieve_image( $item ) {
 
 			//enclosure
 			if ( $thumbnail = $enclosure->embed() ) {
-
+				
+				
 				$pattern = '/https?:\/\/.*\.(?:jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/iU';
 
 				if ( preg_match( $pattern, $thumbnail, $matches ) ) {
@@ -69,14 +84,14 @@ function feedzy_retrieve_image( $item ) {
 				
 			}
 
-			//media:content
+			//media:content && strpos( $enclosure->type, 'image' ) !== false 
 			foreach ( (array) $enclosure->get_link() as $thumbnail ) {
 
 				$pattern = '/https?:\/\/.*\.(?:jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/iU';
 				$imgsrc = $thumbnail;
 
 
-				if ( preg_match( $pattern, $imgsrc, $matches ) ) {
+				if ( preg_match( $pattern, $imgsrc, $matches )  ) {
 					$thethumbnail = $matches[0];
 					break;
 				}
@@ -121,9 +136,9 @@ function feedzy_returnImage( $string ) {
 	$pattern = "/<img[^>]+\>/i";
 	preg_match( $pattern, $img, $matches );
 	if( isset( $matches[0] ) ){
-		$string = $matches[0];
+		return $matches[0];
 	}
-	return $string;
+	return;
 }
 
 function feedzy_scrapeImage( $string ) {

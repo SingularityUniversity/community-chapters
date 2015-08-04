@@ -94,7 +94,7 @@ $singu_theme_settings_number_of_community_stories = get_option('singu_theme_sett
                     <h3 class="sectiion-title">Community Stories</h3>
                 </header>
                 <?php //@todo move the below shortcode to a pods item ?>
-                <?php echo do_shortcode('[feedzy-rss feeds="'.$singu_theme_settings_rss_feed.'" max="4" feed_title="no" target="_blank" meta="yes" summary="yes" summarylength="500" thumb="yes" size="500" ]'); ?>
+                <?php echo do_shortcode('[feedzy-rss-su feeds="'.$singu_theme_settings_rss_feed.'" max="4" feed_title="no" target="_blank" meta="yes" summary="yes" summarylength="20" thumb="yes" size="270" ]'); ?>
             </div>
             <div id="sidebar" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-offset-0 col-md-4" >
                 <?php get_sidebar('home'); ?>

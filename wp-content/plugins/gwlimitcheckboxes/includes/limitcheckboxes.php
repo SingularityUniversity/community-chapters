@@ -21,7 +21,9 @@ class GFLimitCheckboxes {
         
         $script = '';
         $output_script = false;
-        $is_postback = isset( GFFormDisplay::$submission[ $form['id'] ] );
+
+        // $submisison is set if reloading from Save and Continue; also make sure $_POST is empty to ensure this is a true postback
+        $is_postback = isset( GFFormDisplay::$submission[ $form['id'] ] ) && ! empty( $_POST );
         
         foreach($form['fields'] as $field) { 
             
@@ -140,7 +142,7 @@ class GFLimitCheckboxes {
             
             if( $min !== false && $count < $min) {
                 $field['failed_validation'] = true;
-                $field['validation_message'] = sprintf( _n('You must select at least %s item.', 'You must select at least %s items.', $min), $min );
+                $field['validation_message'] = ! empty( $field['errorMessage'] ) ? $field['errorMessage'] : sprintf( _n('You must select at least %s item.', 'You must select at least %s items.', $min), $min );
                 $validation_result['is_valid'] = false;
             }
             else if( $max !== false && $count > $max ) {

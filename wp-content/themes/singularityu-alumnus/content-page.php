@@ -70,154 +70,156 @@ $page_slug = basename(get_the_permalink(get_the_ID()));
         <div class="row">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4" >
+                    <div class="col-md-3" >
                         <?php get_sidebar(); ?>
                     </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <?php if (!empty($display_title_under_the_banner) && $display_title_under_the_banner !== "0"): ?>
-                                <?php if((!empty($banner_call_to_action_or_title) && ($banner_call_to_action_or_title == "title" || $banner_call_to_action_or_title == "alt_title"))): ?>
-                                    <?php if (!empty($alternate_title) && $banner_call_to_action_or_title !== "alt_title"): ?>
-                                        <div id="entry-sub-header">
-                                            <h2 class="entry-subtitle"><?php echo apply_filters('the_title',$alternate_title); ?></h2>
-                                        </div>
-                                    <?php else: ?>
-                                        <div id="entry-sub-header">
-                                            <?php the_title( '<h2 class="entry-subtitle">', '</h2>' ); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                <?php elseif((!empty($banner_call_to_action_or_title) && ($banner_call_to_action_or_title !== "title" || $banner_call_to_action_or_title !== "alt_title"))): ?>
-                                    <header class="entry-header">
-                                        <?php if (!empty($alternate_title)): ?>
-                                            <h1 class="entry-title"><?php echo apply_filters('the_title',$alternate_title); ?></h1>
-                                        <?php else: ?>
-                                            <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-                                        <?php endif; ?>
-                                    </header><!-- .entry-header -->
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            <div class="entry-content">
-                                <?php the_content(); ?>
-                                <?php
-                                wp_link_pages( array(
-                                    'before' => '<div class="page-links">' . __( 'Pages:', 'singularityu-alumnus' ),
-                                    'after'  => '</div>',
-                                ) );
-                                ?>
-                            </div><!-- .entry-content -->
-                        </div>
-                        <div id="nav-links" class="row">
-                            <div class="col-sm-12 col-md-6">
-                                <?php get_prev_page(); ?>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <?php get_next_page(); ?>
-                            </div>
-                        </div>
-
-
-                        <?php if(isset($full_width_section_below_content) && !empty($full_width_section_below_content)){
-                            $show_full_width = true;
-                            echo "</div>";
-                            echo "</div>";
-                            echo "</div>";
-                            echo $full_width_section_below_content;
-                        }
-                        else {
-                            $show_full_width = false;
-                        }
-
-                        if ($show_full_width == true):
-
-                        ?>
-                        <div class="col-md-12">
+                    <div class="col-md-9">
+                        <div class="content-wrap">
                             <div class="row">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <?php endif;
+                                <?php if (!empty($display_title_under_the_banner) && $display_title_under_the_banner !== "0"): ?>
+                                    <?php if((!empty($banner_call_to_action_or_title) && ($banner_call_to_action_or_title == "title" || $banner_call_to_action_or_title == "alt_title"))): ?>
+                                        <?php if (!empty($alternate_title) && $banner_call_to_action_or_title !== "alt_title"): ?>
+                                            <div id="entry-sub-header">
+                                                <h2 class="entry-subtitle"><?php echo apply_filters('the_title',$alternate_title); ?></h2>
+                                            </div>
+                                        <?php else: ?>
+                                            <div id="entry-sub-header">
+                                                <?php the_title( '<h2 class="entry-subtitle">', '</h2>' ); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php elseif((!empty($banner_call_to_action_or_title) && ($banner_call_to_action_or_title !== "title" || $banner_call_to_action_or_title !== "alt_title"))): ?>
+                                        <header class="entry-header">
+                                            <?php if (!empty($alternate_title)): ?>
+                                                <h1 class="entry-title"><?php echo apply_filters('the_title',$alternate_title); ?></h1>
+                                            <?php else: ?>
+                                                <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+                                            <?php endif; ?>
+                                        </header><!-- .entry-header -->
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <div class="entry-content">
+                                    <?php the_content(); ?>
+                                    <?php
+                                    wp_link_pages( array(
+                                        'before' => '<div class="page-links">' . __( 'Pages:', 'singularityu-alumnus' ),
+                                        'after'  => '</div>',
+                                    ) );
+                                    ?>
+                                </div><!-- .entry-content -->
+                            </div>
+                            <div id="nav-links" class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <?php get_prev_page(); ?>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <?php get_next_page(); ?>
+                                </div>
+                            </div>
 
-                                            if (
-                                                (!isset($column_after_content) || empty($column_after_content) || $column_after_content == '')
-                                                && (!isset($column_after_content_2) || empty($column_after_content_2) || $column_after_content_2 == '')
 
-                                            )
-                                            {
-                                                $hide_me = true;
-                                            }
-                                            else{
-                                                $hide_me = false;
-                                            }
+                            <?php if(isset($full_width_section_below_content) && !empty($full_width_section_below_content)){
+                                $show_full_width = true;
+                                echo "</div>";
+                                echo "</div>";
+                                echo "</div>";
+                                echo $full_width_section_below_content;
+                            }
+                            else {
+                                $show_full_width = false;
+                            }
 
-                                            ?>
-                                            <?php if ($hide_me == false):
+                            if ($show_full_width == true):
 
-                                                /*
+                            ?>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <?php endif;
 
-                                                var_dump($column_after_content);
-                                                var_dump($column_after_content_2);
-                                                var_dump($cta_btn_txt_below);
-                                                var_dump($cta_desc_below);
-                                                var_dump($cta_small_print_below);
+                                                if (
+                                                    (!isset($column_after_content) || empty($column_after_content) || $column_after_content == '')
+                                                    && (!isset($column_after_content_2) || empty($column_after_content_2) || $column_after_content_2 == '')
 
-                                                */
+                                                )
+                                                {
+                                                    $hide_me = true;
+                                                }
+                                                else{
+                                                    $hide_me = false;
+                                                }
 
                                                 ?>
+                                                <?php if ($hide_me == false):
 
-                                                <div class="row cols-after-content">
-                                                    <?php if(!empty($column_after_content) && isset($column_after_content) && empty($column_after_content_2) || !isset($column_after_content_2)): ?>
-                                                        <div class="col-md-12">
-                                                            <?php if(!empty($column_after_content) && isset($column_after_content)): ?>
-                                                                <?php echo __($column_after_content,'singularityu-alumnus'); ?>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    <?php elseif (!empty($column_after_content) && isset($column_after_content) && (!empty($column_after_content_2) || isset($column_after_content_2))): ?>
-                                                        <div class="col-md-6">
-                                                            <?php if(!empty($column_after_content) && isset($column_after_content)): ?>
-                                                                <?php echo __($column_after_content,'singularityu-alumnus'); ?>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <?php echo __($column_after_content_2,'singularityu-alumnus'); ?>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                </div>
-                                            <?php endif;
+                                                    /*
 
-                                            if (
-                                                (!isset($cta_btn_txt_below) || empty($cta_btn_txt_below) || $cta_btn_txt_below == '')
-                                                && (!isset($cta_desc_below) || empty($cta_desc_below) || $cta_desc_below == '')
-                                                && (!isset($cta_small_print_below) || empty($cta_small_print_below) || $cta_small_print_below == '')
-                                            )
-                                            {
-                                                $hide_me = true;
-                                            }
-                                            else{
-                                                $hide_me = false;
-                                            }
+                                                    var_dump($column_after_content);
+                                                    var_dump($column_after_content_2);
+                                                    var_dump($cta_btn_txt_below);
+                                                    var_dump($cta_desc_below);
+                                                    var_dump($cta_small_print_below);
 
-                                            if ($hide_me == false):
+                                                    */
 
-                                                ?>
-                                                <div class="row">
-                                                    <div id="callToAction" class="col-md-12">
-                                                        <?php if(!empty($cta_desc_below)): ?>
-                                                            <span id="before-cta" >
-                                                                <?php echo __($cta_desc_below,'singularityu-alumnus'); ?>
-                                                        </span>
-                                                        <?php endif; ?>
-                                                        <?php if(!empty($cta_link_below) && !empty($cta_btn_txt_below)): ?>
-                                                            <span id="calltoActionButton"><a <?php echo $below_cta_text_link_attrs_nofollow; echo $below_cta_text_link_attrs_blank; ?>class="button btn" href="<?php echo esc_url($cta_link_below); ?>"><?php echo __($cta_btn_txt_below,'singularityu-alumnus'); ?></a></span>
-                                                        <?php endif; ?>
-                                                        <?php if(!empty($cta_small_print_link_below) && !empty($cta_small_print_below)): ?>
-                                                            <a <?php echo $below_small_text_link_attrs_blank; echo $below_cta_text_link_attrs_nofollow; ?> class="small link" href="<?php echo esc_url($cta_small_print_link); ?>"><?php echo __($cta_small_print,'singularityu-alumnus'); ?></a>
-                                                        <?php else: ?>
-                                                            <p id="small link"><?php echo __($cta_small_print_below,'singularityu-alumnus'); ?></p>
+                                                    ?>
+
+                                                    <div class="row cols-after-content">
+                                                        <?php if(!empty($column_after_content) && isset($column_after_content) && empty($column_after_content_2) || !isset($column_after_content_2)): ?>
+                                                            <div class="col-md-12">
+                                                                <?php if(!empty($column_after_content) && isset($column_after_content)): ?>
+                                                                    <?php echo __($column_after_content,'singularityu-alumnus'); ?>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        <?php elseif (!empty($column_after_content) && isset($column_after_content) && (!empty($column_after_content_2) || isset($column_after_content_2))): ?>
+                                                            <div class="col-md-6">
+                                                                <?php if(!empty($column_after_content) && isset($column_after_content)): ?>
+                                                                    <?php echo __($column_after_content,'singularityu-alumnus'); ?>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <?php echo __($column_after_content_2,'singularityu-alumnus'); ?>
+                                                            </div>
                                                         <?php endif; ?>
                                                     </div>
-                                                </div>
-                                            <?php endif; ?>
-                                            <?php //singularityu_alumnus_entry_footer(); ?>
+                                                <?php endif;
+
+                                                if (
+                                                    (!isset($cta_btn_txt_below) || empty($cta_btn_txt_below) || $cta_btn_txt_below == '')
+                                                    && (!isset($cta_desc_below) || empty($cta_desc_below) || $cta_desc_below == '')
+                                                    && (!isset($cta_small_print_below) || empty($cta_small_print_below) || $cta_small_print_below == '')
+                                                )
+                                                {
+                                                    $hide_me = true;
+                                                }
+                                                else{
+                                                    $hide_me = false;
+                                                }
+
+                                                if ($hide_me == false):
+
+                                                    ?>
+                                                    <div class="row">
+                                                        <div id="callToAction" class="col-md-12">
+                                                            <?php if(!empty($cta_desc_below)): ?>
+                                                                <span id="before-cta" >
+                                                                    <?php echo __($cta_desc_below,'singularityu-alumnus'); ?>
+                                                            </span>
+                                                            <?php endif; ?>
+                                                            <?php if(!empty($cta_link_below) && !empty($cta_btn_txt_below)): ?>
+                                                                <span id="calltoActionButton"><a <?php echo $below_cta_text_link_attrs_nofollow; echo $below_cta_text_link_attrs_blank; ?>class="button btn" href="<?php echo esc_url($cta_link_below); ?>"><?php echo __($cta_btn_txt_below,'singularityu-alumnus'); ?></a></span>
+                                                            <?php endif; ?>
+                                                            <?php if(!empty($cta_small_print_link_below) && !empty($cta_small_print_below)): ?>
+                                                                <a <?php echo $below_small_text_link_attrs_blank; echo $below_cta_text_link_attrs_nofollow; ?> class="small link" href="<?php echo esc_url($cta_small_print_link); ?>"><?php echo __($cta_small_print,'singularityu-alumnus'); ?></a>
+                                                            <?php else: ?>
+                                                                <p id="small link"><?php echo __($cta_small_print_below,'singularityu-alumnus'); ?></p>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                                <?php //singularityu_alumnus_entry_footer(); ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

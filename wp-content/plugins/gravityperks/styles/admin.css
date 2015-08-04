@@ -4,7 +4,7 @@
 * 
 */      
 
-body.perk-iframe { background-color: #f7f7f7; font-family: 'Merriweather', serif; }
+body.perk-iframe { background-color: #f7f7f7; }
 
 .perk-iframe .wrap { margin: 0; }
 
@@ -27,6 +27,7 @@ body.perk-iframe { background-color: #f7f7f7; font-family: 'Merriweather', serif
 
 .perk-settings {  }
 .perk-settings textarea { width: 75%; height: 150px; }
+.perk-settings .updated *:last-child { margin-bottom: 0; }
     
     .perk-settings-container { border-left: 2px solid #eee; margin: -18px 0 15px 6px; padding: 15px 0 15px 22px; }
     
@@ -70,3 +71,6 @@ body.perk-iframe { background-color: #f7f7f7; font-family: 'Merriweather', serif
 
 .gfield .third { float: left; width: 30%; margin-left: 5%; }
 .gfield .third:first-child { margin-left: 0; }
+
+.gp-field-setting .gp-row { margin: 0 0 14px; }
+    .ui-tabs-panel .gp-field-setting .gp-row label { margin: 0 0 5px !important; }

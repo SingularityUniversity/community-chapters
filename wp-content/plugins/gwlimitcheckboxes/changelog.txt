@@ -1,6 +1,14 @@
 
 # Changelog
 
+## 1.0.9
+
+    - Updated validation to use Custom Validation message setting if set when minimum checkbox count not reached
+
+## 1.0.8
+
+    - Fixed issue where script error was generated when reloading form from Save & Continue URL
+
 ## 1.0.7
 
     - Fixed issue where individual limit was ignored in favor of spanned limit

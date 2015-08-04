@@ -7,6 +7,15 @@
  * License: GPL
  */
 
+define( 'SU_PATH', plugin_dir_path(__FILE__) );
+define('SU_URL', plugin_dir_url(__FILE__));
+function load_feedzy_edit(){
+    if (function_exists('feedzy_rss')){
+        require SU_PATH . '/community-stories.php';
+    }
+}
+add_action('plugins_loaded','load_feedzy_edit');
+
 function mk_ser_shortcode( $args, $content, $tag ) {
 
     $ret = get_search_form(false);
@@ -38,83 +47,6 @@ add_action( 'init', 'my_add_excerpts_to_pages' );
 function my_add_excerpts_to_pages() {
     add_post_type_support( 'page', 'excerpt' );
 }
-
-function get_feedzy_items( $items, $feedURL ){
-
-    $feed_limit = get_option('singu_theme_settings_number_of_community_stories');
-
-    $i = 0;
-    $ii = 0;
-    if ($feed_limit & 1){
-        $force_div = true;
-    }
-    else {
-        $force_div = false;
-    }
-
-    foreach ($items as $item){
-        if ($ii < $feed_limit):
-            $i++;
-
-            //$title = $item->get_title();
-            $title = '';
-            $link  = $item->get_permalink();
-            $image = feedzy_retrieve_image($item);
-
-            $contentMeta = '';
-            $contentMeta .= '<small>' . __( 'Posted', 'feedzy_rss_translate' ) . ' ';
-            $contentMeta .= __( 'on', 'feedzy_rss_translate') . ' ' . date_i18n( get_option( 'date_format' ), $item->get_date( 'U' ) ) . ' ' . __( 'at', 'feedzy_rss_translate' ) . ' ' . date_i18n( get_option( 'time_format' ), $item->get_date( 'U' ) );
-            $contentMeta .= '</small>';
-
-            $description = $item->get_description();
-            $description =  wp_trim_words($description, 20 );
-            $description = strip_tags($description, "<p><a><strong><em>");
-
-            $content = '';
-
-            if ($i === 1){
-                $content .= "<div class='row'>";
-            }
-
-            $content .= "<div class='col-sm-6 col-md-6 thumbnail'>";
-                if (isset($image) && !empty($image)){
-                    $content .= "<a class='rss_image' href='".esc_url($link)."' target='_blank' rel='nofollow'><img src='".esc_url($image)."' /></a>";
-                }
-                else{
-                    if ( function_exists( 'jetpack_the_site_logo' ) ){
-                        $content .= "<a class='rss_image' href='".esc_url($link)."' target='_blank' rel='nofollow'><img src='".jetpack_get_site_logo()."' /></a>";
-                    }
-                    else {
-                        $the_image = get_template_directory_uri() . '/css/images/singlularityu-global-logo.png';
-                        $content .= "<a class='rss_image' href='".esc_url($link)."' target='_blank' rel='nofollow'><img src='".$the_image."' /></a>";
-                    }
-                }
-
-                $content .= "<div class='caption'>";
-                    //$content .= "<a class='title_link' href='".esc_url($link)."' target='_blank' rel='nofollow'><h4 class='story-title'>{$title}</h4></a>";
-                    $content .= "<span class='story-meta'>".$contentMeta."</span>";
-                    $content .= "<span class='description'>".$description."</span>";
-                $content .= "</div>";
-            $content .= "</div>";
-
-
-            if ($i === 2){
-                $content .= "</div>";
-                $i = 0;
-            }
-
-            echo $content;
-        endif;
-        $ii++;
-    }
-    if ($force_div === true){
-        echo '</div>';
-    }
-
-    echo "<a class='more-link' href='".esc_url(str_replace('rss','',$feedURL))."' target='_blank' rel='nofollow'>". __('Read More Stories &raquo;','singularityu-alumnus') ."</a>";
-    //return null;
-}
-add_filter('feedzy_feed_items', 'get_feedzy_items', 9,2);
 
 add_filter('wp_nav_menu_items','do_shortcode');
 

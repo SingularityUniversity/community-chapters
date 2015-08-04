@@ -35,7 +35,13 @@
 			classie.add( overlay, 'open' );
 		}
 	}
+    if( support.transitions ) {
+        triggerBttn.addEventListener( 'click', toggleOverlay );
+        closeBttn.addEventListener( 'click', toggleOverlay );
+    }
+    else {
+        triggerBttn.attachEvent( 'click', toggleOverlay );
+        closeBttn.attachEvent( 'click', toggleOverlay );
+    }
 
-	triggerBttn.addEventListener( 'click', toggleOverlay );
-	closeBttn.addEventListener( 'click', toggleOverlay );
 })();

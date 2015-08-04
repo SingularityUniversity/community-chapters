@@ -168,6 +168,7 @@ class GravityView_View extends Gamajo_Template_Loader {
 		// Add granular overrides
 		add_filter( $this->filter_prefix . '_get_template_part', array( $this, 'add_id_specific_templates' ), 10, 3 );
 
+
 		// widget logic
 		add_action( 'gravityview_before', array( $this, 'render_widget_hooks' ) );
 		add_action( 'gravityview_after', array( $this, 'render_widget_hooks' ) );
@@ -317,7 +318,14 @@ class GravityView_View extends Gamajo_Template_Loader {
 	 * @return array|mixed|null If $key is set and field exists at $key, return that. If not set, return NULL. Otherwise, return array of fields.
 	 */
 	public function getFields( $key = null ) {
-		return empty( $this->fields ) ? NULL : $this->fields ;
+
+		$fields = empty( $this->fields ) ? NULL : $this->fields;
+
+		if( $fields && !empty( $key ) ) {
+			$fields = isset( $fields[ $key ] ) ? $fields[ $key ] : NULL;
+		}
+
+		return $fields;
 	}
 
 	/**

@@ -1,6 +1,59 @@
 
 # Changelog
 
+## 1.2.8.11
+
+    - Fixed lingering issue with GP and individual perk updates caused by different in http vs https on activated URL
+    - Updated GWAPI to clean up & consolidate API parameters and request arguments
+
+## 1.2.8.10
+
+    - Added versions to all enqueued scripts so new versions will force a refresh on cached script files
+
+## 1.2.8.9
+
+    - Required for the new GP Limit Dates perk.
+    - Added gperk.togglePerksTab() function; allows toggling the perks tab when any field setting changes
+
+## 1.2.8.8
+
+    - Added support for GWPerk::$prefix property; used by GWPerk::key() method for future-proof setting names
+
+## 1.2.8.7
+
+    - Added helper styles for field settings
+    - Added template for tooltips: GravityPerks::$tooltip_template
+    - Fixed issue where activating perks from non-network admin was giving warning that Gravity Perks must be network activated
+
+## 1.2.8.6
+
+    - Fixed issue where 'extra_plugin_headers' usage was overriding 3rd party headers set via the same hook
+
+## 1.2.8.5
+
+    - Fixed notice caused when no slug is set on the plugin object.
+
+## 1.2.8.4
+
+    - Fixed issue where version info was not loading correctly due to slug changes in 1.2.8.3
+
+## 1.2.8.3
+
+    - Reverted 1.2.8.2; added correct slug via API response
+    - Fixed styling issue with Perk menu highlight on first-run
+    - Updated several usages of GWPerks to GravityPerks
+    - Added escaping to several API calls
+    - Added "gperks_loaded" action; will be used to load perks via bootstrap
+
+## 1.2.8.2
+
+    - Fixed issue where updates for perks with WP 4.2 were not working due to invalid slug
+
+## 1.2.8.1
+
+    - Fixed strict standards notices in GWNotice class
+    - Fixed styling issue in Perks Settings view
+
 ## 1.2.8
 
     - Added support for dynamic hooks for the "gform_field_appearance_settings" filter

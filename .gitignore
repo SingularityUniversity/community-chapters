@@ -17,6 +17,7 @@ wp-content/wp-cache-config.php
 wp-content/cache/*
 wp-content/cache/supercache/*
 wp-content/debug.log
+wp-content/plugins/wordpress-importer
 
 # wpengine specific
 .smushit-status
@@ -62,6 +63,8 @@ wp-content/mysql.sql
 /wp-content/themes/twentyten
 /wp-content/themes/index.php
 /wp-content/plugins/index.php
+robots.txt
+
 
 # large/disallowed file types
 # a CDN should be used for these

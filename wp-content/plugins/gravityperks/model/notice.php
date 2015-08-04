@@ -2,8 +2,8 @@
 
 class GWNotice {
     
-    public static $class;
-    public static $message;
+    public $class;
+    public $message;
     
     function __construct($message, $args = array()) {
         

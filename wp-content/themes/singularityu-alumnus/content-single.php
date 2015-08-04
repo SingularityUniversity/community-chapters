@@ -68,10 +68,10 @@ $page_slug = basename(get_the_permalink(get_the_ID()));
         <div class="row">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4" >
+                    <div class="col-md-3" >
                         <?php get_sidebar(); ?>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <div class="row">
                             <?php if (!empty($display_title_under_the_banner) && $display_title_under_the_banner !== "0"): ?>
                                 <?php if((!empty($banner_call_to_action_or_title) && ($banner_call_to_action_or_title == "title" || $banner_call_to_action_or_title == "alt_title"))): ?>

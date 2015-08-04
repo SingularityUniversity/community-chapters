@@ -12,7 +12,6 @@
  * @param string $results_error (optional) Throw an error if a records are found
  * @param string $no_results_error (optional) Throw an error if no records are found
  *
- * @internal param string $query The SQL query
  * @return array|bool|mixed|null|void
  * @since 2.0
  */
@@ -34,10 +33,11 @@ function pods_query ( $sql, $error = 'Database Error', $results_error = null, $n
 
         echo '<textarea cols="100" rows="24">';
 
-        if ( is_array( $debug_sql ) )
-            print_r( $debug_sql );
-        else
-            echo $debug_sql;
+        if ( is_array( $debug_sql ) ) {
+            $debug_sql = print_r( $debug_sql, true );
+        }
+
+        echo esc_textarea( $debug_sql );
 
         echo '</textarea>';
     }
@@ -89,8 +89,11 @@ function pods_message ( $message, $type = null ) {
     elseif ( 'error' == $type )
         $class = 'error';
 
-    echo '<div id="message" class="' . $class . ' fade"><p>' . $message . '</p></div>';
+    echo '<div id="message" class="' . esc_attr( $class ) . ' fade"><p>' . $message . '</p></div>';
 }
+
+global $pods_errors;
+$pods_errors = array();
 
 /**
  * Error Handling which throws / displays errors
@@ -106,6 +109,9 @@ function pods_message ( $message, $type = null ) {
  * @since 2.0
  */
 function pods_error ( $error, $obj = null ) {
+
+    global $pods_errors;
+
     $display_errors = false;
 
     if ( is_object( $obj ) && isset( $obj->display_errors ) && true === $obj->display_errors )
@@ -134,16 +140,20 @@ function pods_error ( $error, $obj = null ) {
     $log_error = new WP_Error( 'pods-error-' . md5( $error ), $error );
 
     // throw error as Exception and return false if silent
-    if ( false === $display_errors && !empty( $error ) ) {
+    if ( $pods_errors !== $error && false === $display_errors && !empty( $error ) ) {
         $exception_bypass = apply_filters( 'pods_error_exception', null, $error );
 
         if ( null !== $exception_bypass )
             return $exception_bypass;
 
+        $pods_errors = $error;
+
         set_exception_handler( 'pods_error' );
 
         throw new Exception( $error );
     }
+
+    $pods_errors = array();
 
     $die_bypass = apply_filters( 'pods_error_die', null, $error );
 
@@ -168,7 +178,6 @@ $pods_debug = 0;
  * @param mixed $debug The error message to be thrown / displayed
  * @param boolean $die If set to true, a die() will occur, if set to (int) 2 then a wp_die() will occur
  * @param string $prefix
- * @internal param bool $identifier If set to true, an identifying # will be output
  *
  * @return void
  *
@@ -425,7 +434,7 @@ function pods_help ( $text, $url = null ) {
 		$text .= '<br /><br /><a href="' . $url . '" target="_blank">' . __( 'Find out more', 'pods' ) . ' &raquo;</a>';
 	}
 
-    echo '<img src="' . PODS_URL . 'ui/images/help.png" alt="' . esc_attr( $text ) . '" class="pods-icon pods-qtip" />';
+    echo '<img src="' . esc_url( PODS_URL ) . 'ui/images/help.png" alt="' . esc_attr( $text ) . '" class="pods-icon pods-qtip" />';
 }
 
 /**
@@ -585,6 +594,20 @@ function pods_shortcode ( $tags, $content = null ) {
 		return '';
 	}
 
+	// For enforcing pagination parameters when not displaying pagination
+	$page = 1;
+	$offset = 0;
+
+	if ( isset( $tags['page'] ) ) {
+		$page = (int) $tags['page'];
+		$page = max( $page, 1 );
+	}
+
+	if ( isset( $tags['offset'] ) ) {
+		$offset = (int) $tags['offset'];
+		$offset = max( $offset, 0 );
+	}
+
     $defaults = array(
         'name' => null,
         'id' => null,
@@ -628,8 +651,8 @@ function pods_shortcode ( $tags, $content = null ) {
 
     $tags = apply_filters( 'pods_shortcode', $tags );
 
-	$tags[ 'pagination' ] = (boolean) $tags[ 'pagination' ];
-	$tags[ 'search' ] = (boolean) $tags[ 'search' ];
+	$tags[ 'pagination' ] = filter_var($tags[ 'pagination' ], FILTER_VALIDATE_BOOLEAN);
+	$tags[ 'search' ] = filter_var($tags[ 'pagination' ], FILTER_VALIDATE_BOOLEAN);
 
     if ( empty( $content ) )
         $content = null;
@@ -705,6 +728,8 @@ function pods_shortcode ( $tags, $content = null ) {
     if ( empty( $pod ) )
         return '<p>Pod not found</p>';
 
+	$found = 0;
+
 	if ( empty( $id ) ) {
 		$params = array();
 
@@ -741,34 +766,48 @@ function pods_shortcode ( $tags, $content = null ) {
 			}
 		}
 
-		if ( !empty( $tags[ 'limit' ] ) ) {
-			$params[ 'limit' ] = (int) $tags[ 'limit' ];
+		// Forms require params set
+		if ( ! empty( $params ) || empty( $tags[ 'form' ] ) ) {
+			if ( !empty( $tags[ 'limit' ] ) ) {
+				$params[ 'limit' ] = (int) $tags[ 'limit' ];
+			}
+
+			$params[ 'search' ] = $tags[ 'search' ];
+
+			$params[ 'pagination' ] = $tags[ 'pagination' ];
+
+			// If we aren't displaying pagination, we need to enforce page/offset
+			if ( ! $params['pagination'] ) {
+				$params['page']   = $page;
+				$params['offset'] = $offset;
+
+				// Force pagination on, we need it and we're enforcing page/offset
+				$params['pagination'] = true;
+			} else {
+				// If we are displaying pagination, allow page/offset override only if *set*
+
+				if ( isset( $tags['page'] ) ) {
+					$params['page'] = (int) $tags['page'];
+					$params['page'] = max( $params['page'], 1 );
+				}
+
+				if ( isset( $tags['offset'] ) ) {
+					$params['offset'] = (int) $tags['offset'];
+					$params['offset'] = max( $params['offset'], 0 );
+				}
+			}
+
+			if ( !empty( $tags[ 'cache_mode' ] ) && 'none' != $tags[ 'cache_mode' ] ) {
+				$params[ 'cache_mode' ] = $tags[ 'cache_mode' ];
+				$params[ 'expires' ] = (int) $tags[ 'expires' ];
+			}
+
+			$params = apply_filters( 'pods_shortcode_findrecords_params', $params, $pod, $tags );
+
+			$pod->find( $params );
+
+			$found = $pod->total();
 		}
-
-		$params[ 'search' ] = $tags[ 'search' ];
-
-		if ( 0 < absint( $tags[ 'page' ] ) ) {
-			$params[ 'page' ] = absint( $tags[ 'page' ] );
-		}
-
-		$params[ 'pagination' ] = $tags[ 'pagination' ];
-
-		if ( 0 < (int) $tags[ 'offset' ] ) {
-			$params[ 'offset' ] = (int) $tags[ 'offset' ];
-		}
-
-		if ( !empty( $tags[ 'cache_mode' ] ) && 'none' != $tags[ 'cache_mode' ] ) {
-			$params[ 'cache_mode' ] = $tags[ 'cache_mode' ];
-			$params[ 'expires' ] = (int) $tags[ 'expires' ];
-		}
-
-		$params = apply_filters( 'pods_shortcode_findrecords_params', $params, $pod, $tags );
-
-		$pod->find( $params );
-
-		$found = $pod->total();
-	} else {
-		$found = 0;
 	}
 
     if ( !empty( $tags[ 'form' ] ) ) {
@@ -950,9 +989,9 @@ function pods_version_notice_wp () {
 ?>
     <div class="error fade">
         <p>
-            <strong><?php _e( 'NOTICE', 'pods' ); ?>:</strong> Pods <?php echo PODS_VERSION; ?> <?php _e( 'requires a minimum of', 'pods' ); ?>
-            <strong>WordPress <?php echo PODS_WP_VERSION_MINIMUM; ?>+</strong> <?php _e( 'to function. You are currently running', 'pods' ); ?>
-            <strong>WordPress <?php echo $wp_version; ?></strong> - <?php _e( 'Please upgrade your WordPress to continue.', 'pods' ); ?>
+            <strong><?php _e( 'NOTICE', 'pods' ); ?>:</strong> Pods <?php echo esc_html( PODS_VERSION ); ?> <?php _e( 'requires a minimum of', 'pods' ); ?>
+            <strong>WordPress <?php echo esc_html( PODS_WP_VERSION_MINIMUM ); ?>+</strong> <?php _e( 'to function. You are currently running', 'pods' ); ?>
+            <strong>WordPress <?php echo esc_html( $wp_version ); ?></strong> - <?php _e( 'Please upgrade your WordPress to continue.', 'pods' ); ?>
         </p>
     </div>
 <?php
@@ -969,9 +1008,9 @@ function pods_version_notice_php () {
 ?>
     <div class="error fade">
         <p>
-            <strong><?php _e( 'NOTICE', 'pods' ); ?>:</strong> Pods <?php echo PODS_VERSION; ?> <?php _e( 'requires a minimum of', 'pods' ); ?>
-            <strong>PHP <?php echo PODS_PHP_VERSION_MINIMUM; ?>+</strong> <?php _e( 'to function. You are currently running', 'pods' ); ?>
-            <strong>PHP <?php echo phpversion(); ?></strong> - <?php _e( 'Please upgrade (or have your Hosting Provider upgrade it for you) your PHP version to continue.', 'pods' ); ?>
+            <strong><?php _e( 'NOTICE', 'pods' ); ?>:</strong> Pods <?php echo esc_html( PODS_VERSION ); ?> <?php _e( 'requires a minimum of', 'pods' ); ?>
+            <strong>PHP <?php echo esc_html( PODS_PHP_VERSION_MINIMUM ); ?>+</strong> <?php _e( 'to function. You are currently running', 'pods' ); ?>
+            <strong>PHP <?php echo esc_html( phpversion() ); ?></strong> - <?php _e( 'Please upgrade (or have your Hosting Provider upgrade it for you) your PHP version to continue.', 'pods' ); ?>
         </p>
     </div>
 <?php
@@ -989,9 +1028,9 @@ function pods_version_notice_mysql () {
     $mysql = $wpdb->db_version();
 ?>
     <div class="error fade">
-        <p><strong><?php _e( 'NOTICE', 'pods' ); ?>:</strong> Pods <?php echo PODS_VERSION; ?> <?php _e( 'requires a minimum of', 'pods' ); ?>
-            <strong>MySQL <?php echo PODS_MYSQL_VERSION_MINIMUM; ?>+</strong> <?php _e( 'to function. You are currently running', 'pods' ); ?>
-            <strong>MySQL <?php echo $mysql; ?></strong> - <?php _e( 'Please upgrade (or have your Hosting Provider upgrade it for you) your MySQL version to continue.', 'pods' ); ?>
+        <p><strong><?php _e( 'NOTICE', 'pods' ); ?>:</strong> Pods <?php echo esc_html( PODS_VERSION ); ?> <?php _e( 'requires a minimum of', 'pods' ); ?>
+            <strong>MySQL <?php echo esc_html( PODS_MYSQL_VERSION_MINIMUM ); ?>+</strong> <?php _e( 'to function. You are currently running', 'pods' ); ?>
+            <strong>MySQL <?php echo esc_html( $mysql ); ?></strong> - <?php _e( 'Please upgrade (or have your Hosting Provider upgrade it for you) your MySQL version to continue.', 'pods' ); ?>
         </p>
     </div>
 <?php

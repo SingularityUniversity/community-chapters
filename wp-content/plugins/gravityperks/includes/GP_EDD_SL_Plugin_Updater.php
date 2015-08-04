@@ -129,14 +129,19 @@ class GP_EDD_SL_Plugin_Updater {
 		if( $data['slug'] != $this->slug )
 			return false;
 		
-		$api_params = array( 
+		$api_params = GWAPI::get_api_args( array( 
 			'edd_action' 	=> 'get_version',
 			'license' 		=> $data['license'], 
 			'name' 			=> $data['item_name'],
 			'slug' 			=> $this->slug,
 			'author'		=> $data['author']
-		);
-		$request = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'body' => $api_params ) );
+		) );
+
+		$request_args = GWAPI::get_request_args( array(
+			'body' => $api_params
+		) );
+
+		$request = wp_remote_post( $this->api_url, $request_args );
 		
 		if ( !is_wp_error( $request ) ):
 			$request = json_decode( wp_remote_retrieve_body( $request ) );

@@ -67,6 +67,29 @@ class Better_Search_Replace_DB {
 	}
 
 	/**
+	 * Returns an array containing the size of each database table.
+	 * @access public
+	 * @return array
+	 */
+	public static function get_sizes() {
+		global $wpdb;
+
+		$sizes 	= array();
+		$tables	= $wpdb->get_results( 'SHOW TABLE STATUS', ARRAY_A );
+
+		if ( is_array( $tables ) && ! empty( $tables ) ) {
+
+			foreach ( $tables as $table ) {
+				$size = round( $table['Data_length'] / 1024 / 1024, 2 );
+				$sizes[$table['Name']] = sprintf( __( '(%s MB)', 'better-search-replace' ), $size );
+			}
+
+		}
+
+		return $sizes;
+	}
+
+	/**
 	 * Runs the search replace.
 	 * @access public
 	 * @param  array 	$tables 			The tables to run the search/replace on.
@@ -78,6 +101,7 @@ class Better_Search_Replace_DB {
 	 * @return array
 	 */
 	public function run( $tables = array(), $search, $replace, $replace_guids, $dry_run, $case_insensitive ) {
+
 		if ( count( $tables ) !== 0 ) {
 
 			// Store info about the run for later.
@@ -87,6 +111,9 @@ class Better_Search_Replace_DB {
 			$this->report['dry_run'] 			= $dry_run;
 			$this->report['case_insensitive'] 	= $case_insensitive;
 
+			// Attempt to increase time and memory limits.
+			@set_time_limit( 60 * 10 );
+			@ini_set( 'memory_limit', '1024M' );
 
 			// Run the search replace.
 			foreach ( $tables as $table ) {
@@ -98,6 +125,7 @@ class Better_Search_Replace_DB {
 			$this->report['end'] = microtime( true );
 			return $this->report;
 		}
+
 	}
 
 	/**
@@ -117,6 +145,8 @@ class Better_Search_Replace_DB {
 	 */
 	public function srdb( $table, $search = '', $replace = '', $replace_guids, $dry_run, $case_insensitive ) {
 
+		$table = esc_sql( $table );
+
 		$table_report = array(
 			'change' 	=> 0,
 			'updates' 	=> 0,
@@ -134,20 +164,20 @@ class Better_Search_Replace_DB {
 		$this->wpdb->flush();
 
 		// Count the number of rows we have in the table if large we'll split into blocks, This is a mod from Simon Wheatley
-		$this->wpdb->get_results( 'SELECT COUNT(*) FROM ' . $table );
-		$row_count = $this->wpdb->num_rows;
+		$row_count = $this->wpdb->get_var( "SELECT COUNT(*) FROM $table" );
 		if ( $row_count == 0 ) {
-			continue;
+			return $table_report;
 		}
 
-		$page_size 	= 50000;
+		// Default to a lower page size for shared hosting/large DB's.
+		$page_size 	= get_option( 'bsr_page_size' ) ? get_option( 'bsr_page_size' ) : 20000;
 		$pages 		= ceil( $row_count / $page_size );
 
 		for( $page = 0; $page < $pages; $page++ ) {
 
 			$current_row 	= 0;
 			$start 			= $page * $page_size;
-			$end 			= $start + $page_size;
+			$end 			= $page_size;
 
 			// Grab the content of the table.
 			$data = $this->wpdb->get_results( "SELECT * FROM $table LIMIT $start, $end", ARRAY_A );
@@ -194,7 +224,7 @@ class Better_Search_Replace_DB {
 
 					if ( ! $result ) {
 						$this->report['errors']++;
-						$table_report['errors'][] = 'Error updating row: ' . $current_row . '.';
+						$table_report['errors'][] = sprintf( __( 'Error updating row: %d.', 'better-search-replace' ), $current_row );
 					} else {
 						$this->report['updates']++;
 						$table_report['updates']++;
@@ -202,7 +232,7 @@ class Better_Search_Replace_DB {
 
 				} elseif ( $upd ) {
 					$this->report['errors']++;
-					$table_report['errors'][] = 'Row ' . $current_row . ' has no primary key, manual change needed.';
+					$table_report['errors'][] = sprintf( __( 'Row %d has no primary key, manual change needed.', 'better-search-replace' ), $current_row );
 				}
 			}
 		}

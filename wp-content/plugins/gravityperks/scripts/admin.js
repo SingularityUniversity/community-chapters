@@ -51,6 +51,18 @@ gperk.addTab = function(elem, id, label) {
     
 }
 
+gperk.togglePerksTab = function() {
+
+    var fieldTab = jQuery( '.ui-tabs-nav li.gwp_field_tab' );
+
+    fieldTab.hide();
+
+    if( gperk.fieldHasSettings() ) {
+        fieldTab.show();
+    }
+
+};
+
 gperk.fieldHasSettings = function() {
     
     var hasSetting = false;

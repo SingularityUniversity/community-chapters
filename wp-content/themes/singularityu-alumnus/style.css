@@ -777,12 +777,13 @@ a:active {
 }
 
 #brandingAndMenu nav ul li li span.sub {
-    font-size: 18px;
+    font-size: 15px;
     color: #7d7d7d;
     line-height: normal;
     font-weight: 300;
     white-space: normal;
     display: block;
+    text-transform: none;
 }
 
 #brandingAndMenu nav ul ul li {
@@ -805,6 +806,13 @@ a:active {
     padding-right: 0px;
 }
 
+#brandingAndMenu nav ul ul li {
+    -ms-flex:1 1 auto;
+    -webkit-box-flex:1;
+    -webkit-flex:1 1 auto;
+    flex:1 1 auto;
+}
+
 #brandingAndMenu nav ul li li:hover {
     box-shadow: none;
 }
@@ -822,9 +830,19 @@ a:active {
 }
 
 #brandingAndMenu nav ul li:hover ul {
-    display: block;
+    display:-ms-flexbox;
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:flex;
     z-index: 100;
+}
 
+.no-csstransitions #brandingAndMenu nav ul li:hover ul {
+    display: table;
+}
+
+.no-csstransitions #brandingAndMenu nav ul ul li  {
+    display: table-cell;
 }
 
 #brandingAndMenu nav ul li:hover a {
@@ -844,7 +862,7 @@ a:active {
     z-index:inherit;
     box-shadow: none;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: #333333;
     line-height: 32px;
@@ -1598,7 +1616,7 @@ input[type="submit"]#rcp_login_submit :hover,
 }
 
 #callToAction .small.link {
-    font-size: 20px;
+    font-size: 24px;
     color: #FFF;
     text-shadow: 0px 2px #000;
     text-align: center;
@@ -1658,8 +1676,8 @@ input[type="submit"]#rcp_login_submit :hover,
 }
 
 .entry-content, #entry-sub-header, #nav-links {
-    margin-left: -10px;
-    width: calc(100% + 39px);
+    /* margin-left: -10px; */
+    /* width: calc(100% + 39px); */
 }
 
 .page-template-full-width-page .entry-content,
@@ -1754,20 +1772,20 @@ a.crop_me {
     float: none;
     display: block;
     text-align: left;
-    width: calc(100% + 39px);
-    margin-left: -30px;
+    margin-left: -15px;
     font-size: 16px;
     font-weight: 600;
     color: #ccc;
+    white-space: nowrap;
 }
 
 .nav-next a.more-link {
     float: right;
     display: block;
     margin-right: -15px;
-    width: calc(100% + 39px);
     font-size: 16px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 #communityStories{
@@ -1804,7 +1822,10 @@ a.crop_me {
     font-size: 14px;
     line-height: 1.5em;
     color: #333333;
+}
 
+#communityStories .thumbnail .description p:last-child {
+    margin-bottom: 0px;
 }
 
 #communityStories .thumbnail .caption .story-meta small {
@@ -1822,8 +1843,7 @@ a.crop_me {
     background-color: transparent;
     border-radius: inherit;
     position: relative;
-    margin-bottom: 40px;
-    /* margin-right: 15px; */
+    margin-bottom: 15px;
 }
 
 #communityStories .thumbnail:nth-child(even) {
@@ -1834,19 +1854,31 @@ a.crop_me {
     padding: 0px;
 }
 
+.feedzy-rss .rss_content {
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+.feedzy-rss .rss_item .rss_image span {
+    left:0;
+}
+
+.feedzy-rss .rss_item .rss_image .default {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 a.rss_image {
     display: block;
 }
 
 #communityStories a.more-link {
     margin-top: 0px;
-    margin-bottom: 55px;
 }
 
 #promobox {
-    height: 162px;
     font-weight: 500;
-    /* background-image: url('css/images/bkg_prefooter.png'); */
     background-color: #ededed;
 }
 
@@ -1869,9 +1901,10 @@ a.rss_image {
     font-size: 22px;
     color: #000;
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 16px;
     font-weight: 600;
     text-shadow: none;
+    margin-top: 25px;
 }
 
 #promobox label.gfield_label {
@@ -1973,13 +2006,8 @@ a.rss_image {
 }
 
 #promobox .gform_wrapper div.validation_error {
-    position: absolute;
-    top: -40%;
-}
-
-#promobox .gform_wrapper li.gfield.gfield_error.gfield_contains_required div.gfield_description {
-    position: absolute;
-    bottom: 90%;
+    text-align: center;
+    margin-bottom: 2em;
 }
 
 #promobox .gform_wrapper .top_label .gfield_error {
@@ -1996,6 +2024,18 @@ a.rss_image {
 
 #promobox .gform_wrapper li.gfield.gfield_error input {
     background-color: #FFDFE0;
+}
+
+#promobox .gform_confirmation_message {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.5em;
 }
 
 .footer {
@@ -2034,11 +2074,6 @@ a.rss_image {
     color: #FFF;
 }
 
-.footer .social-footer-menu {
-    /* margin-bottom:0px; */
-    /* position: absolute; */
-    /* bottom: 0px; */
-}
 .footer .social-footer-menu .widget-title {
     font-size: 14px;
     color: #FFF;
@@ -2060,23 +2095,12 @@ a.rss_image {
     text-align: center;
 }
 
-.footer .social-footer-menu .facebook a {
-    /* padding: 3px 9px; */
-
-}
-
 #footerCols {
-    /* height: 280px; */
     font-weight: 300;
 }
 
 .footer li {
     margin-bottom: auto;
-}
-
-.footer .col {
-    /* max-height: 280px; */
-    /* min-height: 260px; */
 }
 
 .footer #very-bottom .widget {
@@ -2122,7 +2146,7 @@ a.rss_image {
     font-weight: 500;
     text-transform: none;
     display: block;
-    margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 15px;
 }
 
@@ -2170,14 +2194,12 @@ a.rss_image {
 }
 
 #secondary {
-    /* background-image: url('css/images/bkg_sidenav_middle.png'); */
     background-repeat: repeat-y;
     border-radius: 4px;
-    margin: 31px 0 0;
+    margin: 31px 0 0 0;
     border: 1px solid #c5c5c5;
     display: inline-block;
     font-size: 16px;
-    /* box-shadow: 5px 5px 35px -7px #c5c5c5; */
     width: auto;
     font-weight: 300;
     background-color: #f9f9f9;
@@ -2193,7 +2215,6 @@ a.rss_image {
 }
 
 #secondary .widget:first-child {
-    /* padding: 30px 0px 22px 30px; */
     border-top:0px;
 }
 
@@ -2229,6 +2250,9 @@ a.rss_image {
     font-weight: 300;
 }
 
+.content-wrap {
+    margin-left: 40px;
+}
 
 ul li .participate:hover {
     background-color: #fff;
@@ -2254,8 +2278,8 @@ span#before-cta {
 }
 
 .row.cols-after-content {
-    margin-left: -25px;
-    width: calc(100% + 85px);
+    /* margin-left: -25px; */
+    /* width: calc(100% + 85px); */
     border-top: 1px solid #ccc;
 }
 
@@ -2288,8 +2312,8 @@ span#before-cta {
 }
 
 .row #callToAction {
-    margin-left: -25px;
-    width: calc(100% + 85px);
+    margin-left: -15px;
+    /* width: calc(100% + 85px); */
     padding-left: 0px;
 }
 
@@ -2538,12 +2562,7 @@ a#gform_save_8_link {
         margin-bottom:20px;
     }
 
-    #getInvolvedLinks {
-        text-align: center;
-    }
-
     #communityStories {
-        text-align: center;
         border-right: none;
         width: 100%;
         margin: 0px auto;
@@ -2557,10 +2576,8 @@ a#gform_save_8_link {
 
     .home #secondary {
         max-width: none;
-
         width: 100%;
         display: block;
-
         margin-left: -15px;
         margin-right: -15px;
     }
@@ -2985,18 +3002,20 @@ a#gform_save_8_link {
     }
     #communityStories {
         padding-right: 15px !important;
-
         margin: 0px auto;
-        text-align: center;
         display: block;
         width: 100%;
     }
 
+    #communityStories .section-header .sectiion-title {
+        padding: 0 15px;
+    }
+
     #communityStories .thumbnail:nth-child(even) {
-        padding: 0px;
+        padding: 0px 15px;
     }
     #communityStories .thumbnail {
-        padding: 0px;
+        padding: 0px 15px;
     }
 
     #promobox .gform_wrapper .top_label .gfield_error {
@@ -3078,7 +3097,6 @@ a#gform_save_8_link {
 
     .page-content, .entry-content, .entry-summary {
         padding: 0px 2.5%;
-
         margin: 20px 0px 0px;
     }
     #loginForm {
@@ -3107,6 +3125,23 @@ a#gform_save_8_link {
     #banner #callToAction .gform_wrapper {
         max-width:100%;
     }
+
+    .home #below-fold {
+        text-align: center;
+    }
+
+    .home #below-fold .entry-title {
+        text-align: center;
+    }
+
+    #communityStories .section-header .sectiion-title {
+
+    }
+
+    #communityStories .rss_item {
+        width: 100%;
+    }
+
 }
 @media (max-width: 480px){
     #below-fold #calltoActionButton .btn, #below-fold .gform_button.btn {
@@ -3209,4 +3244,9 @@ a#gform_save_8_link {
 section.no-results.not-found {
     min-height: 43vh;
     margin-left: 15px;
+}
+
+.wp-video .wp-video-shortcode {
+    width: 100%;
+    height: auto;
 }

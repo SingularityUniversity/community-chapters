@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Perks
  * Plugin URI: http://gravitywiz.com/2012/03/03/what-is-a-perk/?from=perks
  * Description: Effortlessly install and manage small functionality enhancements (aka "perks") for Gravity Forms.
- * Version: 1.2.8
+ * Version: 1.2.8.11
  * Author: David Smith
  * Author URI: http://gravitywiz.com/
  * License: GPL2
@@ -19,17 +19,19 @@ require_once( plugin_dir_path(__FILE__) . 'model/perk.php' );
  * Used to hook into 'pre_update_option_active_plugins' filter and ensure that Gravity Perks
  * is loaded before any individual Perk plugins.
  */
-register_activation_hook( __FILE__, array('GWPerks', 'activation') );
+register_activation_hook( __FILE__, array( 'GravityPerks', 'activation' ) );
 
-add_action( 'init', array('GWPerks', 'init') );
-add_action( 'plugins_loaded', array('GWPerks', 'init_perk_as_plugin_functionality') );
+add_action( 'init', array( 'GravityPerks', 'init' ) );
+add_action( 'plugins_loaded', array( 'GravityPerks', 'init_perk_as_plugin_functionality' ) );
 
 class GravityPerks {
+
+    public static $version = '1.2.8.11';
+    public static $tooltip_template = '<h6>%s</h6> %s';
 
     private static $basename;
     private static $slug = 'gravityperks';
     private static $url = 'http://gravitywiz.com/gravity-perks/';
-    private static $version = '1.2.8';
     private static $min_gravity_forms_version = '1.8';
     private static $min_wp_version = '3.7';
     private static $api;
@@ -180,7 +182,7 @@ class GravityPerks {
         define( 'GW_STORE_URL', 'http://gravitywiz.com/gravity-perks/' ); // used by EDD
         define( 'GW_MANAGE_PERKS_URL', admin_url('admin.php?page=gwp_perks') );
         define( 'GW_SETTINGS_URL', admin_url('admin.php?page=gf_settings&addon=Perks&subview=Perks') );
-        define( 'GW_REGISTER_LICENSE_URL', add_query_arg( array( 'register' => 1 ), GW_SETTINGS_URL ) );
+        define( 'GW_REGISTER_LICENSE_URL', esc_url_raw( add_query_arg( array( 'register' => 1 ), GW_SETTINGS_URL ) ) );
         define( 'GW_SUPPORT_URL', 'http://gravitywiz.com/support/' );
         define( 'GW_BUY_GPERKS_URL', 'http://gravitywiz.com/gravity-perks/' );
         define( 'GW_GFORM_AFFILIATE_URL', 'http://bit.ly/gwizgravityforms' );
@@ -564,6 +566,8 @@ class GravityPerks {
         // save last modified plugin (installed, deleted, activated, deactivated) and save blog ID requesting action
         self::setup_last_modified_functions();
 
+	    do_action( 'gperks_loaded' );
+
     }
 
     public static function setup_last_modified_functions() {
@@ -600,8 +604,9 @@ class GravityPerks {
     * run by Gravity Perks.
     *
     */
-    public static function extra_perk_headers() {
-        return array('Perk');
+    public static function extra_perk_headers( $headers ) {
+	    array_push( $headers, 'Perk' );
+        return $headers;
     }
 
     /**
@@ -829,12 +834,13 @@ class GravityPerks {
 
     public static function require_gravity_perks_network_activation() {
 
-        if( !self::is_last_modified_plugin_perk() || self::is_gravity_perks_network_activated() )
-            return;
+        if( ! is_network_admin() || ! self::is_last_modified_plugin_perk() || self::is_gravity_perks_network_activated() ) {
+	        return;
+        }
 
         $plugin = gwar($_REQUEST, 'plugin');
         $redirect = self_admin_url( 'plugins.php?gwp_error=networkperks&plugin=' . $plugin );
-        wp_redirect(add_query_arg('_error_nonce', wp_create_nonce('plugin-activation-error_' . $plugin), $redirect));
+        wp_redirect( esc_url_raw( add_query_arg( '_error_nonce', wp_create_nonce('plugin-activation-error_' . $plugin ), $redirect ) ) );
         exit;
 
     }
@@ -969,10 +975,10 @@ class GravityPerks {
 
         wp_register_style('gwp-admin', self::get_base_url() . '/styles/admin.css');
 
-        wp_register_script('gwp-common', self::get_base_url() . '/scripts/common.js', array('jquery'));
-        wp_register_script('gwp-admin', self::get_base_url() . '/scripts/admin.js', array('jquery', 'gwp-common'));
-        wp_register_script('gwp-frontend', self::get_base_url() . '/scripts/frontend.js', array('jquery', 'gwp-common'));
-        wp_register_script('gwp-repeater', self::get_base_url() . '/scripts/repeater.js', array('jquery'));
+        wp_register_script( 'gwp-common',   self::get_base_url() . '/scripts/common.js',   array( 'jquery' ), GravityPerks::$version );
+        wp_register_script( 'gwp-admin',    self::get_base_url() . '/scripts/admin.js',    array( 'jquery', 'gwp-common' ), GravityPerks::$version );
+        wp_register_script( 'gwp-frontend', self::get_base_url() . '/scripts/frontend.js', array( 'jquery', 'gwp-common' ), GravityPerks::$version );
+        wp_register_script( 'gwp-repeater', self::get_base_url() . '/scripts/repeater.js', array( 'jquery' ), GravityPerks::$version );
 
         // register our scripts with Gravity Forms so they are not blocked when noconflict mode is enabled
         add_filter( 'gform_noconflict_scripts', create_function('$scripts', 'return array_merge($scripts, array("gwp-admin", "gwp-frontend", "gwp-common"));') );
@@ -1137,7 +1143,7 @@ class GravityPerks {
                     align: 'center'
                 },
                 open: function(event, elements) {
-                    elements.element.css('backgroundColor', '#EAF2FA');
+                    elements.element.css('backgroundColor', 'rgba( 255, 255, 255, 0.15' );
                 },
                 close: function(event, elements) {
                     $.post( ajaxurl, {
@@ -1452,13 +1458,8 @@ class GravityPerks {
         * Hide custom field settings tab if no settings are displayed for the selected field type
         */
         jQuery(document).bind( 'gform_load_field_settings', function( event, field ) {
-
             // show/hide the "no settings" message
-            var fieldTab = jQuery( '.ui-tabs-nav li.gwp_field_tab' );
-            fieldTab.hide();
-            if( gperk.fieldHasSettings() )
-                fieldTab.show();
-
+            gperk.togglePerksTab()
         });
         </script>
 

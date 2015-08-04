@@ -243,7 +243,7 @@ class GWPerk {
         case 'documentation':
 
             $documentation = $this->get_documentation();
-            $url = add_query_arg( array( 'view' => 'documentation', 'slug' => $this->basename, 'TB_iframe' => true, 'width' => 600, 'height' => 500), $base_url );
+            $url = esc_url( add_query_arg( array( 'view' => 'documentation', 'slug' => $this->basename, 'TB_iframe' => true, 'width' => 600, 'height' => 500), $base_url ) );
 
             // support returning a array with a URL for documentation
             if( is_array( $documentation ) ) {
@@ -257,7 +257,7 @@ class GWPerk {
             return $url;
 
         case 'settings':
-            return add_query_arg(array('view' => 'perk_settings', 'slug' => $this->basename, 'TB_iframe' => true, 'width' => 600, 'height' => 500), $base_url);
+            return esc_url( add_query_arg( array( 'view' => 'perk_settings', 'slug' => $this->basename, 'TB_iframe' => true, 'width' => 600, 'height' => 500 ), $base_url ) );
             break;
 
         // @TODO REVIEW BELOW //
@@ -266,7 +266,7 @@ class GWPerk {
             return 'http://gravitywiz.com/gravity-perks/';
             break;
         case 'upgrade_details':
-            return add_query_arg(array('page' => 'gwp_perks', 'view' => 'perk_info', 'plugin' => $this->slug, 'TB_iframe' => 'true', 'width' => 600, 'height' => 500), admin_url('admin.php'));
+            return esc_url( add_query_arg(array('page' => 'gwp_perks', 'view' => 'perk_info', 'plugin' => $this->slug, 'TB_iframe' => 'true', 'width' => 600, 'height' => 500), admin_url('admin.php')) );
             break;
         }
 
@@ -566,8 +566,9 @@ class GWPerk {
         return WP_PLUGIN_DIR . "/$folder";
     }
 
-    public function key($key) {
-        return $this->slug . "_$key";
+    public function key( $key ) {
+	    $prefix = isset( $this->prefix ) ? $this->prefix : $this->slug . '_';
+        return $prefix . $key;
     }
 
     public function field_prop($field, $prop, $prefix = false) {

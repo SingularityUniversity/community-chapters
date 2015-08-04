@@ -228,6 +228,10 @@ function singularityu_alumnus_scripts() {
 
     wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.custom.js', array(), '', false );
 
+    if (is_front_page()){
+        wp_enqueue_script( 'community-stories-size', get_template_directory_uri() . '/js/community-stories-size.js', array('wp-mediaelement'), '', true );
+    }
+
     //wp_enqueue_style( 'singularityu-alumnus-style-bootstrap-theme', get_template_directory_uri() . '/css/bootstrap-theme.min.css' );
 
     //wp_enqueue_style( 'singularityu-alumnus-style-custom', get_template_directory_uri() . '/css/styles.css' );
@@ -359,3 +363,44 @@ function gw_activate_by_entry_id( $entry_id ) {
 
     return $result;
 }
+
+/*
+class GWUnrequire {
+
+    var $_args = null;
+
+    public function __construct( $args = array() ) {
+
+        $this->_args = wp_parse_args( $args, array(
+            'admins_only' => true,
+            'require_query_param' => true
+        ) );
+
+        add_filter( 'gform_pre_validation', array( $this, 'unrequire_fields' ) );
+
+    }
+
+    function unrequire_fields( $form ) {
+
+        if( $this->_args['admins_only'] && ! current_user_can( 'activate_plugins' ) )
+            return $form;
+
+        if( $this->_args['require_query_param'] && ! isset( $_GET['gwunrequire'] ) )
+            return $form;
+
+        foreach( $form['fields'] as &$field ) {
+            $field['isRequired'] = false;
+        }
+
+        return $form;
+    }
+
+}
+
+new GWUnrequire( array(
+    'admins_only' => false,
+    'require_query_param' => false
+) );
+
+*/
+
