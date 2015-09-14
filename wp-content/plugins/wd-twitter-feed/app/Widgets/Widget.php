@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package    twitterfeed
+ * @date       Thu Aug 20 2015 10:24:31
+ * @version    2.1.0
+ * @author     Askupa Software <contact@askupasoftware.com>
+ * @link       http://products.askupasoftware.com/twitter-feed/
+ * @copyright  2015 Askupa Software
+ */
 
 namespace TwitterFeed\Widgets;
 
@@ -48,7 +56,8 @@ abstract class Widget
                 $instance['resource'] = 'Resource_'.$instance['resource'];
 
                 // Render the tweets
-                static::render( $instance );
+                // static::render( $instance );
+                StaticTweets::render( $instance );
 
                 // Display the last part of the wrapper
                 echo ( $instance['wrapper'] == 'ON' ? $after_widget : '' );

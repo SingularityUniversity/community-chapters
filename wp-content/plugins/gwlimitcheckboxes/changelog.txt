@@ -1,6 +1,17 @@
 
 # Changelog
 
+## 1.1.1
+
+    - Moved script from <script> block to separate js file
+
+## 1.1
+
+    - Updated styling of Span Limit feature in the admin
+    - Updated minimum Gravity Perks version to 1.2.8.12
+    - Fixed bug when Span Limit feature was used on multiple groups of fields
+    - Fixed issue where ASM Select stylesheet was not enqueued if GF's No Conflict Mode was activated
+
 ## 1.0.9
 
     - Updated validation to use Custom Validation message setting if set when minimum checkbox count not reached

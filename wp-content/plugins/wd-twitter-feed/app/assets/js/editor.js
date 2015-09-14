@@ -19,15 +19,15 @@
                 img:        'scrolling-icon.gif',
                 label:      'Scrolling Tweets',
                 title:      'Insert Scrolling Tweets',
-                template:   '[scrollingtweets scroll_time="<% scroll_time %>" skin="<% skin %>" resource="<% resource %>" user="<% user %>" list="<% list %>" query="<% query %>" count="<% count %>" retweets="<% retweets %>" replies="<% replies %>"/]',
-                disabled:   isFullVersion( false, true )
+                template:   '[scrollingtweets scroll_time="<% scroll_time %>" skin="<% skin %>" resource="<% resource %>" user="<% user %>" list="<% list %>" query="<% query %>" count="<% count %>" retweets="<% retweets %>" replies="<% replies %>"/]'
+                ,disabled: true 
             },
             slidingtweets: {
                 img:        'sliding-icon.gif',
                 label:      'Sliding Tweets',
                 title:      'Insert Sliding Tweets',
-                template:   '[slidingtweets slide_dir="<% slide_dir %>" slide_duration="<% slide_duration %>" skin="<% skin %>" resource="<% resource %>" user="<% user %>" list="<% list %>" query="<% query %>" count="<% count %>" retweets="<% retweets %>" replies="<% replies %>" show="<% show %>"/]',
-                disabled:   isFullVersion( false, true )
+                template:   '[slidingtweets slide_dir="<% slide_dir %>" slide_duration="<% slide_duration %>" skin="<% skin %>" resource="<% resource %>" user="<% user %>" list="<% list %>" query="<% query %>" count="<% count %>" retweets="<% retweets %>" replies="<% replies %>" show="<% show %>"/]'
+                ,disabled: true 
             }
         }
     };
@@ -298,9 +298,4 @@
             removeTweets( node );
         }
     });
-    
-    function isFullVersion( yes, no )
-    {
-        return 'Demo' === 'Full' ? yes : no;
-    }
 })(jQuery);

@@ -7,13 +7,13 @@
  * @package   Twitter Feed
  * @author    Askupa Software <contact@askupasoftware.com>
  * @link      http://products.askupasoftware.com/twitter-feed/
- * @copyright 2014 Askupa Software
+ * @copyright 2015 Askupa Software
  *
  * @wordpress-plugin
  * Plugin Name:     Twitter Feed
  * Plugin URI:      http://products.askupasoftware.com/twitter-feed/
  * Description:     A powerful Twitter integration system that allows you to display tweets using widgets and shortcodes
- * Version:         2.0.5
+ * Version:         2.1.0
  * Author:          Askupa Software
  * Author URI:      http://www.askupasoftware.com
  * Text Domain:     twitterfeed

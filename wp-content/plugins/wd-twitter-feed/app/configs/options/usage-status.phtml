@@ -29,48 +29,43 @@
         </style>
     </head>
     <body>
-        <?php 
-        $resources = \TwitterFeed\_is_full_version(array(
-            'search'     => array(
-                'tweets' => 'Search'
-            ),
-            'favorites'  => array(
-                'list'   => 'Favorites'
-            ),
-            'statuses'    => array(
-                'user_timeline'     => 'User Timeline',
-                'home_timeline'     => 'Home Timeline',
-                'mentions_timeline' => 'Mentions Timeline',
-                'retweets_of_me'    => 'Retweets of Me'
-            ),
-            'lists'       => array(
-                'statuses'  => 'Lists'
-            ),
+        <?php
+        $resources = array(
             'application' => array(
                 'rate_limit_status' => 'Usage Status'
-            )
-        ),array(
+            ),
             'statuses'    => array(
                 'user_timeline'     => 'User Timeline'
-            ),
-            'application' => array(
-                'rate_limit_status' => 'Usage Status'
             )
-        ));
+            /**/
+        );
         
         $status = new TwitterFeed\Resource\Resource_status(array('resources' => implode(',', array_keys($resources)))); 
         $resp = $status->perform_request();
-        ?>
-        <p>This section shows the usage status for each resource type, as given by Twitter according to the REST API rate limits.</p>
-        <?php foreach( $resources as $resource => $param ): ?>
-            <?php foreach( $param as $type => $title ): ?>
-                <div class="status-obj">
-                    <h3><?php echo $title ?></h3>
-                    <?php $s = '/'.$resource.'/'.$type; $status = $resp->resources->$resource->$s; ?>
-                    <?php $pb = new \Amarkal\UI\Components\ProgressBar(array('value'=>($status->limit-$status->remaining),'max'=>$status->limit)); $pb->render(true); ?>
-                </div>
+        if( isset( $resp->errors ) ): foreach( $resp->errors as $error ): ?>
+        <p><strong>Error: </strong><?php echo $error->message.' (code '.$error->code.')'; ?></p>
+        <?php endforeach; else: ?>
+            <p>This section shows the usage status for each resource type, as given by Twitter according to the REST API rate limits.</p>
+            <?php foreach( $resources as $resource => $param ): ?>
+                <?php foreach( $param as $type => $title ): ?>
+                    <div class="status-obj">
+                        <h3><?php echo $title ?></h3>
+                        <?php 
+                        $s = '/'.$resource.'/'.$type; 
+                        $status = $resp->resources->$resource->$s;
+                        $diff = $status->limit - $status->remaining;
+                        $val = is_numeric($diff) ? $diff : 0;
+                        $max = is_numeric($status->limit) ? $status->limit : 0;
+                        $pb = new \Amarkal\UI\Components\ProgressBar(array(
+                            'value' => $val,
+                            'max'   => $max
+                        ));
+                        $pb->render(true); 
+                        ?>
+                    </div>
+                <?php endforeach; ?>
             <?php endforeach; ?>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </body>
 </html>
 <?php die(); ?>

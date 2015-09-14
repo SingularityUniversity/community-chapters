@@ -8,7 +8,7 @@
 
     <div class="atf-user-card">
         <?php if(in_array('avatar', $this->params['show'])): ?>
-            <img src="<?php echo $this->tweet->image_url; ?>" width="32" height="32" />
+            <img src="<?php echo $this->tweet->image_url; ?>" width="32" height="32" alt="<?php echo $this->tweet->user_name; ?>'s Twitter avatar"/>
         <?php endif; ?>
         <div class="atf-screen-name">
             <?php if(in_array('username', $this->params['show'])): ?>
@@ -29,11 +29,13 @@
     <?php endif; ?>
 
     <?php if(in_array('media', $this->params['show']) && $this->tweet->media): /* Tweet media */ ?>
-        <a class="atf-show-media-button"><i class="fa fa-youtube-play"></i> <span>Show</span> Media</a>
-        <div class="atf-media-wrapper">
+        <?php if( !$this->expand_media ): ?>
+            <a class="atf-show-media-button"><i class="fa fa-youtube-play"></i> <span>Show</span> Media</a>
+        <?php endif; ?>
+        <div class="atf-media-wrapper"<?php echo $this->expand_media ? ' style="display:block"' : '' ?>>
             <?php foreach ($this->tweet->media as $medium): extract($medium); ?>
                 <?php if( 'photo' == $type ): ?>
-                    <img src="<?php echo $url; ?>" />
+                    <img src="<?php echo $url; ?>" alt="Tweet Media"/>
                 <?php endif; ?>
                 <?php if( 'vine' == $type ): ?>
                 <div class="atf-video-container vine">
@@ -54,13 +56,13 @@
     <?php if(in_array('actions', $this->params['show'])): /* Tweet actions */ ?>
         <ul class="atf-tweet-actions">
             <li>
-                <a href="<?php echo $this->intent; ?>tweet?in_reply_to=<?php echo $this->tweet->id_str; ?>" class="reply-action atf-web-intent" title="<?php _e('reply', '@slug'); ?>"><i class="fa fa-reply"></i></a>
+                <a href="<?php echo $this->intent; ?>tweet?in_reply_to=<?php echo $this->tweet->id_str; ?>" class="reply-action atf-web-intent" title="<?php _e('reply', '@slug'); ?>"><i class="fa fa-reply"></i><span class="screen-reader-text"><?php _e('reply', '@slug'); ?></span></a>
             </li>
             <li>
-                <a href="<?php echo $this->intent; ?>retweet?tweet_id=<?php echo $this->tweet->id_str; ?>" class="retweet-action atf-web-intent" title="<?php _e('retweet', '@slug'); ?>"><i class="fa fa-retweet"></i></a> <?php echo $this->tweet->retweet_count; ?>
+                <a href="<?php echo $this->intent; ?>retweet?tweet_id=<?php echo $this->tweet->id_str; ?>" class="retweet-action atf-web-intent" title="<?php _e('retweet', '@slug'); ?>"><i class="fa fa-retweet"></i><span class="screen-reader-text"><?php _e('retweet', '@slug'); ?></span></a> <?php echo $this->tweet->retweet_count; ?>
             </li>
             <li>
-                <a href="<?php echo $this->intent; ?>favorite?tweet_id=<?php echo $this->tweet->id_str; ?>" class="favorite-action atf-web-intent" title="<?php _e('favorite', '@slug'); ?>"><i class="fa fa-star"></i></a> <?php echo $this->tweet->retweet_count; ?>
+                <a href="<?php echo $this->intent; ?>favorite?tweet_id=<?php echo $this->tweet->id_str; ?>" class="favorite-action atf-web-intent" title="<?php _e('favorite', '@slug'); ?>"><i class="fa fa-star"></i><span class="screen-reader-text"><?php _e('favorite', '@slug'); ?></span></a> <?php echo $this->tweet->retweet_count; ?>
             </li>
         </ul>
     <?php endif; /* End actions */ ?>

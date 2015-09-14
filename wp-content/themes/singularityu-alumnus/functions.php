@@ -232,6 +232,10 @@ function singularityu_alumnus_scripts() {
         wp_enqueue_script( 'community-stories-size', get_template_directory_uri() . '/js/community-stories-size.js', array('wp-mediaelement'), '', true );
     }
 
+    if (is_page('apply-for-a-summit-license')){
+        wp_enqueue_script( 'summit-form-list-date', get_template_directory_uri() . '/js/gfield.list.datepicker.js', array('gform_datepicker_init'), '', true );
+    }
+
     //wp_enqueue_style( 'singularityu-alumnus-style-bootstrap-theme', get_template_directory_uri() . '/css/bootstrap-theme.min.css' );
 
     //wp_enqueue_style( 'singularityu-alumnus-style-custom', get_template_directory_uri() . '/css/styles.css' );

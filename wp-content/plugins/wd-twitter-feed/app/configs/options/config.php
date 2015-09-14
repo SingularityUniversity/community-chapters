@@ -1,18 +1,17 @@
 <?php
-
 /**
- * @package   Twitter Feed
- * @date      Mon Apr 27 2015 18:06:42
- * @version   2.0.5
- * @author    Askupa Software <contact@askupasoftware.com>
- * @link      http://products.askupasoftware.com/twitter-feed/
- * @copyright 2014 Askupa Software
+ * @package    twitterfeed
+ * @date       Thu Aug 20 2015 10:24:31
+ * @version    2.1.0
+ * @author     Askupa Software <contact@askupasoftware.com>
+ * @link       http://products.askupasoftware.com/twitter-feed/
+ * @copyright  2015 Askupa Software
  */
 
 use Amarkal\Extensions\WordPress\Options;
 use Amarkal\UI\Components;
 
-$config = array(
+return array(
     'banner'        => TwitterFeed\IMG_URL.'/banner.jpg',
     'title'         => 'Twitter Feed',
     'subtitle'      => 'A powerful Twitter integration system that allows you to display tweets using widgets and shortcodes',
@@ -23,7 +22,7 @@ $config = array(
     'sidebar_icon'  => 'dashicons-twitter',
     'footer_icon'   => TwitterFeed\IMG_URL.'/askupa-logo.png',
     'footer_text'   => date("Y").' © Askupa Software',
-    'subfooter_text'=> '',
+    'subfooter_text'=> 'Do you like Twitter Feed? It could help us a lot if you gave it <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/wd-twitter-feed?filter=5#postform">5 stars on WordPress.com!</a>',
     'global_variable'=> 'twitterfeed_options',
     'sections'      => array(
         new Options\Section(array(
@@ -142,8 +141,24 @@ $config = array(
         new Options\Section(array(
             'title'         => 'Appearance',
             'icon'          => 'fa-paint-brush',
-            'description'   => 'Setup the look and feel of Mivhak',
+            'description'   => 'Setup the look and feel of Twitter Feed',
             'fields'        => array(
+                new Components\ToggleButton(array(
+                    'name'          => 'url_type',
+                    'title'         => 'URL Shortening',
+                    'help'          => 'Choose between showing the short or the expanded version of the urls in the tweet text.',
+                    'default'       => 'short',
+                    'labels'        => [
+                        'short'    => 'Short',
+                        'expanded' => 'Expanded'
+                    ]
+                )),
+                new Components\ToggleButton(array(
+                    'name'          => 'expand_media',
+                    'title'         => 'Expand Tweet Media',
+                    'help'          => 'If set to "ON", tweet media will be expanded automatically when the page loads. Otherwise, media will be initially hidden, and a "Show Media" button will appear.',
+                    'default'       => 'OFF'
+                )),
                 new Components\ToggleButton(array(
                     'name'          => 'css_toggle',
                     'title'         => 'Use Custom CSS',
@@ -226,22 +241,16 @@ $config = array(
                 )
             )
         ))
+        ,new Options\Section(array(
+            'title'         => 'Purchase',
+            'icon'          => 'fa-shopping-cart',
+            'description'   => 'Purchase the full version of Twitter Feed.',
+            'fields' => array(
+                new Components\Content(array(
+                    'template'      => \TwitterFeed\PLUGIN_DIR . '/configs/options/purchase-full.phtml',
+                    'full_width'    => true
+                ))
+            )
+        ))
     )
 );
-
-if( \TwitterFeed\_is_full_version(false,true) )
-{
-    $config['sections'][] = new Options\Section(array(
-        'title'         => 'Purchase',
-        'icon'          => 'fa-shopping-cart',
-        'description'   => 'Purchase the full version of Twitter Feed.',
-        'fields' => array(
-            new Components\Content(array(
-                'template'      => \TwitterFeed\PLUGIN_DIR . '/configs/options/purchase-full.phtml',
-                'full_width'    => true
-            ))
-        )
-    ));
-}
-
-return $config;

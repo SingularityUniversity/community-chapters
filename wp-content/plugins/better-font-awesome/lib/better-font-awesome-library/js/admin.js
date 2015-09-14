@@ -10,7 +10,7 @@
 
     $( document ).on( 'ready tinymce-editor-init', function() {
 
-    	$( '.bfa-iconpicker:visible' ).not( '.initialized' )
+    	$( '.bfa-iconpicker' ).not( '.initialized' )
     		.addClass( 'initialized' )
     		.iconpicker({
 	    		placement: 'bottomLeft',

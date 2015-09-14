@@ -68,7 +68,7 @@ TwitterFeed.SlidingTweets.prototype.show_slide = function(slide_num)
 };
 
 /**
- * Fix the visual appearance of the given slide.
+ * Fix the visual appearance of the current slide.
  */
 TwitterFeed.SlidingTweets.prototype.adjust_view = function() 
 {
@@ -152,9 +152,9 @@ TwitterFeed.SlidingTweets.prototype.transition = function(slide1, slide2)
  * Play the slideshow and scroll the text
  * of each slide.
  * 
- * @param {int}        slide_num        The number of the
- *                                    slide to start playing
- *                                    from.
+ * @param {int}   slide_num   The number of the
+ *                            slide to start playing
+ *                            from.
  */
 TwitterFeed.SlidingTweets.prototype.play = function(slide_num) 
 {
@@ -167,9 +167,9 @@ TwitterFeed.SlidingTweets.prototype.play = function(slide_num)
     
     interval = setInterval(function(){
         Slider.show_slide(i++);
-        if(i === Slider.slide_count)
-            i = 0;
-    }, this.slide_duration);
+        if(i === Slider.slide_count) i = 0;
+    }, 
+    this.slide_duration);
 };
 
 $('.atf-sliding-tweets').each(function(){

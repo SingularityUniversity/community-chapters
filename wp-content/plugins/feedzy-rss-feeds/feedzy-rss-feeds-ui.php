@@ -26,7 +26,7 @@ function feedzy_add_mce_button() {
 	}
 	
 }
-add_action('admin_head', 'feedzy_add_mce_button');
+add_action('init', 'feedzy_add_mce_button');
 
 
 /***************************************************************

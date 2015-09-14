@@ -1,12 +1,11 @@
 <?php
-
 /**
- * @package   Twitter Feed
- * @date      Mon Apr 27 2015 18:06:42
- * @version   2.0.5
- * @author    Askupa Software <contact@askupasoftware.com>
- * @link      http://products.askupasoftware.com/twitter-feed/
- * @copyright 2014 Askupa Software
+ * @package    twitterfeed
+ * @date       Thu Aug 20 2015 10:24:31
+ * @version    2.1.0
+ * @author     Askupa Software <contact@askupasoftware.com>
+ * @link       http://products.askupasoftware.com/twitter-feed/
+ * @copyright  2015 Askupa Software
  */
 
 namespace TwitterFeed\Tweets\UI;
@@ -22,9 +21,11 @@ class Tweet extends \Amarkal\Template\Controller
     
     public function __construct( $tweet, $params )
     {
+        global $twitterfeed_options;
         $this->tweet  = $tweet;
         $this->params = $params;
         $this->intent = 'https://twitter.com/intent/';
+        $this->expand_media = $twitterfeed_options['expand_media'] === 'ON';
     }
     
     /**

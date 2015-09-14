@@ -3,8 +3,8 @@ Contributors: briKou
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7Z6YVM63739Y8
 Tags: RSS, SimplePie, shortcode, feed, thumbnail, image, rss feeds, aggregator, tinyMCE, WYSIWYG, MCE, UI, flux, plugin, WordPress, widget, importer, XML, ATOM, API, parser
 Requires at least: 3.7
-Tested up to: 4.2
-Stable tag: 2.5.1
+Tested up to: 4.3
+Stable tag: 2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,7 @@ By activating this plugin, your cover picture will be inserted into your RSS fee
 * French
 * Serbian [Borisa Djuraskovic](http://www.webhostinghub.com/ "Borisa Djuraskovic")
 * Japanese [sama55](http://askive.cmsbox.jp/ "sama55")
+* German [ralfsteck](https://profiles.wordpress.org/ralfsteck/ "ralfsteck")
 
 Become a translator and send me your translation! [Contact-me](http://b-website.com/contact "Contact")
 
@@ -105,6 +106,13 @@ Yes it is.
 
 
 == Changelog ==
+
+= 2.6 =
+* Fix a conflict with PageBuilder where Feedzy button does not show up in the visual editor
+* Fix a typo in feedzy-rss-feeds-shortcode.php on the thumbnails span
+* Replace WP_Widget by __construct() to initiate the widget because it has been deprecated since version 4.3.0
+* German translation thanks to [ralfsteck](https://profiles.wordpress.org/ralfsteck/ "ralfsteck")
+* Tested on WP 4.3 with success!
 
 = 2.5.1 =
 * Japanese translation thanks to [sama55](http://askive.cmsbox.jp/ "sama55")

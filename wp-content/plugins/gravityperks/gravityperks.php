@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Perks
  * Plugin URI: http://gravitywiz.com/2012/03/03/what-is-a-perk/?from=perks
  * Description: Effortlessly install and manage small functionality enhancements (aka "perks") for Gravity Forms.
- * Version: 1.2.8.11
+ * Version: 1.2.9
  * Author: David Smith
  * Author URI: http://gravitywiz.com/
  * License: GPL2
@@ -26,7 +26,7 @@ add_action( 'plugins_loaded', array( 'GravityPerks', 'init_perk_as_plugin_functi
 
 class GravityPerks {
 
-    public static $version = '1.2.8.11';
+    public static $version = '1.2.9';
     public static $tooltip_template = '<h6>%s</h6> %s';
 
     private static $basename;
@@ -179,13 +179,13 @@ class GravityPerks {
     }
 
     public static function define_constants() {
-        define( 'GW_STORE_URL', 'http://gravitywiz.com/gravity-perks/' ); // used by EDD
-        define( 'GW_MANAGE_PERKS_URL', admin_url('admin.php?page=gwp_perks') );
-        define( 'GW_SETTINGS_URL', admin_url('admin.php?page=gf_settings&addon=Perks&subview=Perks') );
+        define( 'GW_STORE_URL',            'http://gravitywiz.com/gravity-perks/' ); // @used storefront_api.php
+        define( 'GW_MANAGE_PERKS_URL',     admin_url( 'admin.php?page=gwp_perks' ) );
+        define( 'GW_SETTINGS_URL',         admin_url( 'admin.php?page=gf_settings&addon=Perks&subview=Perks' ) );
         define( 'GW_REGISTER_LICENSE_URL', esc_url_raw( add_query_arg( array( 'register' => 1 ), GW_SETTINGS_URL ) ) );
-        define( 'GW_SUPPORT_URL', 'http://gravitywiz.com/support/' );
-        define( 'GW_BUY_GPERKS_URL', 'http://gravitywiz.com/gravity-perks/' );
-        define( 'GW_GFORM_AFFILIATE_URL', 'http://bit.ly/gwizgravityforms' );
+        define( 'GW_SUPPORT_URL',          'http://gravitywiz.com/support/' );
+        define( 'GW_BUY_GPERKS_URL',       'http://gravitywiz.com/gravity-perks/' );
+        define( 'GW_GFORM_AFFILIATE_URL',  'http://bit.ly/gwizgravityforms' );
     }
 
     public static function activation() {

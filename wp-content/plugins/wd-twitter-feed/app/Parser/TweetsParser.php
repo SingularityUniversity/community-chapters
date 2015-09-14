@@ -1,12 +1,11 @@
 <?php
-
 /**
- * @package   Twitter Feed
- * @date      Mon Apr 27 2015 18:06:42
- * @version   2.0.5
- * @author    Askupa Software <contact@askupasoftware.com>
- * @link      http://products.askupasoftware.com/twitter-feed/
- * @copyright 2014 Askupa Software
+ * @package    twitterfeed
+ * @date       Thu Aug 20 2015 10:24:31
+ * @version    2.1.0
+ * @author     Askupa Software <contact@askupasoftware.com>
+ * @link       http://products.askupasoftware.com/twitter-feed/
+ * @copyright  2015 Askupa Software
  */
 
 namespace TwitterFeed\Parser;
@@ -276,7 +275,7 @@ class TweetsParser
                     foreach($entities->media as $_media) {
                         $media[] = array(
                             'type' => $_media->type,
-                            'url' => $_media->media_url,
+                            'url' => $_media->media_url_https,
                             'width' => $_media->sizes->large->w,
                             'height' => $_media->sizes->large->h
                         );
@@ -299,18 +298,27 @@ class TweetsParser
                             $media[] = array(
                                 'type' => 'youtube',
                                 'url' => $url->expanded_url,
-                                'embed_url' => 'http://www.youtube.com/embed/'.str_replace('http://youtu.be/', '', $url->expanded_url)
+                                'embed_url' => 'https://www.youtube.com/embed/'.preg_replace('/https?:\/\/youtu\.be\//', '', $url->expanded_url)
                             );
                     }
             }
             
+            // Process tweet text
+            $tweet_text = $key->text;
+            if( isset( $this->options['url_type'] ) && $this->options['url_type'] === 'expanded' )
+            {
+                $tweet_text = $this->expand_urls( $key->entities->urls, $tweet_text );
+            }
+            $tweet_text = utf8_encode( $tweet_text ); // Tweet text may contain special characters
+            
+            
             // Create a new Tweet object
             $tweet = new Tweet(array(
                 'created_at' => $key->created_at, 
-                'image_url' => $key->user->profile_image_url, 
+                'image_url' => $key->user->profile_image_url_https, 
                 'screen_name' => $key->user->screen_name, 
                 'user_name' => $key->user->name, 
-                'tweet_text' => utf8_encode($key->text), // Tweet text may contain special characters
+                'tweet_text' => $tweet_text, 
                 'id_str' => $key->id_str,
                 'retweeter' => $retweeter,
                 'retweet_count' => $key->retweet_count,
@@ -323,5 +331,14 @@ class TweetsParser
         }
 
         return $tweets;
+    }
+    
+    private function expand_urls( $urls, $text )
+    {
+        foreach( $urls as $url )
+        {
+            $text = str_replace( $url->url, $url->expanded_url, $text );
+        }
+        return $text;
     }
 }

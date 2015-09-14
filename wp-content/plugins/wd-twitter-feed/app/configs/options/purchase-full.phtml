@@ -30,11 +30,20 @@ $rows[] = array(
 );
 
 $rows[] = array(
+	'label' => 'Widgets',
+	'values' => array(
+		array('text', arrayToList(array('Static Tweets'), 'ul')),
+		array('text', arrayToList(array('Static Tweets','Scrolling Tweets','Sliding Tweets'), 'ul')),
+		array('text', arrayToList(array('Static Tweets','Scrolling Tweets','Sliding Tweets'), 'ul'))
+	)
+);
+
+$rows[] = array(
 	'label' => 'Twitter Resources',
 	'values' => array(
 		array('text', arrayToList(array('User Timeline'), 'ul')),
-		array('text', arrayToList(array('User Timeline','Home Timeline','Mentions Timeline', 'Retweets of Me', 'Search', 'List'), 'ul')),
-		array('text', arrayToList(array('User Timeline','Home Timeline','Mentions Timeline', 'Retweets of Me', 'Search', 'List'), 'ul'))
+		array('text', arrayToList(array('User Timeline','Home Timeline','Mentions Timeline', 'Retweets of Me', 'Search', 'List', 'Favorites'), 'ul')),
+		array('text', arrayToList(array('User Timeline','Home Timeline','Mentions Timeline', 'Retweets of Me', 'Search', 'List', 'Favorites'), 'ul'))
 	)
 );
 
@@ -76,15 +85,6 @@ $rows[] = array(
 
 $rows[] = array(
 	'label' => 'Caching System',
-	'values' => array(
-		array('symbol', 'check'),
-		array('symbol', 'check'),
-		array('symbol', 'check')
-	)
-);
-
-$rows[] = array(
-	'label' => 'Widget',
 	'values' => array(
 		array('symbol', 'check'),
 		array('symbol', 'check'),

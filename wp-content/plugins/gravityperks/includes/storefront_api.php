@@ -70,27 +70,30 @@ class GWAPI {
         ) );
 
         $request = wp_remote_post( GW_STORE_URL, $request_args );
-
-        if ( is_wp_error( $request ) )
+        if ( is_wp_error( $request ) ) {
             return false;
+        }
 
         $request = json_decode( wp_remote_retrieve_body( $request ) );
-        if( ! $request )
+        if( ! $request ) {
             return false;
+        }
 
         $perks = array();
 
         foreach( $request as $plugin_file => $perk ) {
 
-            if( property_exists( $perk, 'sections' ) )
-                $perk->sections = maybe_unserialize( $perk->sections );
+            if( property_exists( $perk, 'sections' ) ) {
+	            $perk->sections = maybe_unserialize( $perk->sections );
+            }
 
             $perks[$plugin_file] = $perk;
 
         }
 
-        if( ! $with_download )
-		    set_transient( 'gperks_get_perks', $perks, 60 * 60 * 12 );
+        if( ! $with_download ) {
+	        set_transient( 'gperks_get_perks', $perks, 60 * 60 * 12 );
+        }
 
         return ! empty( $perks ) ? $perks : false;
     }

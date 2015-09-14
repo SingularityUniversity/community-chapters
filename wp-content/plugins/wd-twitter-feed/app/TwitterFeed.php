@@ -1,19 +1,17 @@
 <?php
-
 /**
- * @package   Twitter Feed
- * @date      Mon Apr 27 2015 18:06:42
- * @version   2.0.5
- * @author    Askupa Software <contact@askupasoftware.com>
- * @link      http://products.askupasoftware.com/twitter-feed/
- * @copyright 2014 Askupa Software
+ * @package    twitterfeed
+ * @date       Thu Aug 20 2015 10:24:31
+ * @version    2.1.0
+ * @author     Askupa Software <contact@askupasoftware.com>
+ * @link       http://products.askupasoftware.com/twitter-feed/
+ * @copyright  2015 Askupa Software
  */
 
 namespace TwitterFeed;
 
 use Amarkal\Loaders;
 use Amarkal\Extensions\WordPress\Plugin;
-use Amarkal\Extensions\WordPress\Widget;
 use Amarkal\Extensions\WordPress\Options;
 use Amarkal\Extensions\WordPress\Editor;
 
@@ -33,9 +31,8 @@ class TwitterFeed extends Plugin\AbstractPlugin
         self::$options = new Options\OptionsPage( include('configs/options/config.php') );
         self::$options->register();
         
-        // Register a widget
-        $this->widget = new Widget\Widget( include('configs/widget/config.php') );
-        $this->widget->register();
+        // Register widgets
+        self::register_widgets();
         
         // Add a popup button to the rich editor
         Editor\Editor::add_button( include('configs/editor/config.php') );
@@ -57,8 +54,7 @@ class TwitterFeed extends Plugin\AbstractPlugin
         define( __NAMESPACE__.'\JS_URL', plugin_dir_url( $basepath ).'app/assets/js' );
         define( __NAMESPACE__.'\CSS_URL', plugin_dir_url( $basepath ).'app/assets/css' );
         define( __NAMESPACE__.'\IMG_URL', plugin_dir_url( $basepath ).'app/assets/img' );
-        define( __NAMESPACE__.'\PLUGIN_VERSION', '2.0.5' );
-        define( __NAMESPACE__.'\PLUGIN_VERSION_TYPE', 'Demo');
+        define( __NAMESPACE__.'\PLUGIN_VERSION', '2.1.0' );
     }
     
     public function load_classes()
@@ -108,9 +104,9 @@ class TwitterFeed extends Plugin\AbstractPlugin
                 )),
                 new \Amarkal\Assets\Stylesheet(array(
                     'handle'        => 'font-awesome',
-                    'url'           => '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css',
+                    'url'           => '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',
                     'facing'        => array( 'public' ),
-                    'version'       => '4.2.0'
+                    'version'       => '4.3.0'
                 ))
             )
         );
@@ -118,6 +114,11 @@ class TwitterFeed extends Plugin\AbstractPlugin
         
         // Custom CSS
         add_action( 'wp_head', array( __CLASS__, 'custom_css' ) );
+    }
+    
+    static function register_widgets()
+    {
+        Widgets\StaticTweets::register();
     }
     
     static function custom_css()

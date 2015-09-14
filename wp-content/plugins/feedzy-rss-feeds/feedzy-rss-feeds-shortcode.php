@@ -148,12 +148,12 @@ function feedzy_rss( $atts, $content = '' ) {
 					if ( !empty( $thethumbnail )) {
 						
 						$thethumbnail = feedzy_image_encode( $thethumbnail );
-						$contentThumb .= '<span class="default" style="width:' . $sizes['width'] . 'px; height:' . $sizes['height'] . 'px; background-image:  url(' . $default . ');" alt="' . $item->get_title() . '"></span/>';
-						$contentThumb .= '<span class="fetched" style="width:' . $sizes['width'] . 'px; height:' . $sizes['height'] . 'px; background-image:  url(' . $thethumbnail . ');" alt="' . $item->get_title() . '"></span/>';
+						$contentThumb .= '<span class="default" style="width:' . $sizes['width'] . 'px; height:' . $sizes['height'] . 'px; background-image:  url(' . $default . ');" alt="' . $item->get_title() . '"></span>';
+						$contentThumb .= '<span class="fetched" style="width:' . $sizes['width'] . 'px; height:' . $sizes['height'] . 'px; background-image:  url(' . $thethumbnail . ');" alt="' . $item->get_title() . '"></span>';
 					
 					} else if ( empty( $thethumbnail ) && $thumb == 'yes' ) {
 					
-						$contentThumb .= '<span style="width:' . $sizes['width'] . 'px; height:' . $sizes['height'] . 'px; background-image:url(' . $default . ');" alt="' . $item->get_title() . '"></span/>';
+						$contentThumb .= '<span style="width:' . $sizes['width'] . 'px; height:' . $sizes['height'] . 'px; background-image:url(' . $default . ');" alt="' . $item->get_title() . '"></span>';
 					
 					}
 

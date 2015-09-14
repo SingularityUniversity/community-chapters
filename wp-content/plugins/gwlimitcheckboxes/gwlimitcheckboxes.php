@@ -3,7 +3,7 @@
 * Plugin Name: GP Limit Checkboxes
 * Description: Limit how many checkboxes can be checked.
 * Plugin URI: http://gravitywiz.com/
-* Version: 1.0.9
+* Version: 1.1.1
 * Author: David Smith
 * Author URI: http://gravitywiz.com/
 * License: GPL2
@@ -19,9 +19,10 @@ if( !require_once(dirname($gw_perk_file) . '/safetynet.php') )
 
 class GWLimitCheckboxes extends GWPerk {
 
-	public $version = '1.0.9';
-    protected $min_wp_version = '1.7';
-    protected $min_perk_version = '1.0.5';
+	public $version = '1.1.1';
+
+    protected $min_wp_version            = '1.7';
+    protected $min_gravity_perks_version = '1.2.8.12';
     
 	public function init() {
         
@@ -32,8 +33,11 @@ class GWLimitCheckboxes extends GWPerk {
 
 		add_action( 'wp_print_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
-		add_filter( 'gform_pre_render', array( $this, 'init_limit_checkbox_class' ), 1);
-		add_filter( 'gform_validation', array( $this, 'init_limit_checkbox_class' ), 1);
+		add_filter( 'gform_pre_render', array( $this, 'init_limit_checkbox_class' ), 1 );
+		add_filter( 'gform_validation', array( $this, 'init_limit_checkbox_class' ), 1 );
+
+		add_filter( 'gform_enqueue_scripts', array( $this, 'enqueue_form_scripts' ) );
+
 	}
 
 	public function init_limit_checkbox_class( $form_or_validation ) {
@@ -57,7 +61,7 @@ class GWLimitCheckboxes extends GWPerk {
 
 			if( gwar( $field, $this->key('span_multiple_fields') ) && ! empty( $span_limit_fields ) ) {
 				array_push( $span_limit_fields, $field['id'] );
-				$fields_array[] = array( 'field' => $span_limit_fields, 'min' => $minimum_limit, 'max' => $maximum_limit );
+				$fields_array[$field['id']] = array( 'field' => $span_limit_fields, 'min' => $minimum_limit, 'max' => $maximum_limit );
 			} else {
 				$fields_array[$field['id']] = array( 'min' => $minimum_limit, 'max' => $maximum_limit );
 			}
@@ -89,6 +93,18 @@ class GWLimitCheckboxes extends GWPerk {
 				#gws_field_tab .gwp-option label { margin: 0 !important; }
 				#gws_field_tab .gwp-option input[type="text"] { margin-right: 100px; }
 				.gws-child-settings { border-left: 2px solid #eee; padding: 15px; margin-left: 5px; margin-top: 5px; }
+				/*.gwp-option .asmSelect { max-width: 100%; }*/
+				/*.gwp-option .asmList { margin: 10px 0 0 !important; }*/
+				/*.gwp-option li.asmListItem {*/
+					/*background-color: #f7f7f7;*/
+					/*border: 1px solid #eee !important;*/
+					/*padding: 6px 10px !important;*/
+					/*border-radius: 4px;*/
+					/*margin-left: 0 !important;*/
+				/*}*/
+				/*.gwp-option a.asmListItemRemove {*/
+					/*float: right;*/
+				/*}*/
 			</style>
 
 			<li class="<?php echo $this->key('setting'); ?> gwp_field_setting field_setting">
@@ -195,7 +211,7 @@ class GWLimitCheckboxes extends GWPerk {
                             if( ! fieldLabel )
 								fieldLabel = '(unlabeled) ID: ' + fieldId;
                             	
-                            html += "<option id='field-id-" + fieldId + "' value='" + fieldId + "'" + selected + ">" + fieldLabel + "</option>";
+                            html += "<option id='field-id-" + fieldId + "' value='" + fieldId + "'" + selected + ">" + truncateRuleText( fieldLabel, 40 ) + "</option>";
 							
 						});
                         
@@ -209,6 +225,18 @@ class GWLimitCheckboxes extends GWPerk {
                         var field = GetFieldById( fieldId );
                         return $.inArray( fieldId, spanLimitFields ) != -1;
                     }
+
+					function truncateRuleText( text, length ) {
+
+						if( ! text || text.length <= length ) {
+							return text;
+						}
+
+						var halfLength = length / 2;
+
+						return text.substr( 0, halfLength ) + '...' + text.substr( text.length -( halfLength - 1 ), halfLength );
+
+					}
                     
 				})(jQuery);
 			</script>
@@ -220,13 +248,28 @@ class GWLimitCheckboxes extends GWPerk {
         if( !is_admin() || rgget('page') != 'gf_edit_forms' || !rgget('id') || rgget('view') )
             return;
         
-		wp_enqueue_style('asmSelectCss', plugins_url('', __FILE__) . '/css/jquery.asmselect.css');
-		wp_enqueue_script('asmSelect', plugins_url('', __FILE__) . '/js/jquery.asmselect.js');
+		wp_enqueue_style( 'asmSelectCss', $this->get_base_url() . '/css/jquery.asmselect.css');
+		$this->register_noconflict_styles( 'asmSelectCss' );
 
+		wp_enqueue_script( 'asmSelect', $this->get_base_url() . '/js/jquery.asmselect.js' );
 		$this->register_noconflict_script( 'asmSelect' );
-        
+
 	}
 
+	public function enqueue_form_scripts( $form ) {
+		if( $this->is_applicable_form( $form ) ) {
+			wp_enqueue_script( 'gp-limit-checkboxes', $this->get_base_url() . '/js/gp-limit-checkboxes.js', array( 'jquery' ), $this->version );
+		}
+	}
+
+	public function is_applicable_form( $form ) {
+		foreach( $form['fields'] as $field ) {
+			if( $this->is_limit_checkbox_field( $field ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
     public function documentation() {
         return array( 
             'type' => 'url', 

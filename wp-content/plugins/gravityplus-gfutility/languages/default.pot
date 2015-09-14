@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gravity Forms Utility\n"
+"POT-Creation-Date: 2014-10-01 12:27-0500\n"
+"PO-Revision-Date: 2014-10-01 12:27-0500\n"
+"Last-Translator: Naomi C. Bush <hello@naomicbush.com>\n"
+"Language-Team: gravity+ <support@gravityplus.pro>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_html__;esc_html_e;_x;_ex;"
+"esc_attr_x;esc_html_x;_n;_nx;_n_noop;_nx_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ../tools\n"
+
+#: ../tools/redact.php:37
+#: ../tools/redact/views/gform-field-advanced-settings-redact.php:9
+msgid "Redact"
+msgstr ""
+
+#: ../tools/redact.php:37
+msgid ""
+"Check this box if you do *not* want the information the user places in this "
+"field to be saved to the entry. The information will be unrecoverable and "
+"will not be available to any functions that use entry values to perform "
+"actions while the form is submitting."
+msgstr ""
+
+#: ../tools/toggle-all-fields-required.php:22
+msgid "Utility"
+msgstr ""
+
+#: ../tools/toggle-all-fields-required.php:24
+msgid "Use a utility tool"
+msgstr ""
+
+#: ../tools/toggle-all-fields-required.php:58
+msgid "Available Utilities:"
+msgstr ""
+
+#: ../tools/toggle-all-fields-required.php:59
+msgid "Toggle All Fields Required"
+msgstr ""
+
+#: ../tools/toggle-all-fields-required.php:71
+msgid "All fields set as required"
+msgstr ""
+
+#: ../tools/toggle-all-fields-required.php:71
+msgid "All fields unset as required"
+msgstr ""
+
+#: ../tools/prevent-entry-creation/gform-form-settings.php:9
+msgid "Prevent entry creation"
+msgstr ""
+
+#: ../tools/prevent-entry-creation/gform-form-settings.php:15
+msgid "Prevent entries from being created for this form"
+msgstr ""

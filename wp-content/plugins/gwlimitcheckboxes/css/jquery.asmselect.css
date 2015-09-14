@@ -16,6 +16,7 @@
 	/* the highlight span */
 	padding: 0;
 	margin: 0 0 0 1em;
+	display: none !important;
 }
 
 .asmList {
@@ -24,7 +25,8 @@
 	position: relative;
 	display: block;
 	padding-left: 0; 
-	list-style: none; 
+	list-style: none;
+	overflow: hidden !important;
 }
 
 .asmListItem {
@@ -32,10 +34,11 @@
 	position: relative;
 	list-style: none;
 	background: #f7f7f7;
-	border-bottom: 1px solid #eee !important; 
-	width: 100%; 
-	margin: 0 0 1px; 
-    padding: 0 !important;
+	border-bottom: 1px solid #eee !important;
+	margin: 0 0 1px;
+	border-radius: 4px;
+	line-height: 30px;
+	padding: 0 10px !important;
 }
 
 .asmListItem:hover {
@@ -45,9 +48,6 @@
 
 .asmListItemLabel {
 	/* this is a span that surrounds the text in the item, except for the remove link */
-    display: block;
-    padding: 0 10px;
-    line-height: 26px;
 }
 
 .asmListSortable .asmListItemLabel {
@@ -55,9 +55,6 @@
 }
 
 .asmListItemRemove {
-  line-height: 26px;
-  position: absolute;
-  right: 10px;
-  text-decoration: none;
-  top: 0;
+  	text-decoration: none;
+	float: right;
 }
