@@ -14,6 +14,7 @@
 						{
 							type: 'textbox',
 							name: 'feeds',
+							classes : 'feedzy-validator', //necessary to insert the validator link
 							label: editor.getLang('feedzy_tinymce_plugin.feeds'),
 							value: ''
 						},

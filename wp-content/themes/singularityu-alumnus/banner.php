@@ -37,6 +37,7 @@ $cta_small_print_link = get_post_meta($post_id,'call_to_action_small_print_link'
 $alternate_title = get_post_meta($post_id,'alternate_title',true);
 $banner_call_to_action_or_title = get_post_meta($post_id,'banner_call_to_action_or_title',true);
 $display_title_under_the_banner = get_post_meta($post_id,'display_title_under_the_banner',true);
+$slider_shortcode = get_post_meta($post_id,'slider_shortcode',true);
 
 if(!empty($banner_call_to_action_or_title) && ($banner_call_to_action_or_title == "title" ||$banner_call_to_action_or_title == "alt_title" )){
     $add_class = ' add-title';
@@ -72,7 +73,7 @@ else{
 
 ?>
 
-<?php if ( (has_post_thumbnail($post_id) || has_post_thumbnail()) && $banner_call_to_action_or_title !== "none"): ?>
+<?php if ( (has_post_thumbnail($post_id) || has_post_thumbnail()) && $banner_call_to_action_or_title !== "none" && $banner_call_to_action_or_title !== 'slider'): ?>
     <?php
     $post_thumb_ID = get_post_thumbnail_id($post_id);
     $post_thumb_data = wp_get_attachment_image_src($post_thumb_ID, 'full'. false);
@@ -133,5 +134,10 @@ else{
 
             <?php endif; ?>
         </section>
+<?php elseif($banner_call_to_action_or_title == 'slider' && isset($slider_shortcode) && $slider_shortcode !== '' ): ?>
+<div id="banner" class="container-fluid">
+    <div class="row">
+        <?php echo do_shortcode($slider_shortcode); ?>
     </div>
+</div>
 <?php endif; ?>

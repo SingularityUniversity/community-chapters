@@ -63,7 +63,17 @@ class Test_DB extends WP_StreamTestCase {
 
 		foreach ( $this->dummy_stream_data() as $dummy_key => $dummy_value ) {
 			$this->assertArrayHasKey( $dummy_key, $stream_result );
-			$this->assertEquals( $dummy_value, $stream_result[ $dummy_key ] );
+			if ( 'created' === $dummy_key ) {
+				// It may take up to two seconds to insert a record, so check the time difference
+				$dummy_time  = strtotime( $dummy_value );
+				$result_time = strtotime( $stream_result[ $dummy_key ] );
+				$this->assertTrue( $dummy_time > 0 );
+				$this->assertTrue( $result_time > 0 );
+				$this->assertTrue( $result_time - $dummy_time < 2 );
+				$this->assertTrue( $result_time - $dummy_time >= -2 );
+			} else {
+				$this->assertEquals( $dummy_value, $stream_result[ $dummy_key ] );
+			}
 		}
 
 		// Check that meta exists
@@ -97,7 +107,7 @@ class Test_DB extends WP_StreamTestCase {
 
 	private function dummy_stream_data() {
 		return array(
-			'object_id' => null,
+			'object_id' => 9,
 			'site_id' => '1',
 			'blog_id' => get_current_blog_id(),
 			'user_id' => '1',

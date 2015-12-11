@@ -108,6 +108,11 @@ class GWTermsofServiceField extends GWField {
 
 				array_push( $classes, 'gptos_terms_container', 'gwtos_terms_container' );
 
+				// replace merge tags if Preview Confirmation is available
+				if( is_callable( array( 'GWPreviewConfirmation', 'preview_replace_variables' ) ) && $form = GFAPI::get_form( $field->formId ) ) {
+					$terms = GWPreviewConfirmation::preview_replace_variables( $terms, $form );
+				}
+
 				$terms = sprintf(
 					"<div id='gw_terms_%d' class='%s'>" .
 						"<div class='gptos_the_terms'>%s</div>" .

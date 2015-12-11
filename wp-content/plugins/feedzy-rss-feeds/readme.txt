@@ -3,8 +3,8 @@ Contributors: briKou
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7Z6YVM63739Y8
 Tags: RSS, SimplePie, shortcode, feed, thumbnail, image, rss feeds, aggregator, tinyMCE, WYSIWYG, MCE, UI, flux, plugin, WordPress, widget, importer, XML, ATOM, API, parser
 Requires at least: 3.7
-Tested up to: 4.3
-Stable tag: 2.6
+Tested up to: 4.3.1
+Stable tag: 2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ By activating this plugin, your cover picture will be inserted into your RSS fee
 * feedzy_summary_output
 * feedzy_global_output
 * feedzy_thumb_sizes
+* feedzy_feed_blacklist_images
+* feedzy_default_image
+* feedzy_default_error
+* shortcode_atts_feedzy_default
 
 
 [FULL DOCUMENTATION AND EXAMPLES](http://b-website.com/feedzy-rss-feeds-wordpress-plugin-using-simplepie "Documentation & examples")
@@ -82,6 +86,7 @@ By activating this plugin, your cover picture will be inserted into your RSS fee
 * Serbian [Borisa Djuraskovic](http://www.webhostinghub.com/ "Borisa Djuraskovic")
 * Japanese [sama55](http://askive.cmsbox.jp/ "sama55")
 * German [ralfsteck](https://profiles.wordpress.org/ralfsteck/ "ralfsteck")
+* Spanish [Angel Calzado](http://sintaxisweb.es "Angel Calzado")
 
 Become a translator and send me your translation! [Contact-me](http://b-website.com/contact "Contact")
 
@@ -96,6 +101,10 @@ Become a translator and send me your translation! [Contact-me](http://b-website.
 
 Yes it is.
 
+= My feed is not displayed and the following message appears "Sorry, this feed is currently unavailable or does not exists anymore." =
+
+You have to check first if your feed is valid. Please test it here: https://validator.w3.org/feed/
+
 
 == Screenshots ==
 
@@ -106,6 +115,31 @@ Yes it is.
 
 
 == Changelog ==
+
+= 2.7 =
+* Better displaying of fetching feeds errors (see error message div error-attr).
+* Write errors in the WP log file
+* New hook: feedzy_default_error to filter error message
+* New hook: shortcode_atts_feedzy_default to filter default shortcode attibutes
+* Add a link to validate feed in the TinyMCE popup modal
+* French translation update
+* Remove unnecessary functions
+* New constant FEEDZY_VERSION
+* readme.txt and hooks documentation update
+
+= 2.6.2 =
+* Spanish translation thanks to [Angel Calzado](http://sintaxisweb.es "Angel Calzado")
+* PHP issue fix in feedzy_returnImage() "strpos() expects parameter 1 to be string"
+* Remove SSL from feeds URL to prevent fetching errors
+* New hook: feedzy_default_image
+* readme.txt and hooks documentation update
+
+= 2.6.1 =
+* Replace jQuery live() function by on() function to prevent JS error (fix the issue with Visual composer)
+* Improve image's fetching on itunes feeds
+* New feature: default WP smilies are now blacklisted from image fetching
+* New hook: feedzy_feed_blacklist_images
+* Tested on WP 4.3 with success!
 
 = 2.6 =
 * Fix a conflict with PageBuilder where Feedzy button does not show up in the visual editor

@@ -17,7 +17,7 @@ if ( ! class_exists( '_WP_Editors' ) )
 function feedzy_tinymce_translation() {
     $strings = array(
 		'plugin_title' 	=> __('Insert FEEDZY RSS Feeds Shortcode', 'feedzy_rss_translate'),
-		'feeds' 		=> __('The feed(s) URL (comma-separated list).', 'feedzy_rss_translate'),
+		'feeds' 		=> __('The feed(s) URL (comma-separated list).', 'feedzy_rss_translate') . ' ' . __('If your feed is not valid, it won\'t work.', 'feedzy_rss_translate'),
 		'maximum' 		=> __('Number of items to display.', 'feedzy_rss_translate'),
 		'feed_title' 	=> __('Should we display the RSS title?', 'feedzy_rss_translate'),
 		'target' 		=> __('Links may be opened in the same window or a new tab.', 'feedzy_rss_translate'),
@@ -33,7 +33,7 @@ function feedzy_tinymce_translation() {
 		'text_no' 		=> __('No', 'feedzy_rss_translate'),
 		'text_yes' 		=> __('Yes', 'feedzy_rss_translate'),
 		'text_auto' 	=> __('Auto', 'feedzy_rss_translate')
-    );
+	);
     $locale = _WP_Editors::$mce_locale;
     $translated = 'tinyMCE.addI18n("' . $locale . '.feedzy_tinymce_plugin", ' . json_encode( $strings ) . ");\n";
 

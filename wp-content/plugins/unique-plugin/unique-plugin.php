@@ -9,6 +9,9 @@
 
 define( 'SU_PATH', plugin_dir_path(__FILE__) );
 define('SU_URL', plugin_dir_url(__FILE__));
+
+require SU_PATH . 'theme-add-link.php';
+
 function load_feedzy_edit(){
     if (function_exists('feedzy_rss')){
         require SU_PATH . '/community-stories.php';

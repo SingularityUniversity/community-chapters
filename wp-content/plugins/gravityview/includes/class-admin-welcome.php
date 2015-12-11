@@ -26,7 +26,7 @@ class GravityView_Welcome {
 	/**
 	 * @var string The capability users should have to view the page
 	 */
-	public $minimum_capability = 'manage_options';
+	public $minimum_capability = 'gravityview_getting_started';
 
 	/**
 	 * Get things started
@@ -256,22 +256,190 @@ class GravityView_Welcome {
 
 				<h2 class="subtitle" style="text-align: center;"><?php esc_html_e('What&rsquo;s New', 'gravityview' ); ?></h2>
 
-				<div class="feature-section col two-col">
-
+				<div class="feature-section col two-col" style="margin-top:0">
 					<div class="col col-1">
-						<div class="media-container"><img src="<?php echo plugins_url( 'assets/images/screenshots/format-number.png', GRAVITYVIEW_FILE ); ?>" alt="Format number"></div>
-						<h4 class="higher">Number Field Formatting</h4>
-						<p>Now you can choose to use thousands separators (or not), and define decimal precision!</p>
+						<div class="media-container" style="min-height:81px; border: none;"><img src="<?php echo plugins_url( 'assets/images/screenshots/caps.png', GRAVITYVIEW_FILE ); ?>" alt="Icons representing capabilities"></div>
+						<h4 class="higher">Capability Management</h4>
+						<p>Manage what users and roles have access to GravityView functionality. <a href="http://docs.gravityview.co/article/311-gravityview-capabilities">See what capabilities are available</a>.</p>
+
+						<div class="media-container" style="margin-top: 2em; min-height:80px;"><img src="<?php echo plugins_url( 'assets/images/screenshots/get.png', GRAVITYVIEW_FILE ); ?>" alt=""></div>
+						<h4 class="higher">The <code>{get}</code> Merge Tag</h4>
+						<p>Pass data using URLs and create even more powerful integrations with GravityView. <a href="http://docs.gravityview.co/article/314-the-get-merge-tag">Learn how to use <code>{get}</code></a>.</p>
 					</div>
 
 					<div class="col col-2 last-feature">
-						<div class="media-container" style="min-height:143px;"><img src="<?php echo plugins_url( 'assets/images/screenshots/toolbar.png', GRAVITYVIEW_FILE ); ?>" alt="Toolbar link to Edit View"></div>
-						<h4 class="higher">Edit View in the Toolbar</h4>
-						<p>Editing a View from the front of your site used to take a bunch of clicks. Now a link to edit the embedded View is just a click away in the Toolbar.</p>
+						<div class="media-container" style="min-height:81px; border: none;"><img src="<?php echo plugins_url( 'assets/images/screenshots/support-port.png', GRAVITYVIEW_FILE ); ?>" alt="The Support Port"></div>
+						<h4 class="higher">Support Port</h4>
+						<p>Users can easily search GravityView help docs. Administrators can use it to contact support. Just click the <img src="<?php echo plugins_url( 'assets/images/screenshots/beacon.png', GRAVITYVIEW_FILE ); ?>" width="16" alt="The Support Port icon looks like a question mark"> icon on GravityView screens to activate.</p>
 					</div>
 				</div>
 
+				<h3>1.15.2 on December 3</h3>
+
+				<ul>
+					<li>Fixed: Approval column not being added properly on the Form Entries screen for Gravity Forms 1.9.14.18+</li>
+					<li>Fixed: Select, multi-select, radio, checkbox, and post category field types should use exact match search</li>
+					<li>Fixed: Cannot delete entry notes from Gravity Forms Entry screen</li>
+					<li>Fixed: Date Range search field label not working</li>
+					<li>Fixed: Date Range searches did not include the &quot;End Date&quot; day</li>
+					<li>Fixed: Support Port docs not working on HTTPS sites</li>
+					<li>Fixed: When deleting an entry, only show &quot;Entry Deleted&quot; message for the deleted entry&#39;s View</li>
+					<li>Fixed: &quot;Open link in a new tab or window?&quot; setting for Paragraph Text fields</li>
+					<li>Fixed: Custom Labels not being used as field label in the View Configuration screen
+
+						<ul>
+							<li>Tweak: Custom Labels will be used as the field label, even when the &quot;Show Label&quot; checkbox isn&#39;t checked</li>
+						</ul></li>
+					<li>Tweak: Show available plugin updates, even when license is expired</li>
+					<li>Tweak: Improve spacing of the Approval column on the Entries screen</li>
+					<li>Tweak: Added support for new accessibility labels added in WordPress 4.4</li>
+				</ul>
+
+				<p><strong>Developer Notes:</strong></p>
+
+				<ul>
+					<li>Fixed: Make <code>gravityview/fields/fileupload/link_atts</code> filter available when not using lightbox with File Uploads field</li>
+					<li>Renamed files:
+
+						<ul>
+							<li><code>includes/fields/class.field.php</code> =&gt; <code>includes/fields/class-gravityview-field.php</code></li>
+							<li><code>includes/class-logging.php</code> =&gt; <code>includes/class-gravityview-logging.php</code></li>
+							<li><code>includes/class-image.php</code> =&gt; <code>includes/class-gravityview-image.php</code></li>
+							<li><code>includes/class-migrate.php</code> =&gt; <code>includes/class-gravityview-migrate.php</code></li>
+							<li><code>includes/class-change-entry-creator.php</code> =&gt; <code>includes/class-gravityview-change-entry-creator.php</code></li>
+						</ul></li>
+					<li>New: <code>gravityview/delete-entry/verify_nonce</code> Override Delete Entry nonce validation. Return true to declare nonce valid.</li>
+					<li>New: <code>gravityview/entry_notes/add_note</code> filter to modify GravityView note properties before being added</li>
+					<li>New: <code>gravityview_post_type_supports</code> filter to modify <code>gravityview</code> post type support values</li>
+					<li>New: <code>gravityview_publicly_queryable</code> filter to modify whether Views be accessible using <code>example.com/?post_type=gravityview</code>. Default: Whether the current user has <code>read_private_gravityviews</code> capability (Editor or Administrator by default)</li>
+				</ul>
+
 				<hr />
+
+				<h3>1.15.1 on October 27</h3>
+
+				<ul>
+					<li>New: Use <code>{get}</code> Merge Tags as <code>[gravityview]</code> attributes</li>
+					<li>Fixed: Edit Entry and Delete Entry links weren't working in DataTables</li>
+					<li>Fixed: Some Gravity Forms Merge Tags weren't working, like <code>{embed_post:post_title}</code></li>
+					<li>Fixed: Display Checkbox and Radio field labels in the Search Bar
+
+						<ul>
+							<li>New: If you prefer how the searches looked before the labels were visible, you can set the "Label" for the search field to a blank space. That will hide the label.</li>
+							<li>Removed extra whitespace from search field <code>&lt;label&gt;</code>s</li>
+						</ul>
+					</li>
+					<li>Fixed: Update the required Gravity Forms version to 1.9.9.10</li>
+					<li>Fixed: Section fields should not be affected by "Hide empty fields" View setting</li>
+					<li>Fixed: Add ability to check post custom fields for <code>[gravityview]</code> shortcode. This fixes issues with some themes and page builder plugins.</li>
+					<li>Fixed: Return type wasn't boolean for <code>has_gravityview_shortcode()</code> function</li>
+					<li>Tweak: Improve notifications logic
+
+						<ul>
+							<li>Only show notices to users with appropriate capabilities</li>
+							<li>Allow dismissing all notices</li>
+							<li>Clear dismissed notices when activating the plugin</li>
+							<li>Fixed showing notice to enter license key</li>
+						</ul>
+					</li>
+					<li>Tweak: Added previously-supported <code>{created_by:roles}</code> Merge Tag to available tags dropdown</li>
+					<li>Tweak: Allow overriding <code>gravityview_sanitize_html_class()</code> function</li>
+					<li>Tweak: Make <code>GravityView_Merge_Tags::replace_get_variables()</code> method public</li>
+					<li>Tweak: Rename <code>GravityView_Merge_Tags::_gform_replace_merge_tags()</code> method <code>GravityView_Merge_Tags::replace_gv_merge_tags()</code> for clarity</li>
+				</ul>
+
+
+				<h3>1.15 on October 15</h3>
+
+				<ul>
+					<li>Added: <code>{get}</code> Merge Tag that allows passing data via URL to be safely displayed in Merge Tags. <a href="http://docs.gravityview.co/article/314-the-get-merge-tag">Learn how this works</a>.
+
+						<ul>
+							<li>Example: When adding <code>?first-name=Floaty</code> to a URL, the Custom Content <code>My name is {get:first-name}</code> would be replaced with <code>My name is Floaty</code></li>
+						</ul>
+					</li>
+					<li>Added: GravityView Capabilities: restrict access to GravityView functionality to certain users and roles. <a href="http://docs.gravityview.co/article/311-gravityview-capabilities">Learn more</a>.
+
+						<ul>
+							<li>Fixed: Users without the ability to create Gravity Forms forms are able to create a new form via "Start Fresh"</li>
+							<li>Only add the Approve Entries column if user has the <code>gravityview_moderate_entries</code> capability (defaults to Editor role or higher)</li>
+							<li>Fixed: Contributors now have access to the GravityView "Getting Started" screen</li>
+						</ul>
+					</li>
+					<li>Added: <code>[gv_entry_link]</code> shortcode to link directly to an entry. <a href="http://docs.gravityview.co/article/287-edit-entry-and-delete-entry-shortcodes">Learn more</a>.
+
+						<ul>
+							<li>Existing <code>[gv_delete_entry_link]</code> and <code>[gv_edit_entry_link]</code> shortcodes will continue to work</li>
+						</ul>
+					</li>
+					<li>Added: Ability to filter View by form in the Admin. <a href="http://docs.gravityview.co/article/313-the-views-list-on-the-dashboard">Learn more</a>.</li>
+					<li>Added: Option to delete GravityView data when the plugin is uninstalled, then deleted. <a href="http://docs.gravityview.co/article/312-how-to-delete-the-gravityview-data-when-the-plugin-is-uninstalled">Learn more</a>.</li>
+					<li>Added: New support "Beacon" to easily search documentation and ask support questions</li>
+					<li>Added: Clear search button to the Search Widget (WP widget)</li>
+					<li>Fixed: <code>number_format()</code> PHP warning on blank Number fields</li>
+					<li>Fixed: <code>{created_by}</code> merge tags weren't being escaped using <code>esc_html()</code></li>
+					<li>Fixed: Checkmark icons weren't always available when displaying checkbox input field</li>
+					<li>Fixed: When "Shorten Link Display" was enabled for Website fields, "Link Text" wasn't respected</li>
+					<li>Fixed: Only process "Create" Gravity Forms User Registration Addon feeds, by default the user role and the user display name format persist</li>
+					<li>Fixed: Error with List field  <code>Call to undefined method GF_Field::get_input_type()</code></li>
+					<li>Fixed: BuddyPress/bbPress <code>bbp_setup_current_user()</code> warning</li>
+					<li>Fixed: <code>gravityview_is_admin_page()</code> wasn't recognizing the Settings page as a GravityView admin page</li>
+					<li>Fixed: Custom Content Widgets didn't replace Merge Tags</li>
+					<li>Fixed: PHP Warnings</li>
+					<li>Fixed: WordPress Multisite fatal error when Gravity Forms not Network Activated</li>
+					<li>Tweak: Don't show Data Source column in Views screen to users who don't have permissions to see any of the data anyway</li>
+					<li>Tweak: Entry notes are now created using <code>GravityView_Entry_Notes</code> class</li>
+					<li>Tweak: Improved automated code testing</li>
+					<li>Tweak: Added <code>gravityview/support_port/display</code> filter to enable/disable displaying Support Port</li>
+					<li>Tweak: Added <code>gravityview/support_port/show_profile_setting</code> filter to disable adding the Support Port setting on User Profile pages</li>
+					<li>Tweak: Removed <code>gravityview/admin/display_live_chat</code> filter</li>
+					<li>Tweak: Removed <code>gravityview_settings_capability</code> filter</li>
+					<li>Tweak: Escape form name in dropdowns</li>
+				</ul>
+
+
+				<h3>1.14.2 &amp; 1.14.3 on September 17</h3>
+				<ul>
+					<li>Fixed: Issue affecting Gravity Forms User Registration Addon. Passwords were being reset when an user edited their own entry.</li>
+				</ul>
+
+				<h3>1.14.1 on September 16</h3>
+				<ul>
+					<li>Fixed: Error with older versions of Maps Premium View</li>
+				</ul>
+
+				<h3>1.14 on September 16</h3>
+
+				<ul>
+					<li>Added: Search Bar now supports custom label text</li>
+					<li>Added: Show the value of a single column of a "Multiple Columns" List field</li>
+					<li>Added: Sorting by time now works. Why is this "Added" and not "Fixed"? Because Gravity Forms doesn't natively support sorting by time!</li>
+					<li>Added: Display the roles of the entry creator by using <code>{created_by:roles}</code> Merge Tag</li>
+					<li>Fixed: Field containers were being rendered even when empty</li>
+					<li>Fixed: Widgets were not being displayed when using page builders and themes that pre-process shortcodes</li>
+					<li>Fixed: Don't show "Width %" setting when in Single Entry configuration</li>
+					<li>Fixed: Error in extension class that assumes GravityView is active</li>
+					<li>Fixed: Add check for <code>{all_fields_display_empty}</code> Gravity Forms merge tag</li>
+					<li>Fixed: Hide metabox until View Data Source is configured</li>
+					<li>Fixed: Search Bar "Link" input type wasn't highlighting properly based on the value of the filter</li>
+					<li>Fixed: Improved speed of getting users for Search Bar and GravityView Search Widgets with "Submitted by" fields, and in the Edit Entry screen (the Change Entry Creator dropdown)</li>
+					<li>Fixed: Conflict with other icon fonts in the Dashboard</li>
+					<li>Fixed: Allow HTML in Source URL "Link Text" field setting</li>
+					<li>Fixed: Gravity Forms User Registration Addon conflicts
+						<ul>
+							<li>When editing an entry, an user's roles and display name were reset to the Addon's feed configuration settings</li>
+							<li>Users receive "Password Updated" emails in WordPress 4.3+, even if the password wasn't changed</li>
+						</ul>
+					</li>
+					<li>Tweak: Support for plugin banner images in the plugin changelog screen</li>
+					<li>Tweak: Updated default Search Bar configuration to be a single input with "Search Everything"</li>
+					<li>Tweak: Sort user dropdown by display name instead of username</li>
+					<li>Tweak: Reduce size of AJAX responses</li>
+					<li>Tweak: Add "Template" column to the All Views list table - now you can better see what template is being used</li>
+					<li>Tweak: Remove redundant close icon for field and widget settings</li>
+					<li>Tweak: When adding notes via GravityView, set the note type to <code>gravityview</code> to allow for better searchability</li>
+					<li>Added: Automated code testing</li>
+				</ul>
 
 				<h3>1.13.1 on August 26</h3>
 
@@ -453,7 +621,7 @@ class GravityView_Welcome {
 
 			<p class="about-description"><?php _e( 'GravityView is brought to you by:', 'gravityview' ); ?></p>
 
-			<div class="feature-section col three-col">
+			<div class="feature-section col two-col">
 
 				<div class="col">
 					<h2>Zack Katz</h2>

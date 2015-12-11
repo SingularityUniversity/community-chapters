@@ -3,7 +3,7 @@
 * Plugin Name: GP Limit Checkboxes
 * Description: Limit how many checkboxes can be checked.
 * Plugin URI: http://gravitywiz.com/
-* Version: 1.1.1
+* Version: 1.1.3
 * Author: David Smith
 * Author URI: http://gravitywiz.com/
 * License: GPL2
@@ -19,7 +19,7 @@ if( !require_once(dirname($gw_perk_file) . '/safetynet.php') )
 
 class GWLimitCheckboxes extends GWPerk {
 
-	public $version = '1.1.1';
+	public $version = '1.1.3';
 
     protected $min_wp_version            = '1.7';
     protected $min_gravity_perks_version = '1.2.8.12';

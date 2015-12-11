@@ -362,7 +362,7 @@ class GravityView_View extends Gamajo_Template_Loader {
 	 * @return int
 	 */
 	public function getViewId() {
-		return $this->view_id;
+		return absint( $this->view_id );
 	}
 
 	/**
@@ -411,7 +411,7 @@ class GravityView_View extends Gamajo_Template_Loader {
 	 * @param int $total_entries
 	 */
 	public function setTotalEntries( $total_entries ) {
-		$this->total_entries = $total_entries;
+		$this->total_entries = intval( $total_entries );
 	}
 
 	/**
@@ -458,11 +458,9 @@ class GravityView_View extends Gamajo_Template_Loader {
 		$last = ( $offset + $page_size > $total ) ? $total : $offset + $page_size;
 
 		/**
-		 * Modify the displayed pagination numbers
-		 *
-		 * @param array $counts Array with $first, $last, $total
-		 *
-		 * @var array array with $first, $last, $total numbers in that order.
+		 * @filter `gravityview_pagination_counts` Modify the displayed pagination numbers
+		 * @since 1.13
+		 * @param array $counts Array with $first, $last, $total numbers in that order
 		 */
 		list( $first, $last, $total ) = apply_filters( 'gravityview_pagination_counts', array( $first, $last, $total ) );
 
@@ -709,8 +707,10 @@ class GravityView_View extends Gamajo_Template_Loader {
 	 *
 	 * @see  Gamajo_Template_Loader::get_template_file_names() Where the filter is
 	 * @param array $templates Existing list of templates.
-	 * @param [type] $slug      [description]
-	 * @param [type] $name      [description]
+	 * @param string $slug      Name of the template base, example: `table`, `list`, `datatables`, `map`
+	 * @param string $name      Name of the template part, example: `body`, `footer`, `head`, `single`
+	 *
+	 * @return array $templates Modified template array, merged with existing $templates values
 	 */
 	function add_id_specific_templates( $templates, $slug, $name ) {
 
@@ -765,6 +765,7 @@ class GravityView_View extends Gamajo_Template_Loader {
 	public function render_widget_hooks( $view_id ) {
 
 		if( empty( $view_id ) || 'single' == gravityview_get_context() ) {
+			do_action( 'gravityview_log_debug', __METHOD__ . ' - Not rendering widgets; single entry' );
 			return;
 		}
 
@@ -788,7 +789,10 @@ class GravityView_View extends Gamajo_Template_Loader {
 		}
 
 		// Prevent being called twice
-		if( did_action( $zone.'_'.$view_id.'_widgets' ) ) { return; }
+		if( did_action( $zone.'_'.$view_id.'_widgets' ) ) {
+			do_action( 'gravityview_log_debug', sprintf( '%s - Not rendering %s; already rendered', __METHOD__ , $zone.'_'.$view_id.'_widgets' ) );
+			return;
+		}
 
 		// TODO Convert to partials
 		?>
@@ -815,8 +819,14 @@ class GravityView_View extends Gamajo_Template_Loader {
 		</div>
 
 		<?php
-		// Prevent being called twice
-		do_action( $zone.'_'.$view_id.'_widgets' );
+
+		/**
+		 * Prevent widgets from being called twice.
+		 * Checking for loop_start prevents themes and plugins that pre-process shortcodes from triggering the action before displaying. Like, ahem, the Divi theme and WordPress SEO plugin
+		 */
+		if( did_action( 'loop_start' ) ) {
+			do_action( $zone.'_'.$view_id.'_widgets' );
+		}
 	}
 
 }

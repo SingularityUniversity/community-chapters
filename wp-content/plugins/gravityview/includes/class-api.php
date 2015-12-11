@@ -11,8 +11,6 @@
  * @since 1.0.0
  */
 
-
-
 class GravityView_API {
 
 	/**
@@ -45,7 +43,7 @@ class GravityView_API {
 
 					$input = GFFormsModel::get_input( $field_object, $field['id'] );
 
-					// This is a complex field, with lables on a per-input basis
+					// This is a complex field, with labels on a per-input basis
 					if( $input ) {
 
 						// Does the input have a custom label on a per-input basis? Otherwise, default label.
@@ -121,7 +119,13 @@ class GravityView_API {
 
 		if( !empty( $field['width'] ) ) {
 			$width = absint( $field['width'] );
-			$width = $width > 100 ? 100 : sprintf( $format, $width );
+
+			// If using percentages, limit to 100%
+			if( '%d%%' === $format && $width > 100 ) {
+				$width = 100;
+			}
+
+			$width = sprintf( $format, $width );
 		}
 
 		return $width;
@@ -213,7 +217,7 @@ class GravityView_API {
 	 * @param integer $field
 	 * @return null|string
 	 */
-	public static function field_value( $entry, $field_settings, $format = 'html') {
+	public static function field_value( $entry, $field_settings, $format = 'html' ) {
 
 		if( empty( $entry['form_id'] ) || empty( $field_settings['id'] ) ) {
 			return NULL;
@@ -317,7 +321,9 @@ class GravityView_API {
 		 */
 		if( !empty( $field_settings['show_as_link'] ) ) {
 
-			$output = self::entry_link_html( $entry, $output, array(), $field_settings );
+			$link_atts = empty( $field_settings['new_window'] ) ? array() : array( 'target' => '_blank' );
+
+			$output = self::entry_link_html( $entry, $output, $link_atts, $field_settings );
 
 		}
 
@@ -484,7 +490,7 @@ class GravityView_API {
 		}
 
 		// Deal with returning to proper pagination for embedded views
-		if( $add_query_args ) {
+		if( $link && $add_query_args ) {
 
 			$args = array();
 
@@ -874,125 +880,6 @@ function gravityview_get_the_term_list( $post_id, $link = true, $taxonomy = 'pos
 
 }
 
-/**
- * Do a _very_ basic match for second-level TLD domains, like `.co.uk`
- *
- * Ideally, we'd use https://github.com/jeremykendall/php-domain-parser to check for this, but it's too much work for such a basic functionality. Maybe if it's needed more in the future. So instead, we use [Basic matching regex](http://stackoverflow.com/a/12372310).
- * @param  string $domain Domain to check if it's a TLD or subdomain
- * @return string         Extracted domain if it has a subdomain
- */
-function _gravityview_strip_subdomain( $string_maybe_has_subdomain ) {
-
-    if( preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.(?:com\.|co\.|net\.|org\.|firm\.|me\.|school\.|law\.|gov\.|mod\.|msk\.|irkutsks\.|sa\.|act\.|police\.|plc\.|ac\.|tm\.|asso\.|biz\.|pro\.|cg\.|telememo\.)?[a-z\.]{2,6})$/i", $string_maybe_has_subdomain, $matches ) ) {
-        return $matches['domain'];
-    } else {
-        return $string_maybe_has_subdomain;
-    }
-}
-
-
-/**
- * Convert a whole link into a shorter link for display
- *
- * @since 1.1
- *
- * @param  string $value Existing URL
- * @return string        If parse_url doesn't find a 'host', returns original value. Otherwise, returns formatted link.
- */
-function gravityview_format_link( $value = null ) {
-
-
-	$parts = parse_url( $value );
-
-	// No domain? Strange...show the original text.
-	if( empty( $parts['host'] ) ) {
-		return $value;
-	}
-
-	// Start with empty value for the return URL
-	$return = '';
-
-	/**
-	 * @filter `gravityview_anchor_text_striphttp` Strip scheme from the displayed URL?
-	 * @since 1.5.1
-	 * @param boolean $enable Whether to strip the scheme. Return false to show scheme. (default: true)\n
-	 * If true: `http://example.com => example.com`
-	 */
-	if( false === apply_filters('gravityview_anchor_text_striphttp', true) ) {
-
-		if( isset( $parts['scheme'] ) ) {
-			$return .= $parts['scheme'];
-		}
-
-	}
-
-	// The domain, which may contain a subdomain
-	$domain = $parts['host'];
-
-	/**
-	 * @filter `gravityview_anchor_text_stripwww` Strip www from the domain?
-	 * @since 1.5.1
-	 * @param boolean $enable Whether to strip www. Return false to show www. (default: true)\n
-	 * If true: `www.example.com => example.com`
-	 */
-	$strip_www = apply_filters('gravityview_anchor_text_stripwww', true );
-
-	if( $strip_www ) {
-		$domain = str_replace('www.', '', $domain );
-	}
-
-	/**
-	 * @filter `gravityview_anchor_text_nosubdomain` Strip subdomains from the domain?
-	 * @since 1.5.1
-	 * @param boolean $enable Whether to strip subdomains. Return false to show subdomains. (default: true)\n
-	 * If true: `http://demo.example.com => example.com` \n
-	 * If false: `http://demo.example.com => demo.example.com`
-	 */
-	$strip_subdomains = apply_filters('gravityview_anchor_text_nosubdomain', true);
-
-	if( $strip_subdomains ) {
-
-		$domain = _gravityview_strip_subdomain( $parts['host'] );
-
-	}
-
-	// Add the domain
-	$return .= $domain;
-
-	/**
-	 * @filter `gravityview_anchor_text_rootonly` Display link path going only to the base directory, not a sub-directory or file?
-	 * @since 1.5.1
-	 * @param boolean $enable Whether to enable "root only". Return false to show full path. (default: true)\n
-	 * If true: `http://example.com/sub/directory/page.html => example.com`  \n
-	 * If false: `http://example.com/sub/directory/page.html => example.com/sub/directory/page.html`
-	 */
-	$root_only = apply_filters('gravityview_anchor_text_rootonly', true);
-
-	if( empty( $root_only ) ) {
-
-		if( isset( $parts['path'] ) ) {
-			$return .= $parts['path'];
-		}
-	}
-
-	/**
-	 * @filter `gravityview_anchor_text_noquerystring` Strip the query string from the end of the URL?
-	 * @since 1.5.1
-	 * @param boolean $enable Whether to enable "root only". Return false to show full path. (default: true)\n
-	 * If true: `http://example.com/?query=example => example.com`
-	 */
-	$strip_query_string = apply_filters('gravityview_anchor_text_noquerystring', true );
-
-	if( empty( $strip_query_string ) ) {
-
-		if( isset( $parts['query'] ) ) {
-			$return .= '?'.$parts['query'];
-		}
-
-	}
-
-	return $return;
-}
 
 /**
  * Get all views processed so far for the current page load
@@ -1131,9 +1018,10 @@ function gravityview_get_context() {
  * @return array           Array of file output, with `file_path` and `html` keys (see comments above)
  */
 function gravityview_get_files_array( $value, $gv_class = '' ) {
+	/** @define "GRAVITYVIEW_DIR" "../" */
 
 	if( !class_exists( 'GravityView_Field' ) ) {
-		include_once( GRAVITYVIEW_DIR .'includes/fields/class.field.php' );
+		include_once( GRAVITYVIEW_DIR .'includes/fields/class-gravityview-field.php' );
 	}
 
 	if( !class_exists( 'GravityView_Field_FileUpload' ) ) {
@@ -1223,10 +1111,18 @@ function gravityview_field_output( $passed_args ) {
 	$entry = empty( $args['entry'] ) ? array() : $args['entry'];
 
 	/**
-	 * Create the Context for replacing.
+	 * Create the content variables for replacing.
 	 * @since 1.11
 	 */
-	$context = array();
+	$context = array(
+		'value' => '',
+		'width' => '',
+		'width:style' => '',
+		'label' => '',
+		'label_value' => '',
+		'class' => '',
+		'field_id' => '',
+	);
 
 	$context['value'] = gv_value( $entry, $args['field'] );
 
@@ -1254,12 +1150,12 @@ function gravityview_field_output( $passed_args ) {
 		$context['label'] = str_replace( array( '{{label}}', '{{ label }}' ), '<span class="gv-field-label">{{ label_value }}</span>', $args['label_markup'] );
 	}
 
-	if ( empty( $context['label'] ) ){
-		$context['label'] = '<span class="gv-field-label">{{ label_value }}</span>';
-	}
-
 	// Default Label value
 	$context['label_value'] = gv_label( $args['field'], $entry );
+
+	if ( empty( $context['label'] ) && ! empty( $context['label_value'] ) ){
+		$context['label'] = '<span class="gv-field-label">{{ label_value }}</span>';
+	}
 
 	/**
 	 * @filter `gravityview/field_output/pre_html` Allow Pre filtering of the HTML

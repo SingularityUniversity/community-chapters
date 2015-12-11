@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	die( 'Direct access not allowed!' );
 }
 
-
+	
 /***************************************************************
  * Main shortcode function
  ***************************************************************/
@@ -35,11 +35,18 @@ function feedzy_rss( $atts, $content = '' ) {
 		"default" => '', 		//default thumb URL if no image found (only if thumb is set to yes or auto)
 		"size" => '', 			//thumbs pixel size
 		"keywords_title" => '' 	//only display item if title contains specific keywords (comma-separated list/case sensitive)
-		), $atts ) );
+		), $atts, 'feedzy_default' ) );
+
+	//Use "shortcode_atts_feedzy_default" filter to edit shortcode parameters default values or add your owns.
 
 	if ( !empty( $feeds ) ) {
 		$feeds = rtrim( $feeds, ',' );
-		$feedURL = explode( ',', $feeds );
+		$feeds = explode( ',', $feeds );
+		
+		//Remove SSL from HTTP request to prevent fetching errors
+		foreach( $feeds as $feed ){
+			$feedURL[] = preg_replace("/^https:/i", "http:", $feed);
+		}
 
 		if ( count( $feedURL ) === 1 ) {
 			$feedURL = $feedURL[0];
@@ -76,7 +83,7 @@ function feedzy_rss( $atts, $content = '' ) {
 		$default = $default;
 	
 	} else {
-		$default = plugins_url( 'img/feedzy-default.jpg', __FILE__ );
+		$default = apply_filters( 'feedzy_default_image', $default, $feedURL );
 	}
  
  	//Load SimplePie Instance
@@ -93,15 +100,14 @@ function feedzy_rss( $atts, $content = '' ) {
 	$feed -> init();
 	$feed -> handle_content_type();
 
-	if ($feed->error()) {
-
-		$content .= '<div id="message" class="error"><p>' . __('Sorry, this feed is currently unavailable or does not exists anymore.', 'feedzy_rss_translate') . '</p></div>';
-	
+	// Display the error message
+	if ( $feed -> error() ) {
+		$content .= apply_filters( 'feedzy_default_error', $feed -> error(), $feedURL );	
 	}
 
 	$content .= '<div class="feedzy-rss">';
 
-	if ($feed_title == 'yes') {
+	if ( $feed_title == 'yes' ) {
 
 		$content .= '<div class="rss_header">';
 		$content .= '<h2><a href="' . $feed->get_permalink() . '" class="rss_title">' . html_entity_decode( $feed->get_title() ) . '</a> <span class="rss_description"> ' . $feed->get_description() . '</span></h2>';
@@ -219,7 +225,9 @@ function feedzy_rss( $atts, $content = '' ) {
 				}
 				
 				if ( $metaArgs[ 'date' ] ) {
-					$contentMeta .= __( 'on', 'feedzy_rss_translate') . ' ' . date_i18n( $metaArgs[ 'date_format' ], $item->get_date( 'U' ) ) . ' ' . __( 'at', 'feedzy_rss_translate' ) . ' ' . date_i18n( $metaArgs[ 'time_format' ], $item->get_date( 'U' ) );
+					$contentMeta .= __( 'on', 'feedzy_rss_translate') . ' ' . date_i18n( $metaArgs[ 'date_format' ], $item->get_date( 'U' ) );
+					$contentMeta .= ' ';
+					$contentMeta .= __( 'at', 'feedzy_rss_translate' ) . ' ' . date_i18n( $metaArgs[ 'time_format' ], $item->get_date( 'U' ) );
 				}
 				
 				$contentMeta .= '</small>';

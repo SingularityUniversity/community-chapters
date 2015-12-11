@@ -16,7 +16,7 @@
 
 /**
  * Returns the form object for a given Form ID.
- *
+ * @see GVCommon::get_form()
  * @access public
  * @param mixed $form_id
  * @return mixed False: no form ID specified or Gravity Forms isn't active. Array: Form returned from Gravity Forms
@@ -28,6 +28,7 @@ function gravityview_get_form( $form_id ) {
 
 /**
  * Get the form array for an entry based only on the entry ID
+ * @see GVCommon::get_form_from_entry_id
  * @param  int|string $entry_slug Entry slug
  * @return array           Gravity Forms form array
  */
@@ -38,6 +39,7 @@ function gravityview_get_form_from_entry_id( $entry_slug ) {
 /**
  * Returns the list of available forms
  *
+ * @see GVCommon::get_forms()
  * @access public
  * @param mixed $form_id
  * @return array (id, title)
@@ -49,6 +51,7 @@ function gravityview_get_forms() {
 /**
  * Return array of fields' id and label, for a given Form ID
  *
+ * @see GVCommon::get_form_fields()
  * @access public
  * @param string|array $form_id (default: '') or $form object
  * @return array
@@ -102,10 +105,11 @@ function gravityview_get_entries( $form_ids = null, $passed_criteria = null, &$t
  * @access public
  * @param mixed $entry_id
  * @param boolean $force_allow_ids Force the get_entry() method to allow passed entry IDs, even if the `gravityview_custom_entry_slug_allow_id` filter returns false.
- * @return object or false
+ * @param boolean $check_entry_display Check whether the entry is visible for the current View configuration. Default: true {@since 1.14}
+ * @return array|boolean
  */
-function gravityview_get_entry( $entry_slug, $force_allow_ids = false ) {
-	return GVCommon::get_entry( $entry_slug, $force_allow_ids );
+function gravityview_get_entry( $entry_slug, $force_allow_ids = false, $check_entry_display = true ) {
+	return GVCommon::get_entry( $entry_slug, $force_allow_ids, $check_entry_display );
 }
 
 /**
@@ -124,9 +128,13 @@ function gravityview_get_field_label( $form, $field_id ) {
 /**
  * Returns the field details array of a specific form given the field id
  *
+ * Alias of Alias of GFFormsModel::get_field
+ *
+ * @uses GVCommon::get_field
+ * @see GFFormsModel::get_field
  * @access public
- * @param mixed $form
- * @param mixed $field_id
+ * @param array $form
+ * @param string|int $field_id
  * @return array
  */
 function gravityview_get_field( $form, $field_id ) {
@@ -175,6 +183,15 @@ function gravityview_get_form_id( $view_id ) {
 	return GVCommon::get_meta_form_id( $view_id );
 }
 
+/**
+ * Get the template ID (`list`, `table`, `datatables`, `map`) for a View
+ *
+ * @see GravityView_Template::template_id
+ *
+ * @param int $view_id The ID of the View to get the layout of
+ *
+ * @return string GravityView_Template::template_id value. Empty string if not.
+ */
 function gravityview_get_template_id( $post_id ) {
 	return GVCommon::get_meta_template_id( $post_id );
 }
@@ -201,6 +218,22 @@ function gravityview_get_template_settings( $post_id ) {
  */
 function gravityview_get_template_setting( $post_id, $key ) {
 	return GVCommon::get_template_setting( $post_id, $key );
+}
+
+/**
+ * Get all available preset templates
+ * @since 1.13.2
+ * @return array Templates
+ */
+function gravityview_get_registered_templates() {
+
+	/**
+	 * @filter `gravityview_register_directory_template` Fetch available View templates
+	 * @param array $templates Templates to show
+	 */
+	$templates = apply_filters( 'gravityview_register_directory_template', array() );
+
+	return $templates;
 }
 
 /**
@@ -242,6 +275,7 @@ function gravityview_get_directory_fields( $post_id ) {
  *
  * @access public
  * @param  int $formid Form ID
+ * @param string $current Field ID of field used to sort
  * @return string         html
  */
 function gravityview_get_sortable_fields( $formid, $current = '' ) {
@@ -302,4 +336,32 @@ function the_gravityview( $view_id = '', $atts = array() ) {
  */
 function gravityview_is_single_entry() {
 	return GravityView_frontend::is_single_entry();
+}
+
+/**
+ * Determine whether a View has a single checkbox or single radio input
+ * @see GravityView_frontend::add_scripts_and_styles()
+ * @since 1.15
+ * @param array $form Gravity Forms form
+ * @param array $view_fields GravityView fields array
+ */
+function gravityview_view_has_single_checkbox_or_radio( $form, $view_fields ) {
+
+	if( $form_fields = GFFormsModel::get_fields_by_type( $form, array( 'checkbox', 'radio' ) ) ) {
+
+		/** @var GF_Field_Radio|GF_Field_Checkbox $form_field */
+		foreach( $form_fields as $form_field ) {
+			$field_id = $form_field->id;
+			foreach( $view_fields as $zone ) {
+				foreach( $zone as $field ) {
+					// If it's an input, not the parent and the parent ID matches a checkbox or radio
+					if( ( strpos( $field['id'], '.' ) > 0 ) && floor( $field['id'] ) === floor( $field_id ) ) {
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
 }

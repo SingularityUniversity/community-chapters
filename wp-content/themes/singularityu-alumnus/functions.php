@@ -315,14 +315,6 @@ function custom_validation($validation_result) {
 }
 
 */
-add_filter( 'wp_feed_cache_transient_lifetime', 'bweb_feedzy_cache_duration', 10, 2 );
-function bweb_feedzy_cache_duration( $feedCacheDuration, $feedURL ) {
-    if( 'http://singularityuglobal.tumblr.com/tagged/highlight' == $feedURL )
-        return 60*1; //5 minutes
-
-    return $feedCacheDuration;
-}
-
 
 add_filter( 'gform_notification_events', 'gw_add_manual_notification_event' );
 function gw_add_manual_notification_event( $events ) {

@@ -8,10 +8,44 @@ if ( !defined( 'ABSPATH' ) ) {
 
 
 /***************************************************************
+ * Define the default image thumbnail
+ ***************************************************************/
+function feedzy_define_default_image( $imageSrc ){
+	return plugins_url( 'img/feedzy-default.jpg', __FILE__ );
+}
+add_filter( 'feedzy_default_image', 'feedzy_define_default_image' );
+
+
+/***************************************************************
+ * Default error message + log errors
+ ***************************************************************/
+function feedzy_default_error_notice( $error, $feedURL  ){
+	//Write in the log file
+	feedzy_write_log( 'Feedzy RSS Feeds - related feed: ' .$feedURL . ' - Error message: ' . $error );
+	//Display the error message
+	return '<div id="message" class="error" data-error"' . esc_attr( $error ) . '"><p>' . __('Sorry, this feed is currently unavailable or does not exists anymore.', 'feedzy_rss_translate') . '</p></div>';
+}
+add_filter( 'feedzy_default_error', 'feedzy_default_error_notice', 9, 2 );
+
+
+/***************************************************************
+ * Write errors in the error log file
+ * Src: https://www.elegantthemes.com/blog/tips-tricks/using-the-wordpress-debug-log
+ ***************************************************************/
+function feedzy_write_log ( $error ){
+	if ( is_array( $error ) || is_object( $error ) ) {
+         error_log( print_r( $error, true ) );
+      } else {
+         error_log( $error );
+      }
+}
+
+
+/***************************************************************
  * Enqueue feedzy CSS
  ***************************************************************/
 function feedzy_register_custom_style() {
-	wp_register_style( 'feedzy-style', plugins_url( 'css/feedzy-rss-feeds.css', __FILE__ ), NULL, NULL );
+	wp_register_style( 'feedzy-style', plugins_url( 'css/feedzy-rss-feeds.css', __FILE__ ), array(), FEEDZY_VERSION );
 }
 function feedzy_print_custom_style() {
 	global $feedzyStyle;
@@ -28,8 +62,8 @@ add_action( 'wp_footer', 'feedzy_print_custom_style' );
  * Padding ratio based on image size
  ***************************************************************/
 function feedzy_add_item_padding( $itemAttr, $sizes ){
-	$paddinTop = number_format( (15 / 150) * $sizes['height'], 0 );
-	$paddinBottom = number_format( (25 / 150) * $sizes['height'], 0 );
+	$paddinTop = number_format( ( 15 / 150 ) * $sizes[ 'height' ], 0 );
+	$paddinBottom = number_format( ( 25 / 150 ) * $sizes[ 'height' ], 0 );
 	$stylePadding = ' style="padding: ' . $paddinTop . 'px 0 ' . $paddinBottom . 'px"';
 	return $itemAttr . $stylePadding;
 }
@@ -97,7 +131,7 @@ function feedzy_retrieve_image( $item ) {
 				}
 				
 			}
-			
+
 			//break loop if thumbnail found
 			if ( ! empty( $thethumbnail ) ) {
 				break;
@@ -107,13 +141,19 @@ function feedzy_retrieve_image( $item ) {
 		
 	}
 
-
+	//xmlns:itunes podcast
+	if ( empty( $thethumbnail ) ) {
+		$data = $item->get_item_tags('http://www.itunes.com/dtds/podcast-1.0.dtd', 'image');
+		if ( isset( $data['0']['attribs']['']['href'] ) && !empty( $data['0']['attribs']['']['href'] ) ){
+			$thethumbnail = $data['0']['attribs']['']['href'];
+		}
+	}
+	
 	//content image
 	if ( empty( $thethumbnail ) ) {
 
 		$feedDescription = $item->get_content();
-		$image = feedzy_returnImage( $feedDescription );
-		$thethumbnail = feedzy_scrapeImage( $image );
+		$thethumbnail = feedzy_returnImage( $feedDescription );
 		
 	}
 
@@ -121,13 +161,14 @@ function feedzy_retrieve_image( $item ) {
 	if ( empty( $thethumbnail ) ) {
 		
 		$feedDescription = $item->get_description();
-		$image = feedzy_returnImage( $feedDescription );
-		$thethumbnail = feedzy_scrapeImage( $image );
+		$thethumbnail = feedzy_returnImage( $feedDescription );
 	
 	}
 
 	return $thethumbnail;
 }
+
+
 /***************************************************************
  * Get an image from a string
  ***************************************************************/
@@ -136,27 +177,72 @@ function feedzy_returnImage( $string ) {
 	$pattern = "/<img[^>]+\>/i";
 	preg_match( $pattern, $img, $matches );
 	if( isset( $matches[0] ) ){
-		return $matches[0];
+		$blacklistCount = 0;
+		foreach( $matches as $matche){
+			$link = feedzy_scrapeImage( $matche );
+			$blacklist = array();
+			$blacklist = apply_filters( 'feedzy_feed_blacklist_images', feedzy_blacklist_images( $blacklist ) );
+			foreach( $blacklist as $string ) {
+				if ( strpos( (string) $link, $string ) !== false) {
+					$blacklistCount++;
+				}
+			}
+			if( $blacklistCount == 0) break;
+		}
+		if( $blacklistCount == 0) return $link;
 	}
 	return;
 }
 
-function feedzy_scrapeImage( $string ) {
-	$link = '';
+function feedzy_scrapeImage( $string, $link = '' ) {
 	$pattern = '/src=[\'"]?([^\'" >]+)[\'" >]/';     
 	preg_match( $pattern, $string, $link );
 	if( isset( $link[1] ) ){
-		$link = $link[1];
-		$link = urldecode( $link );
+		$link = urldecode( $link[1] );
 	}
 	return $link;
 }
 
 /***************************************************************
+ * List blacklisted images to prevent fetching emoticons
+ ***************************************************************/
+function feedzy_blacklist_images( $blacklist ) {
+	$blacklist = array(
+		'frownie.png',
+		'icon_arrow.gif',
+		'icon_biggrin.gif',
+		'icon_confused.gif',
+		'icon_cool.gif',
+		'icon_cry.gif',
+		'icon_eek.gif',
+		'icon_evil.gif',
+		'icon_exclaim.gif',
+		'icon_idea.gif',
+		'icon_lol.gif',
+		'icon_mad.gif',
+		'icon_mrgreen.gif',
+		'icon_neutral.gif',
+		'icon_question.gif',
+		'icon_razz.gif',
+		'icon_redface.gif',
+		'icon_rolleyes.gif',
+		'icon_sad.gif',
+		'icon_smile.gif',
+		'icon_surprised.gif',
+		'icon_twisted.gif',
+		'icon_wink.gif',
+		'mrgreen.png',
+		'rolleyes.png',
+		'simple-smile.png',
+	);
+	return $blacklist;
+}
+
+
+/***************************************************************
  * Image name encode + get image url if in url param
  ***************************************************************/
-function feedzy_image_encode( $string ) {
-	
+function feedzy_image_encode( $string ) {	
 	//Check if img url is set as an URL parameter
 	$url_tab = parse_url( $string );
 	if( isset( $url_tab['query'] ) ){
@@ -210,7 +296,7 @@ function feedzy_feed_item_keywords_title( $continue, $keywords_title, $item, $fe
 	}
 	return $continue;
 }
-add_filter('feedzy_item_keyword', 'feedzy_feed_item_keywords_title', 9, 4); 
+add_filter( 'feedzy_item_keyword', 'feedzy_feed_item_keywords_title', 9, 4 ); 
 
 
 /***************************************************************

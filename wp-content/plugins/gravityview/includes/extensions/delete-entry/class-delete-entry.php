@@ -32,16 +32,7 @@ final class GravityView_Delete_Entry {
 
 		self::$file = plugin_dir_path( __FILE__ );
 
-		$this->include_files();
-
 		$this->add_hooks();
-	}
-
-	/**
-	 * @since 1.9.2
-	 */
-	private function include_files() {
-		require_once( self::$file . 'class-delete-entry-shortcode.php' );
 	}
 
 	/**
@@ -240,6 +231,7 @@ final class GravityView_Delete_Entry {
         $base = GravityView_API::directory_link( $post_id, true );
 
 		if( empty( $base ) ) {
+			do_action( 'gravityview_log_error', __METHOD__ . ' - Post ID does not exist: '.$post_id );
 			return NULL;
 		}
 
@@ -453,8 +445,18 @@ final class GravityView_Delete_Entry {
 
 		$nonce_key = self::get_nonce_key( $_GET['entry_id'] );
 
-		return wp_verify_nonce( $_GET['delete'], $nonce_key );
+		$valid = wp_verify_nonce( $_GET['delete'], $nonce_key );
 
+		/**
+		 * @filter `gravityview/delete-entry/verify_nonce` Override Delete Entry nonce validation. Return true to declare nonce valid.
+		 * @since 1.15.2
+		 * @see wp_verify_nonce()
+		 * @param int|boolean $valid False if invalid; 1 or 2 when nonce was generated
+		 * @param string $nonce_key Name of nonce action used in wp_verify_nonce. $_GET['delete'] holds the nonce value itself. Default: `delete_{entry_id}`
+		 */
+		$valid = apply_filters( 'gravityview/delete-entry/verify_nonce', $valid, $nonce_key );
+
+		return $valid;
 	}
 
 	/**
@@ -522,22 +524,28 @@ final class GravityView_Delete_Entry {
 	 * checks if user has permissions to view the link or delete a specific entry
 	 *
 	 * @since 1.5.1
+	 * @since 1.15 Added `$view_id` param
+	 *
 	 * @param  array $entry Gravity Forms entry array
 	 * @param array $field Field settings (optional)
+	 * @param int $view_id Pass a View ID to check caps against. If not set, check against current View (optional)
 	 * @return bool
 	 */
-	public static function check_user_cap_delete_entry( $entry, $field = array() ) {
+	public static function check_user_cap_delete_entry( $entry, $field = array(), $view_id = 0 ) {
 		$gravityview_view = GravityView_View::getInstance();
 
-		// Or if they can delete any entries (as defined in Gravity Forms), we're good.
-		if( GFCommon::current_user_can_any( 'gravityforms_delete_entries' ) ) {
+		$current_user = wp_get_current_user();
 
-			do_action('gravityview_log_debug', 'GravityView_Delete_Entry[check_user_cap_delete_entry] Current user has `gravityforms_delete_entries` capability.' );
+		$entry_id = isset( $entry['id'] ) ? $entry['id'] : NULL;
+
+		// Or if they can delete any entries (as defined in Gravity Forms), we're good.
+		if( GVCommon::has_cap( array( 'gravityforms_delete_entries', 'gravityview_delete_others_entries' ), $entry_id ) ) {
+
+			do_action('gravityview_log_debug', 'GravityView_Delete_Entry[check_user_cap_delete_entry] Current user has `gravityforms_delete_entries` or `gravityview_delete_others_entries` capability.' );
 
 			return true;
 		}
 
-		$current_user = wp_get_current_user();
 
 		// If field options are passed, check if current user can view the link
 		if( !empty( $field ) ) {
@@ -550,7 +558,7 @@ final class GravityView_Delete_Entry {
 				return false;
 			}
 
-			if( GFCommon::current_user_can_any( $field['allow_edit_cap'] ) ) {
+			if( GVCommon::has_cap( $field['allow_edit_cap'] ) ) {
 
 				// Do not return true if cap is read, as we need to check if the current user created the entry
 				if( $field['allow_edit_cap'] !== 'read' ) {
@@ -573,10 +581,12 @@ final class GravityView_Delete_Entry {
 			return false;
 		}
 
-		// Only checks user_delete view option if view is already set
-		if( $gravityview_view->getViewId() ) {
+		$view_id = empty( $view_id ) ? $gravityview_view->getViewId() : $view_id;
 
-			$current_view = gravityview_get_current_view_data();
+		// Only checks user_delete view option if view is already set
+		if( $view_id ) {
+
+			$current_view = gravityview_get_current_view_data( $view_id );
 
 			$user_delete = isset( $current_view['atts']['user_delete'] ) ? $current_view['atts']['user_delete'] : false;
 
@@ -606,12 +616,20 @@ final class GravityView_Delete_Entry {
 	 * If success, there will be `status` URL parameters `status=>success`
 	 * If an error, there will be `status` and `message` URL parameters `status=>error&message=example`
 	 *
+	 * @since 1.15.2 Only show message when the URL parameter's View ID matches the current View ID
 	 * @since 1.5.1
+	 *
+	 * @param int $current_view_id The ID of the View being rendered
 	 * @return void
 	 */
-	public function display_message() {
+	public function display_message( $current_view_id = 0 ) {
 
 		if( empty( $_GET['status'] ) || ! self::verify_nonce() ) {
+			return;
+		}
+
+		// Entry wasn't deleted from current View
+		if( intval( $_GET['gvid'] ) !== intval( $current_view_id ) ) {
 			return;
 		}
 

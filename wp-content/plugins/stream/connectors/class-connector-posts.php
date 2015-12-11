@@ -152,6 +152,8 @@ class Connector_Posts extends Connector {
 
 		if ( in_array( $new, array( 'auto-draft', 'inherit' ) ) ) {
 			return;
+		} elseif ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
 		} elseif ( 'draft' === $new && 'publish' === $old ) {
 			$summary = _x(
 				'"%1$s" %2$s unpublished',
@@ -165,6 +167,18 @@ class Connector_Posts extends Connector {
 				'stream'
 			);
 			$action  = 'untrashed';
+		} elseif ( 'draft' === $new && 'draft' === $old ) {
+			$summary = _x(
+				'"%1$s" %2$s draft saved',
+				'1: Post title, 2: Post type singular name',
+				'stream'
+			);
+		} elseif ( 'publish' === $new && 'draft' === $old ) {
+			$summary = _x(
+				'"%1$s" %2$s published',
+				'1: Post title, 2: Post type singular name',
+				'stream'
+			);
 		} elseif ( 'draft' === $new ) {
 			$summary = _x(
 				'"%1$s" %2$s drafted',
@@ -186,12 +200,6 @@ class Connector_Posts extends Connector {
 		} elseif ( 'future' === $old && 'publish' === $new ) {
 			$summary = _x(
 				'"%1$s" scheduled %2$s published',
-				'1: Post title, 2: Post type singular name',
-				'stream'
-			);
-		} elseif ( 'publish' === $new ) {
-			$summary = _x(
-				'"%1$s" %2$s published',
 				'1: Post title, 2: Post type singular name',
 				'stream'
 			);
@@ -355,18 +363,19 @@ class Connector_Posts extends Connector {
 		global $wpdb;
 
 		$revision_id = $wpdb->get_var( // db call okay
-			$wpdb->prepare( "
-				SELECT p.ID
+			// @codingStandardsIgnoreStart
+			$wpdb->prepare(
+				"SELECT p.ID
 				FROM $wpdb->posts AS p
 				WHERE p.post_date {$operator} %s
 					AND p.post_type = 'revision'
 					AND p.post_parent = %d
 				ORDER BY p.post_date {$order}
-				LIMIT 1
-				",
+				LIMIT 1",
 				$revision->post_date,
 				$revision->post_parent
 			)
+			// @codingStandardsIgnoreEnd prepare okay
 		);
 
 		$revision_id = absint( $revision_id );

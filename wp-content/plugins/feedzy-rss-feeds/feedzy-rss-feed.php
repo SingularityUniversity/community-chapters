@@ -5,9 +5,9 @@
  * Description: FEEDZY RSS Feeds is a small and lightweight plugin. Fast and easy to use, it aggregates RSS feeds into your WordPress site through simple shortcodes.				
  * Author: Brice CAPOBIANCO
  * Author URI: http://b-website.com/
- * Version: 2.6
+ * Version: 2.7
  * Text Domain: feedzy_rss_translate
- * Domain Path: /langs
+ * Text Domain Path: /langs
  */
 
 /*  Copyright 2015  Brice CAPOBIANCO  (contact : http://b-website.com/contact)
@@ -35,11 +35,19 @@ if ( !defined( 'ABSPATH' ) ) {
 
 
 /***************************************************************
+ * Define constant
+ ***************************************************************/
+if ( !defined( 'FEEDZY_VERSION' ) ) {
+    define( 'FEEDZY_VERSION', '2.7' );
+}
+
+
+/***************************************************************
  * Load plugin textdomain
  ***************************************************************/
 function feedzy_rss_load_textdomain() {
 	$path = dirname(plugin_basename( __FILE__ )) . '/langs/';
-	load_plugin_textdomain( 'feedzy_rss_translate', false, $path);
+	load_plugin_textdomain( 'feedzy_rss_translate', false, $path );
 }
 add_action( 'init', 'feedzy_rss_load_textdomain' );
 

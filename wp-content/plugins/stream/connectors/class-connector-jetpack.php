@@ -77,7 +77,7 @@ class Connector_Jetpack extends Connector {
 	public function get_action_labels() {
 		return array(
 			'activated'   => esc_html_x( 'Activated', 'jetpack', 'stream' ),
-			'deactivated' => esc_html_x( 'Dectivated', 'jetpack', 'stream' ),
+			'deactivated' => esc_html_x( 'Deactivated', 'jetpack', 'stream' ),
 			'register'    => esc_html_x( 'Connected', 'jetpack', 'stream' ),
 			'disconnect'  => esc_html_x( 'Disconnected', 'jetpack', 'stream' ),
 			'authorize'   => esc_html_x( 'Link', 'jetpack', 'stream' ),
@@ -141,9 +141,9 @@ class Connector_Jetpack extends Connector {
 					$slug = current( $slug );
 				}
 
-				if ( Jetpack::is_module_active( $slug ) ) {
+				if ( \Jetpack::is_module_active( $slug ) ) {
 					if ( apply_filters( 'jetpack_module_configurable_' . $slug, false ) ) {
-						$links[ esc_html__( 'Configure', 'stream' ) ] = Jetpack::module_configuration_url( $slug );
+						$links[ esc_html__( 'Configure', 'stream' ) ] = \Jetpack::module_configuration_url( $slug );
 					}
 
 					$links[ esc_html__( 'Deactivate', 'stream' ) ] = wp_nonce_url(
@@ -152,7 +152,7 @@ class Connector_Jetpack extends Connector {
 								'action' => 'deactivate',
 								'module' => $slug,
 							),
-							Jetpack::admin_url()
+							\Jetpack::admin_url()
 						),
 						'jetpack_deactivate-' . sanitize_title( $slug )
 					);
@@ -163,16 +163,16 @@ class Connector_Jetpack extends Connector {
 								'action' => 'activate',
 								'module' => $slug,
 							),
-							Jetpack::admin_url()
+							\Jetpack::admin_url()
 						),
 						'jetpack_activate-' . sanitize_title( $slug )
 					);
 				}
-			} elseif ( Jetpack::is_module_active( str_replace( 'jetpack-', '', $record->context ) ) ) {
+			} elseif ( \Jetpack::is_module_active( str_replace( 'jetpack-', '', $record->context ) ) ) {
 				$slug = str_replace( 'jetpack-', '', $record->context ); // handling jetpack-comment anomaly
 
 				if ( apply_filters( 'jetpack_module_configurable_' . $slug, false ) ) {
-					$links[ esc_html__( 'Configure module', 'stream' ) ] = Jetpack::module_configuration_url( $slug );
+					$links[ esc_html__( 'Configure module', 'stream' ) ] = \Jetpack::module_configuration_url( $slug );
 				}
 			}
 		}
@@ -312,12 +312,23 @@ class Connector_Jetpack extends Connector {
 	 * @param array $entry
 	 */
 	public function callback_jetpack_log_entry( array $entry ) {
-		$method  = $entry['code'];
-		$data    = $entry['data'];
+		if ( isset( $entry['code'] ) ) {
+			$method = $entry['code'];
+		} else {
+			return;
+		}
+
+		if ( isset( $entry['data'] ) ) {
+			$data = $entry['data'];
+		} else {
+			$data = null;
+		}
+
 		$context = null;
 		$action  = null;
+		$meta    = array();
 
-		if ( in_array( $method, array( 'activate', 'deactivate' ) ) ) {
+		if ( in_array( $method, array( 'activate', 'deactivate' ) ) && ! is_null( $data ) ) {
 			$module_slug = $data;
 			$module      = \Jetpack::get_module( $module_slug );
 			$module_name = $module['name'];
@@ -329,7 +340,7 @@ class Connector_Jetpack extends Connector {
 				$module_name,
 				( 'activated' === $action ) ? esc_html__( 'activated', 'stream' ) : esc_html__( 'deactivated', 'stream' )
 			);
-		} elseif ( in_array( $method, array( 'authorize', 'unlink' ) ) ) {
+		} elseif ( in_array( $method, array( 'authorize', 'unlink' ) ) && ! is_null( $data ) ) {
 			$user_id = intval( $data );
 
 			if ( empty( $user_id ) ) {
@@ -357,8 +368,6 @@ class Connector_Jetpack extends Connector {
 			if ( empty( $blog_id ) ) {
 				return;
 			}
-
-			$meta = array();
 
 			if ( ! $is_multisite ) {
 				$message = sprintf(

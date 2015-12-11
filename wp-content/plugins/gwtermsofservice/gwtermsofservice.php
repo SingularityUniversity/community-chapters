@@ -3,7 +3,7 @@
  * Plugin Name: GP Terms of Service Field
  * Description: Add a "Terms of Service" field to your forms.
  * Plugin URI: http://gravitywiz.com/
- * Version: 1.3.1
+ * Version: 1.3.3
  * Author: David Smith
  * Author URI: http://gravitywiz.com
  * License: GPLv2
@@ -19,7 +19,7 @@ if(!require_once(dirname($gw_perk_file) . '/safetynet.php'))
 
 class GWTermsofService extends GWPerk {
 
-    public $version = '1.3.1';
+    public $version = '1.3.3';
     protected $min_gravity_perks_version = '1.1.14';
 	protected $min_gravity_forms_version = '1.9.3';
     
