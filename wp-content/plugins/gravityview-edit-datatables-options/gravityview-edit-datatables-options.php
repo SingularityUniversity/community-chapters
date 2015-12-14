@@ -201,10 +201,10 @@ function get_view_data($view_id, $is_responsive){
                             if ($field_settings['label'] == 'Approved' || $field_settings['label'] == 'Approved <small>(Approved? (Admin-only))</small>'){
                                 $data['approval_col'] = $field_settings['id'];
                                 $current_status = gform_get_meta($entry['id'],'is_approved');
-                                if($current_status == "0"){
+                                if($current_status === "0"){
                                     $current_status = "<label data-status='2'><span class='value'>2</span></label>";
                                 }
-                                elseif (!isset($current_status) || empty($current_status)){
+                                elseif (!isset($current_status) || empty($current_status) || $current_status === false){
                                     $current_status = "<label data-status='0'><span class='value'>0</span></label>";
                                 }
                                 else {
