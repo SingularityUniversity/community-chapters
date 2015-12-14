@@ -183,69 +183,104 @@ function get_view_data($view_id, $is_responsive){
 
                 $entry_notes = array();
 
-                //for ($i = 0; $i < 250; $i++){
-                    $temp = array();
+                $temp = array();
 
-                    $temp['DT_RowId'] = 'lead-'.$entry['id'];
+                $temp['DT_RowId'] = 'lead-'.$entry['id'];
 
-                    if ($is_responsive == "1" || $is_responsive == true){
-                        $temp[] = '';
+                if ($is_responsive == "1" || $is_responsive == true){
+                    $temp[] = '';
+                }
+
+                $temp[] = "<input type=\"checkbox\" name=\"lead[]\" value=\"{$entry['id']}\">";
+
+
+                $notes = RGFormsModel::get_lead_notes( $entry['id'] );
+                if (!empty($notes)){
+                    $date = '';
+                    $date_array = '';
+                    $noteVal = '';
+                    foreach ($notes as $note){
+                        if ($note->note_type !== 'gravityview' && $note->value !== 'Approved the Entry for GravityView' && $note->value !== "Disapproved the Entry for GravityView" ) {
+                            $entry_notes[] = $note;
+                        } elseif ($note->note_type === 'gravityview' || $note->value === 'Approved the Entry for GravityView' || $note->value === "Disapproved the Entry for GravityView" ){
+                            $dateTime = $note->date_created;
+                            $index = strpos($dateTime, ' ');
+                            $dateStr = substr($dateTime,0,$index);
+                            $dateClass = DateTime::createFromFormat('Y-m-d',$dateStr);
+                            $date_array[] = $dateClass->format('Y/m/d');
+                        }
                     }
+                    if (is_array($entry_notes)){
+                        $last_note = end($entry_notes);
+                    } else {
+                        $last_note = '';
+                    }
+                    if ($last_note){
+                        $noteVal = '';
+                        $user_email = '';
+                        $user_name = '';
+                        $date_created = '';
+                        foreach ($last_note as $key => $val){
+                            $a = $key;
+                            switch ($key){
+                                case 'value':
+                                    $noteText = $val;
+                                    break;
+                                case 'user_name':
+                                    $user_name = $val;
+                                    break;
+                                case 'user_email':
+                                    $user_email = $val;
+                                    break;
+                                case 'date_created':
+                                    $date_created = $val;
+                                    break;
+                            }
+                        }
+                        $noteVal = $noteText . "<br>By: <a class='user_email' href='mailto:{$user_email}'>{$user_name}</a> <span class='sep'> | </span> <span class='date_create'>{$date_created}</span>";
+                    } else {
+                        $noteVal = '';
+                    }
+                    if (is_array($date_array)){
+                        $date = end($date_array);
+                    } else {
+                        $date = '';
+                    }
+                } else {
+                    $noteVal = "";
+                    $date = "";
+                }
 
-                    $temp[] = "<input type=\"checkbox\" name=\"lead[]\" value=\"{$entry['id']}\">";
-
-
-                    // Loop through each column and set the value of the column to the field value
-                    if( !empty(  $view_data['fields']['directory_table-columns'] ) ) {
-                        foreach( $view_data['fields']['directory_table-columns'] as $field_settings ) {
-                            if ($field_settings['label'] == 'Approved' || $field_settings['label'] == 'Approved <small>(Approved? (Admin-only))</small>'){
-                                $data['approval_col'] = $field_settings['id'];
-                                $current_status = gform_get_meta($entry['id'],'is_approved');
-                                if($current_status === "0"){
-                                    $current_status = "<label data-status='2'><span class='value'>2</span></label>";
-                                }
-                                elseif (!isset($current_status) || empty($current_status) || $current_status === false){
-                                    $current_status = "<label data-status='0'><span class='value'>0</span></label>";
-                                }
-                                else {
-                                    $current_status = "<label data-status='1'><span class='value'>1</span></label>";
-                                }
-
-                                $temp[] = $current_status;
+                // Loop through each column and set the value of the column to the field value
+                if( !empty(  $view_data['fields']['directory_table-columns'] ) ) {
+                    foreach( $view_data['fields']['directory_table-columns'] as $field_settings ) {
+                        if ($field_settings['label'] == 'Last Approval Status Change' || $field_settings['label'] == 'Last Approval Status Change'){
+                            $temp[] = $date;
+                        }
+                        elseif ($field_settings['label'] == 'Approved' || $field_settings['label'] == 'Approved <small>(Approved? (Admin-only))</small>'){
+                            $data['approval_col'] = $field_settings['id'];
+                            $current_status = gform_get_meta($entry['id'],'is_approved');
+                            if($current_status === "0"){
+                                $current_status = "<label data-status='2'><span class='value'>2</span></label>";
+                            }
+                            elseif (!isset($current_status) || empty($current_status) || $current_status === false){
+                                $current_status = "<label data-status='0'><span class='value'>0</span></label>";
                             }
                             else {
-                                $temp[] = GravityView_API::field_value( $entry, $field_settings );
+                                $current_status = "<label data-status='1'><span class='value'>1</span></label>";
                             }
-                        }
-                        $notes = RGFormsModel::get_lead_notes( $entry['id'] );
-                        if (!empty($notes)){
-                            foreach ($notes as $note){
-                                if ($note->note_type !== 'gravityview' && $note->value !== 'Approved the Entry for GravityView' ){
-                                    $entry_notes[] = $note;
-                                }
-                            }
-                            $last_note = end($entry_notes);
-                            if ($last_note){
-                                foreach ($last_note as $key => $val){
-                                    $a = $key;
-                                    if ($a === 'value'){
-                                        $temp[] = $val;
-                                    }
-                                }
-                            }
-                            else{
-                                $temp[] = '';
-                            }
+
+                            $temp[] = $current_status;
                         }
                         else {
-                            $temp[] = "";
+                            $temp[] = GravityView_API::field_value( $entry, $field_settings );
                         }
                     }
+                    $temp[] = $noteVal;
+                }
 
-                    // Then add the item to the output dataset
-                    $data['data'][] = $temp;
-
-                //}
+                // Then add the item to the output dataset
+                $data['data'][] = $temp;
 
             }
 
@@ -367,9 +402,40 @@ function gv_bulk_update(){
         foreach ($_POST['leads'] as $entry){
             $entry_id = $entry['lead_id'];
             $_POST['entry_id'] = $entry_id;
-            $GravityView_Admin_ApproveEntries = new GravityView_Admin_ApproveEntries;
-            $GravityView_Admin_ApproveEntries->ajax_update_approved();
+            if( empty( $_POST['entry_id'] ) || empty( $_POST['form_id'] ) ) {
+
+                do_action( 'gravityview_log_error', __METHOD__ . ' entry_id or form_id are empty.', $_POST );
+
+                $result = false;
+            }
+
+            else if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'gravityview_ajaxgfentries' ) ) {
+
+                do_action( 'gravityview_log_error', __METHOD__ . ' Security check failed.', $_POST );
+
+                $result = false;
+            }
+
+            else if( ! GVCommon::has_cap( 'gravityview_moderate_entries', $_POST['entry_id'] ) ) {
+
+                do_action( 'gravityview_log_error', __METHOD__ . ' User does not have the `gravityview_moderate_entries` capability.' );
+
+                $result = false;
+            }
+
+            else {
+
+                $result = GravityView_Admin_ApproveEntries::update_approved( $_POST['entry_id'], $_POST['approved'], $_POST['form_id'] );
+
+                if( is_wp_error( $result ) ) {
+                    /** @var WP_Error $result */
+                    do_action( 'gravityview_log_error', __METHOD__ .' Error updating approval: ' . $result->get_error_message() );
+                    $result = false;
+                }
+
+            }
         }
+        exit ($result);
     }
     else {
         foreach ($_POST['leads'] as $entry){

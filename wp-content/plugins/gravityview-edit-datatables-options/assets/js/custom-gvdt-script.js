@@ -69,6 +69,8 @@ var drawCallback = function(){
 
     self.processApproval = function(leads, approved, new_value ){
 
+        console.log(approved);
+
         //get the data ready for ajax submission
         var data = {
             action: 'gv_bulk_update',
@@ -114,6 +116,8 @@ var drawCallback = function(){
                 var approved = self.whichClick( e );
                 var leads = self.getChecked();
                 var clicked_opt;
+
+                console.log(approved);
 
                 if (approved == "Approve"){
                     clicked_opt = 1;
