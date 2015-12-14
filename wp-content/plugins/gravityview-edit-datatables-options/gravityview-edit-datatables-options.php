@@ -16,12 +16,22 @@ define('GVDT_OPTS_URL', plugin_dir_url(__FILE__));
 remove_action('wp_ajax_gv_datatables_data','get_datatables_data');
 remove_action('wp_ajax_nopriv_gv_datatables_data','get_datatables_data');
 add_filter( 'gravityview_datatables_js_options', 'change_gravityview_datatables_source', 9999, 3 );
-//add_filter('gravityview_use_cache', '__return_false');
+add_filter('gravityview_use_cache', '__return_false');
 
 function change_gravityview_datatables_source( $dt_config, $view_id, $post ){
+
+    if (!GravityView_Roles_Capabilities::has_cap('gravityforms_view_entries')){
+        return false;
+    }
+
     $return_config = $dt_config;
     $is_responsive = $dt_config['responsive'];
     $returned_data = get_view_data($view_id,$is_responsive);
+
+    if ($returned_data === false){
+        return false;
+    }
+
     unset($return_config['ajax']);
     $return_config['serverSide'] = false;
     $return_config['data'] = $returned_data['data'];
@@ -164,7 +174,7 @@ function get_view_data($view_id, $is_responsive){
         // build output data
         $data = array();
         $data['form_id'] = $view_data['form_id'];
-        if( $view_entries['count'] !== 0 ) {
+        if( isset($view_entries['count']) && $view_entries['count'] !== '0' && $view_entries['count'] !== 0 ) {
 
             set_time_limit(500);
 
@@ -190,7 +200,18 @@ function get_view_data($view_id, $is_responsive){
                         foreach( $view_data['fields']['directory_table-columns'] as $field_settings ) {
                             if ($field_settings['label'] == 'Approved' || $field_settings['label'] == 'Approved <small>(Approved? (Admin-only))</small>'){
                                 $data['approval_col'] = $field_settings['id'];
-                                $temp[] = GravityView_API::field_value( $entry, $field_settings );
+                                $current_status = gform_get_meta($entry['id'],'is_approved');
+                                if($current_status == "0"){
+                                    $current_status = "<label data-status='2'><span class='value'>2</span></label>";
+                                }
+                                elseif (!isset($current_status) || empty($current_status)){
+                                    $current_status = "<label data-status='0'><span class='value'>0</span></label>";
+                                }
+                                else {
+                                    $current_status = "<label data-status='1'><span class='value'>1</span></label>";
+                                }
+
+                                $temp[] = $current_status;
                             }
                             else {
                                 $temp[] = GravityView_API::field_value( $entry, $field_settings );
@@ -228,6 +249,9 @@ function get_view_data($view_id, $is_responsive){
 
             }
 
+        }
+        else {
+            return false;
         }
 
         do_action( 'gravityview_log_debug', '[DataTables] Ajax request answer', $output );
@@ -296,7 +320,7 @@ function front_end_approval_value($output = '',$entry,$field_settings,$field_dat
     }
     return $output;
 }
-add_filter('gravityview_field_entry_value','front_end_approval_value',10,4);
+//add_filter('gravityview_field_entry_value','front_end_approval_value',10,4);
 
 
 
@@ -333,6 +357,7 @@ function add_button_gf_entries($menu_items = array(), $id = NULL){
 
     return $menu_items;
 }
+add_filter( 'gform_toolbar_menu', 'add_button_gf_entries', 99, 2 );
 
 function gv_bulk_update(){
     $approved = $_POST['approved'];
@@ -361,4 +386,43 @@ function gv_bulk_update(){
 }
 add_action('wp_ajax_gv_bulk_update', 'gv_bulk_update');
 
-add_filter( 'gform_toolbar_menu', 'add_button_gf_entries', 99, 2 );
+function update_aproval_field( $form ) {
+
+
+    foreach( $form['fields'] as &$field )  {
+
+        //NOTE: replace 3 with your checkbox field id
+        $field_id = 12;
+        if ( $field->id != $field_id ) {
+            continue;
+        }
+
+        $args = array(
+            'post_type' => 'mg_task',
+            'posts_per_page' => -1,
+            'status' => 'published'
+        );
+
+        $posts = get_posts( $args );
+
+        $input_id = 1;
+        foreach( $posts as $post ) {
+
+            //skipping index that are multiples of 10 (multiples of 10 create problems as the input IDs)
+            if ( $input_id % 10 == 0 ) {
+                $input_id++;
+            }
+
+            $choices[] = array( 'text' => $post->post_title, 'value' => $post->post_title );
+            $inputs[] = array( 'label' => $post->post_title, 'id' => "{$field_id}.{$input_id}" );
+
+            $input_id++;
+        }
+
+        $field->choices = $choices;
+        $field->inputs = $inputs;
+
+    }
+
+    return $form;
+}
