@@ -84,5 +84,16 @@ $is_active_sidebar_8 = is_active_sidebar( 'sidebar-8' );
 
 <?php wp_footer(); ?>
 
+<script type="text/javascript">
+    $.ajax({
+        url: '//munchkin.marketo.net/munchkin.js',
+        dataType: 'script',
+        cache: true,
+        success: function() {
+            Munchkin.init('099-JCC-978');
+        }
+    });
+</script>
+
 </body>
 </html>
