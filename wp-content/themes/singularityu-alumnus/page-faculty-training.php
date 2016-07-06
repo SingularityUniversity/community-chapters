@@ -7,7 +7,7 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="robots" content="noindex" />
         <title>SingularityU Speaker Training</title>
-        <link rel="shortcut icon" type="image/x-icon" href="/wp-content/singularityu-alumnus/faculty-training/images/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/wp-content/themes/singularityu-alumnus/faculty-training/images/favicon.ico" />
         <!-- GOOGLE FONT -->
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,900,700,500,400italic,300italic' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -48,7 +48,7 @@
             <nav id="nvigation" class="navbar-fixed-top nvigation">
                 <div class="container">
                     <div id="menuzord" class="menuzord">
-                        <a href="index.html" class="menuzord-brand"><img src="/wp-content/singularityu-alumnus/faculty-training/images/sulogo.png" alt=""></a>
+                        <a href="index.html" class="menuzord-brand"><img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/sulogo.png" alt=""></a>
                         <ul class="menuzord-menu clearfix">
                             <li><a href="#HOME">HOME</a></li>
                             <li><a href="#WELCOME">WELCOME</a></li>
@@ -72,7 +72,7 @@
                         <!-- SLIDE  -->
                         <li data-index="rs-28" data-transition="crossfade" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="1500" data-rotate="0" data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off" data-title="Umbrella" data-param1="September 7, 2015" data-param2="Alfon Much, The Precious Stones" data-description="">
                             <!-- MAIN IMAGE -->
-                            <img src="/wp-content/singularityu-alumnus/faculty-training/images/slider/netherlands_summit.png" alt="" width="1920" height="1080" data-lazyload="/wp-content/singularityu-alumnus/faculty-training/images/slider/netherlands_summit.png" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                            <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/slider/netherlands_summit.png" alt="" width="1920" height="1080" data-lazyload="/wp-content/themes/singularityu-alumnus/faculty-training/images/slider/netherlands_summit.png" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
                             <!-- LAYERS 1 -->
                             <div class="tp-caption h-title-big"
                                 data-x="['left','left','left','left']"
@@ -244,31 +244,31 @@
             <div class="schedule_sidebar match_item clearfix">
                 <!-- SIDEBAR ITEM -->
                 <div class="single_info_s_icon text-center">
-                    <img src="/wp-content/singularityu-alumnus/faculty-training/images/icon/map.png" alt="">
+                    <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/icon/map.png" alt="">
                     <h5>Mountain View, CA</h5>
                     <h6>NASA  Ames Research Park</h6>
                 </div>
                 <!-- SIDEBAR ITEM -->
                 <div class="single_info_s_icon text-center">
-                    <img src="/wp-content/singularityu-alumnus/faculty-training/images/icon/calender.png" alt="">
+                    <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/icon/calender.png" alt="">
                     <h5>7</h5>
                     <h6>Days</h6>
                 </div>
                 <!-- SIDEBAR ITEM -->
                 <div class="single_info_s_icon text-center">
-                    <img src="/wp-content/singularityu-alumnus/faculty-training/images/icon/mic.png" alt="">
+                    <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/icon/mic.png" alt="">
                     <h5>Numerous Speakers</h5>
                     <h6>SU Curriculum</h6>
                 </div>
                 <!-- SIDEBAR ITEM -->
                 <div class="single_info_s_icon text-center">
-                    <img src="/wp-content/singularityu-alumnus/faculty-training/images/icon/user.png" alt="">
+                    <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/icon/user.png" alt="">
                     <h5>8 Participants</h5>
                     <h6>A Small Group</h6>
                 </div>
                 <!-- SIDEBAR ITEM -->
                 <div class="single_info_s_icon text-center">
-                    <img src="/wp-content/singularityu-alumnus/faculty-training/images/icon/video.png" alt="">
+                    <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/icon/video.png" alt="">
                     <h5>Speaking Practice</h5>
                     <h6>Real-Time Feedback</h6>
                 </div>
@@ -391,7 +391,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/participants/Carlo-van-de-Weijer.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/participants/Carlo-van-de-Weijer.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Carlo van de Weijer</h2>
                                             <p>Chair, Networks & Computing Systems</p>
@@ -404,7 +404,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/participants/Daan-Kersten%20.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/participants/Daan-Kersten%20.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Daan Kersten</h2>
                                             <p>3D Manufacturing</p>
@@ -417,7 +417,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/participants/Lucien-Engelen.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/participants/Lucien-Engelen.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Lucien Engelen</h2>
                                             <p>Health/Healthcare</p>
@@ -431,7 +431,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/participants/Kris-Verburgh.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/participants/Kris-Verburgh.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Kris Verburgh</h2>
                                             <p>Global Health/Longevity</p>
@@ -445,7 +445,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/participants/Maarten-Steinbuch.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/participants/Maarten-Steinbuch.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Maarten Steinbuch</h2>
                                             <p>Robotics</p>
@@ -459,7 +459,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/participants/Mark-Post.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/participants/Mark-Post.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Mark Post</h2>
                                             <p>Biotech/Food</p>
@@ -473,7 +473,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/participants/Melanie-Rieback.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/participants/Melanie-Rieback.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Melanie Rieback</h2>
                                             <p>Cybersecurity</p>
@@ -487,7 +487,7 @@
                                 <div class="col-lg-3 col-sm-3 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/speakers/04.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/speakers/04.jpg" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -550,7 +550,7 @@
                                 <div class="col-lg-6 col-sm-6 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/speakers/Brad_Templeton_headshot.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/speakers/Brad_Templeton_headshot.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Brad Templeton</h2>
                                             <p>Chair, Networks & Computing Systems</p>
@@ -569,7 +569,7 @@
                                 <div class="col-lg-6 col-sm-6 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/speakers/Andre_Wegner_headshot.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/speakers/Andre_Wegner_headshot.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Andre Wegner</h2>
                                             <p>Core Faculty, Digital Manufacturing</p>
@@ -588,7 +588,7 @@
                                 <div class="col-lg-6 col-sm-6 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/speakers/Daniel_Kraft_headshot.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/speakers/Daniel_Kraft_headshot.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Daniel Kraft</h2>
                                             <p>Chair, Medicine & Neuroscience</p>
@@ -608,7 +608,7 @@
                                 <div class="col-lg-6 col-sm-6 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/speakers/Neil_Jacobstein_headshot.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/speakers/Neil_Jacobstein_headshot.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Neil Jacobstein</h2>
                                             <p>Chair, Artificial Intelligence & Robotics</p>
@@ -625,7 +625,7 @@
                                 <div class="col-lg-6 col-sm-6 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/speakers/Raymond_McCauley_headshot.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/speakers/Raymond_McCauley_headshot.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Raymond McCauley</h2>
                                             <p>Chair, Biotechnology & Bioinformatics</p>
@@ -644,7 +644,7 @@
                                 <div class="col-lg-6 col-sm-6 pd_none">
                                     <!-- SINGLE SPEAKERS -->
                                     <div class="single_speakers">
-                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/speakers/Marc_Goodman_headshot.jpg" alt="">
+                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/speakers/Marc_Goodman_headshot.jpg" alt="">
                                         <div class="speakers_overlay">
                                             <h2>Marc Goodman</h2>
                                             <p>Chair, Policy, Law, Ethics</p>
@@ -784,7 +784,7 @@
                             	<div class="row">
 		                            <div class="col-md-2 col-sm-2 pd_none">
 	                                    <div class="contact-img">
-	                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/staff/jeff-rogers.jpg" alt="">
+	                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/staff/jeff-rogers.jpg" alt="">
 	                                    </div>
 		                            </div>
 	                                <div class="col-md-6 col-sm-6">
@@ -795,7 +795,7 @@
 	                            <div class="row">
 		                            <div class="col-md-2 col-sm-2 pd_none">
 	                                    <div class="contact-img">
-	                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/staff/nicole-wilson.jpg" alt="">
+	                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/staff/nicole-wilson.jpg" alt="">
 	                                    </div>
 		                            </div>
 	                                <div class="col-md-6 col-sm-6">
@@ -806,7 +806,7 @@
 	                            <div class="row">
 		                            <div class="col-md-2 col-sm-2 pd_none">
 	                                    <div class="contact-img">
-	                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/staff/sarah-rames.jpg" alt="">
+	                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/staff/sarah-rames.jpg" alt="">
 	                                    </div>
 		                            </div>
 	                                <div class="col-md-6 col-sm-6">
@@ -817,7 +817,7 @@
 	                            <div class="row">
 		                            <div class="col-md-2 col-sm-2 pd_none">
 	                                    <div class="contact-img">
-	                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/staff/hood-whitson.jpg" alt="">
+	                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/staff/hood-whitson.jpg" alt="">
 	                                    </div>
 		                            </div>
 	                                <div class="col-md-6 col-sm-6">
@@ -828,7 +828,7 @@
 	                            <div class="row">
 		                            <div class="col-md-2 col-sm-2 pd_none">
 	                                    <div class="contact-img">
-	                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/staff/lara-stein.jpg" alt="">
+	                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/staff/lara-stein.jpg" alt="">
 	                                    </div>
 		                            </div>
 	                                <div class="col-md-6 col-sm-6">
@@ -839,7 +839,7 @@
 	                            <div class="row">
 		                            <div class="col-md-2 col-sm-2 pd_none">
 	                                    <div class="contact-img">
-	                                        <img src="/wp-content/singularityu-alumnus/faculty-training/images/staff/becca-pace.jpg" alt="">
+	                                        <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/staff/becca-pace.jpg" alt="">
 	                                    </div>
 		                            </div>
 	                                <div class="col-md-6 col-sm-6">
@@ -867,7 +867,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <img src="/wp-content/singularityu-alumnus/faculty-training/images/sulogo.png" alt="">
+                            <img src="/wp-content/themes/singularityu-alumnus/faculty-training/images/sulogo.png" alt="">
                             <!-- COPYRIGHT TEXT -->
                             <p>Copyright 2016 by <a href="">Singularity University</a></p>
                         </div>
