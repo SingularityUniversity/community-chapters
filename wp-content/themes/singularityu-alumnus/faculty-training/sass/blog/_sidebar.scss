@@ -1,0 +1,263 @@
+.sidebar{
+	.widget{
+		margin-bottom: 50px;
+		h2{
+			font-family: $roboto-font;
+			color: $blog_pagination_text;
+			font-size: 13px;
+			font-weight: 700;
+			text-transform: uppercase;
+			margin: 0px;
+			border-bottom: 1px solid $widget_title_border;
+			padding-bottom: 15px;
+			letter-spacing: 1px;
+		}
+		&.search{
+			form{
+				position: relative;
+				.form-control{
+					&, &:focus{
+						box-shadow: none;
+						height: 80px;
+						border: 1px solid $search_box_border;
+						border-radius: 0px;
+						box-shadow: none;
+						padding: 30px;
+					} 
+					&::-webkit-input-placeholder { 
+						color: $search_placeholder;
+						font-size: 15px;
+						font-family: $roboto-font;
+						font-weight: 400; 
+					}
+					&:-moz-placeholder { 
+						color: $search_placeholder;
+						font-size: 15px;
+						font-family: $roboto-font;
+						font-weight: 400; 
+					}
+					&::-moz-placeholder { 
+						color: $search_placeholder;
+						font-size: 15px;
+						font-family: $roboto-font;
+						font-weight: 400; 
+					}
+					&:-ms-input-placeholder { 
+						color: $search_placeholder;
+						font-size: 15px;
+						font-family: $roboto-font;
+						font-weight: 400; 
+					}
+
+				}
+				.src_btn{
+					&, &:active, &:hover, &:focus, &:visited{
+						position: absolute;
+						top: 20px;
+						right: 0px;
+						padding-right: 30px;
+						font-size: 15px;
+						background-color: transparent;
+						border: 0px;
+						box-shadow: none;
+						outline: 0;
+						color: $search_icon;
+					}
+				}
+			}
+		}
+		&.categories{
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				padding-top: 30px;
+				li{
+
+					a{
+						color: $white_section_title_text;
+						font-size: 12px;
+						font-weight: 400;
+						font-family: $arial-font;
+						text-decoration: none;
+						display: block;
+						line-height: 30px;
+						@include transition(.5s);
+						&:hover{
+							color: $blue-color;
+						}
+					}
+				}
+			}
+		}
+		&.recent_post{
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				padding-top: 30px;
+				li{
+					margin-bottom: 40px;
+					.media{
+						.media-body{
+							h4{
+								margin:0px;
+								a{
+									color: $blog_pagination_text;
+									font-size: 15px;
+									font-weight: 400;
+									font-family: $roboto-font;
+									text-decoration: none;
+									@include transition(.5s);
+									&:hover{
+										color: $blue-color;
+									}
+								}
+							}
+							p{
+								color: $recent_post_date;
+								font-size: 12px;
+								font-weight: 400;
+								font-family: $roboto-font;
+								margin:{
+									top: 5px;
+									bottom: 0px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		&.recent_comment{
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				padding-top: 30px;
+				li{
+					margin-bottom: 40px;
+					.media{
+						.media-body{
+							h4{
+								margin: 0px;
+								line-height: 24px;
+								a{
+									color: $blog_pagination_text;
+									font-size: 15px;
+									font-weight: 400;
+									font-family: $roboto-font;
+									text-decoration: none;
+									@include transition(.5s);
+									&:hover{
+										color: $blue-color;
+									}
+								}
+							}
+							h6{
+								color: $recent_post_date;
+								font-size: 12px;
+								font-weight: 400;
+								font-family: $roboto-font;
+								margin:{
+									top: 5px;
+									bottom: 0px;
+								}
+								a{
+									color: $recent_post_date;
+									text-decoration: none;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		&.tag{
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				padding-top: 30px;
+				li{
+					display: inline;
+					a{
+						display: inline-block;
+						color: $white_color;
+						font-size: 11px;
+						font-weight: 400;
+						font-family: $roboto-font;
+						background-color: $tag_bg;
+						padding: 10px;
+						text-decoration: none;
+						text-transform: uppercase;
+						margin-right: 7px;
+						margin-bottom: 7px;
+						@include transition(.5s);
+						&:hover{
+							background-color: $blue-color;
+						}
+					}
+				}
+			}
+		}
+		&.twitter_wid{
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				padding-top: 30px;
+				li{
+					padding-left: 40px;
+					position: relative;
+					margin-bottom: 40px;
+					i{
+						position: absolute;
+						top: 0;
+						left: 0;
+						font-size: 20px;
+						color: $twitter_icon;
+					}
+					h6{
+						margin: 0px;
+						color: $footer_tp_copyright;
+						font-size: 13px;
+						font-style: italic;
+						font-family: $roboto-font;
+
+					}
+					h3{
+						margin:{
+							top: 10px;
+							bottom: 10px;
+						}
+						a{
+							color: $twitter_title;
+							font-size: 15px;
+							font-weight: 400;
+							font-family: $roboto-font;
+							text-decoration: none;
+							@include transition(.5s);
+							&:hover{
+								color: $blue-color;
+							}
+						}
+					}
+					h5{
+						a{
+							color: $section_title_subheading;
+							font-size: 15px;
+							font-weight: 400;
+							text-decoration: none;
+							font-family: $roboto-font;
+							@include transition(.5s);
+							&:hover{
+								color: $blue-color;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

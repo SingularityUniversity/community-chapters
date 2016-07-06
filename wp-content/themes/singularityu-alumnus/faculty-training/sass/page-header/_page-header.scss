@@ -1,0 +1,49 @@
+.page_header{
+	background-image: url(../images/background/page-header.jpg);
+	background-size: cover;
+	padding:{
+		top: 250px;
+		bottom: 150px;
+	}
+	.breadcumb{
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: inline-block;
+			background-color: $blue-color;
+			padding: 20px;
+			border-radius: 30px;
+			li{
+				display: inline;
+				a{
+					display: inline-block;
+					color: $white_color;
+					font-size: 13px;
+					font-weight: 400;
+					text-decoration: none;
+					padding:{
+						left: 12px;
+						right: 12px;
+					}
+					position: relative;
+					&::after{
+						content: "/";
+						position: absolute;
+						top: 0;
+						left: -6px;
+						color: $white_color;
+						font-size: 13px;
+					}
+				}
+				&:first-child{
+					a{
+						&:after{
+							opacity: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}

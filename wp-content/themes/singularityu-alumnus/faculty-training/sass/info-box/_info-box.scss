@@ -1,0 +1,191 @@
+.info_box{
+	position: relative;
+	margin-top: -60px;
+	z-index: 99;
+}
+.single_info_box{
+	background-image: url(../images/infobox/01.jpg);
+	background-size: cover;
+	position: relative;
+	padding: 35px;
+	min-height: 290px;
+	h2{
+		color: $white_color;
+		font-size: 20px;
+		font-weight: 700;
+		margin-top: 10px;
+		margin-bottom: 35px;
+		font-family: $roboto-font;
+		position: relative;
+	}
+	&:before{
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(253,39,64,.8);
+	}
+	.info_box_carosel{
+		position: initial;
+		.owl-controls{
+		    margin-top: 0;
+		    text-align: center;
+		    -webkit-tap-highlight-color: transparent;
+		    position: absolute;
+		    right: 15px;
+		    top: 15px;
+		    .owl-dots{
+		    	.owl-dot{
+		    		span{
+		    			width: 8px;
+		    			height: 8px;
+		    			border-radius: 50%;
+		    			margin: 0px 4px;
+		    		}
+		    		&.active{
+		    			span{
+		    				background-color: $white_color;
+		    			}
+		    		}
+		    	}
+		    }		
+		}
+	}
+	.info_box_item{
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			li{
+				color: $white_color;
+				font-size: 16px;
+				font-family: $roboto-font;
+				line-height: 50px;
+				@media(max-width:1200px){
+					&{
+						font-size: 14px;
+					}
+				}
+			}
+		}
+	}
+	&.schedule{
+		.info_box_item{
+			ul{
+				li{
+					border-bottom: 1px solid $schedule_border;
+					&:last-child{
+						border-bottom: 0px;
+					}
+				}
+			}
+		}
+		&:before{
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(253,39,64,.8);
+		}
+		.owl-controls{
+		    .owl-dots{
+		    	.owl-dot{
+		    		span{
+		    			background-color: $schedule_dots_color;
+		    		}
+		    	}
+		    }		
+		}				
+	}
+	&.meeting{
+		.info_box_item{
+			ul{
+				li{
+					border-bottom: 1px solid $meetings_border;
+					&:last-child{
+						border-bottom: 0px;
+					}
+				}
+			}
+		}		
+		&:before{
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(24,222,127,.8);
+		}
+		.owl-controls{
+		    .owl-dots{
+		    	.owl-dot{
+		    		span{
+		    			background-color: $meetings_dots_color;
+		    		}
+		    	}
+		    }		
+		}				
+	}
+	&.twitter_feed{
+		h2{
+			margin-bottom: 20px;
+		}
+		&:before{
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(24,156,190,.8);
+		}
+		.owl-controls{
+		    .owl-dots{
+		    	.owl-dot{
+		    		span{
+		    			background-color: $twitter_feed_dots_color;
+		    		}
+		    	}
+		    }		
+		}				
+	}
+	@media(max-width:991px){
+		&{
+			margin-bottom: 30px;
+		}
+	}	
+}
+.twitter_inner{
+	i{
+		color: $white_color;
+		font-size: 30px;
+	}
+	p{
+		color: $white_color;
+		font-size: 18px;
+		font-family: $roboto-font;
+		font-weight: 300;
+		margin-top: 15px;
+	}
+	.twitter_tag{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		text-align: center;
+		li{
+			display: inline;
+			line-height: 20px !important;
+			a{
+				display: inline-block;
+				font-size: 14px;
+				color: #29fff2;
+				line-height: 20px;
+			}
+		}
+	}
+}

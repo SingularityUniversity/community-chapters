@@ -1,0 +1,145 @@
+.nvigation{
+	background-color: transparent;
+	@include transition(.5s);
+	.menuzord{
+		padding: 0px;
+		background-color: transparent;
+		padding:{
+			top: 40px;
+			bottom: 40px;
+		}
+		@include transition(.5s);
+		.showhide em{
+			background-color: $white_color;
+		}
+		.menuzord-brand{
+			margin-top: 0px;
+		}
+		.menuzord-menu{
+			li{
+				a{
+					color: $white_color;
+					font-size: 13px;
+					font-weight: 700;
+					font-family: $roboto-font;
+					padding:10px;
+					border-radius: 4px;
+					@include transition(.5s);
+					margin-left: 5px;
+					&:hover{
+						&{
+							background-color: $blue-color;
+						}
+					}
+				}
+				 &.active > a{
+					&{
+						background-color: $blue-color;
+					}
+				}
+				ul.dropdown{
+					background-color: $scroll_nav_color;
+					@media(min-width: 768px){
+						&{
+							max-width: 280px;
+							li{
+								a{
+									border-radius: 0px;
+									display: block;
+									margin-left: 0px !important;
+									padding: 15px 20px !important;
+									&:hover{
+										color: $white_color;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	&.scroll_nav{
+		background-color: $scroll_nav_color;
+		.menuzord{
+			padding:{
+				top: 17px;
+				bottom: 17px;
+			}
+		}
+	}
+}
+
+@media(max-width: 1200px) and (min-width: 768px){
+	.menuzord-brand{
+		float: none;
+		display: block;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.menuzord{
+		float: none;
+		display: block;
+		text-align: center;
+		.menuzord-menu.menuzord-right{
+			float: none;
+			display: block;
+			text-align: center;
+			li{
+				float: none;
+			}
+		}
+	}
+}
+@media(max-width: 991px) and (min-width: 768px){
+	.nvigation .menuzord .menuzord-menu li a{
+		font-size: 11px;
+		padding: 8px;
+		margin: 0px;
+	}
+}
+
+@media(max-width: 768px){
+	.nvigation {
+		background-color: $scroll_nav_color;
+		.menuzord{
+			padding:{
+				top: 17px;
+				bottom: 17px;
+			}
+			.menuzord-menu{
+				li{
+					a{
+						border-radius: 0px;
+						border-bottom: solid 1px #333;
+					}
+					&:first-child{
+						a{
+							border-top: solid 1px #333;
+						}
+					}
+					ul.dropdown{
+						li{
+							a{
+								border-bottom: solid 1px #333;
+							}
+							&:hover{
+								a{
+									padding-left: 40px !important;
+									color: $white_color;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.menuzord-responsive .menuzord-menu.scrollable{
+		overflow-x: hidden; 
+	}
+	.menuzord-responsive .menuzord-menu li .indicator{
+		height: 38px;
+		border-left: 1px solid #333;
+	}
+}

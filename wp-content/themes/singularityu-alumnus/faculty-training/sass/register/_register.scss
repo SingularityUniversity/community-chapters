@@ -1,0 +1,84 @@
+.register_area{
+	background-image: url(../images/background/register.jpg);
+	background-size: cover;
+	font-family: $roboto-font;
+	.register_overlay{
+		background-color: rgba(0,174,218,.9);
+		padding:{
+			top: 80px;
+			bottom: 80px;
+		}
+		.registration_title{
+			h2{
+				color: $white_color;
+				font-size: 35px;
+				font-weight: 700;
+				margin:{
+					top: 0px;
+					bottom: 10px;
+				}
+			}
+			p{
+				color: $register_subtitle;
+				font-size: 15px;
+				font-weight: 700;
+				text-transform: uppercase;
+				margin: 0px;
+			}
+		}
+		.form{
+			padding-top: 35px;
+			.btn{
+				margin-top: 30px;
+			}
+			.form-group{
+				.form-control{
+					&, &:focus{
+						height: 65px;
+						background-color: $register_input_bg;
+						border-radius: 4px;
+						border: 0px;
+						box-shadow: none;
+						outline: 0;
+						padding: 20px;
+						color: $white_color;
+						font-weight: 700;
+						font-size: 13px;
+					}
+					&::-webkit-input-placeholder { 
+						color: $white_color;
+						font-size: 13px;
+						font-weight: 700;
+						text-transform: uppercase; 
+					}
+					&:-moz-placeholder { 
+						color: $white_color;
+						font-size: 13px;
+						font-weight: 700;
+						text-transform: uppercase; 
+					}
+					&::-moz-placeholder { 
+						color: $white_color;
+						font-size: 13px;
+						font-weight: 700;
+						text-transform: uppercase; 
+					}
+					&:-ms-input-placeholder { 
+						color: $white_color;
+						font-size: 13px;
+						font-weight: 700;
+						text-transform: uppercase; 
+					}					
+				}
+			}
+		}
+		@media(max-width: 991px){
+			&{
+				padding:{
+					top: 50px;
+					bottom: 50px;
+				}
+			}
+		}
+	}
+}

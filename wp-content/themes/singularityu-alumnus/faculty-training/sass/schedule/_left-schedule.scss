@@ -1,0 +1,264 @@
+.schedule_area{
+	position: relative;
+	padding-top: 120px;
+	padding-bottom: 120px;
+	.schedule_tab{
+		padding-top: 50px;
+		.nav-tabs{
+			border: 0px;
+			li{
+				margin: 0px;
+				margin-right: 10px;
+				a{
+					border: 0px;
+					margin: 0px;
+					color: $tab_menu_link;
+					font-weight: 700;
+					font-family: $roboto-font;
+					text-transform: uppercase;
+					border-radius: 4px;
+					padding: 20px 30px;
+					font-size: 14px;
+					&, &:hover, &:focus{
+						background-color: $tab_menu_color;
+					}
+					@media(max-width: 475px){
+						&{
+							padding: 10px 15px;
+						}
+					}
+					@media(max-width: 350px){
+						&{
+							font-size: 11px;
+						}
+					}
+				}
+				&.active{
+					a{
+						background-color: $blue-color;
+						color: $white_color;
+						position: relative;
+						&:after{
+						    content: "";
+						    position: absolute;
+						    bottom: -4px;
+						    left: 50%;
+						    width: 10px;
+						    height: 10px;
+						    background-color: $blue-color;
+						    margin-left: -5px;
+						    transform: rotate(45deg);
+						}
+					}
+				}
+				&:last-child{
+					margin-right: 0px;
+				}
+				@media(max-width: 475px){
+					&{
+						margin-right: 5px;
+					}
+				}
+			}
+		}
+		.tab-content{
+			margin-top: 50px;
+			padding-right: 50px;
+			.panel-group{
+				.panel-default{
+					border: 0px;
+					margin-top: 12px;
+					box-shadow: none;
+					.panel-heading{
+						border: 0px;
+						padding: 0px;
+						background-color: transparent;
+						a{
+							display: block;
+							text-decoration: none;
+							.left_info{
+								font-family: $roboto-font;
+								padding:{
+									left: 40px;
+									right: 20px;
+									top: 25px;
+									bottom: 25px;
+								}
+								margin-right: 60px;
+								background-color: $blue-color;
+								position: relative;
+								border-radius: 5px;
+								.time{
+									color: $white_color;
+									font-size: 25px;
+									font-weight: 700;
+									border-right: 1px solid $fun_facts_desc;
+									float: left;
+									padding-right: 20px;								
+									span{
+										color: $white_color;
+										font-size: 14px;
+									}
+									@media(max-width: 450px){
+										&{
+											font-size: 20px;
+										}
+									}
+									@media(max-width: 400px){
+										&{
+											padding-right: 10px;
+										}
+									}
+									@media(max-width: 350px){
+										&{
+											width: 100%;
+											border-right: 0px;
+										}
+									}
+								}
+								.topics{
+									color: $white_color;
+									font-size: 18px;
+									font-weight: 400;
+									float: left;
+									padding-left: 20px;
+									margin-top: 5px;
+									@media(max-width: 450px){
+										&{
+											font-size: 14px;
+										}
+									}
+									@media(max-width: 400px){
+										&{
+											padding-left: 10px;
+										}
+									}
+									@media(max-width: 350px){
+										&{
+											padding-left: 0px;
+										}
+									}
+								}
+								.speaker{
+									position: absolute;
+									top: 0;
+									right: 0;
+									height: 100%;
+									img{
+										height: 100%;
+									}
+									@media(max-width: 768px){
+										&{
+											display: none;
+										}
+									}
+								}
+								@media(max-width: 1200px){
+									&{
+										margin-right: 0px;
+									}
+								}
+								@media(max-width: 500px){
+									&{
+										padding: 15px;
+									}
+								}
+							}
+							&.collapsed{
+								.left_info{
+									background-color: $tab_accordion_bar_color;
+									.topics{
+										color: $accordion_text_color;
+									}
+									.time{
+										color: $accordion_text_color;
+										border-right: 1px solid $accordion_border_color;
+										span{
+											color: $accordion_text_color;
+										}
+									}
+								}
+							}
+						}
+					}
+					.panel-body{
+						border-top: 0px;
+						padding:{
+							left: 40px;
+							right: 60px;
+						}
+						.desc{
+							padding:{
+								top: 30px;
+								bottom: 20px;
+							}
+							border-bottom: 1px solid $accordion_border_second;
+							p{
+								color: $accordion_desc;
+								font-size: 16px;
+								font-weight: 400;
+								line-height: 26px;
+							}
+						}
+						.speaker_name{
+							h3{
+								color: $speaker_text;
+								font-weight: 700;
+								font-size: 13px;
+								span{
+									color: $section_title_subheading;
+									font-size: 15px;
+									margin-left: 15px;
+								}
+								@media(max-width: 320px){
+									&{
+										font-size: 10px;
+										span{
+											font-size: 10px;
+											margin-left: 10px;
+										}
+									}
+								}
+							}
+							img{
+								margin-left: 20px;
+								@media(max-width: 320px){
+									&{
+										margin-left: 10px;
+									}
+								}
+							}
+						}
+						@media(max-width: 400px){
+							&{
+								padding:{
+									left: 10px;
+									right: 10px;
+								}
+							}
+						}
+					}
+				}
+			}
+			@media(max-width: 1200px){
+				&{
+					padding-right: 0px;
+				}
+			}
+		}
+	}
+	@media(max-width: 1200px){
+		&{
+			height: auto !important;
+			padding-bottom: 0px;
+		}
+	}
+	@media(max-width: 991px){
+		&{
+			padding-top: 50px;
+			.schedule_tab{
+				padding-bottom: 30px;
+			}
+		}
+	}
+}

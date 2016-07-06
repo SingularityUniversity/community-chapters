@@ -1,0 +1,27 @@
+.fun_facts{
+	font-family: $roboto-font;
+	background-color: $fun_fact_bg;
+	padding:{
+		top: 55px;
+		bottom: 55px;
+	}
+	.single_fun_facts{
+		h2{
+			color: $white_color;
+			font-size: 70px;
+			font-weight: 400;
+			margin:0px;
+		}
+		p{
+			color: $fun_facts_desc;
+			font-size: 15px;
+			margin: 0px;
+			text-transform: capitalize;
+		}
+		@media(max-width: 768px){
+			&{
+				margin-bottom: 30px;
+			}
+		}
+	}
+}

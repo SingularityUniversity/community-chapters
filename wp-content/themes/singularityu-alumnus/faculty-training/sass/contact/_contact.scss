@@ -1,0 +1,164 @@
+.contact_us{
+	padding:{
+		top: 115px;
+		bottom: 100px;
+	}
+	font-family: $roboto-font;
+	@media(max-width: 991px){
+		&{
+			padding:{
+				top: 50px;
+				bottom: 50px;
+			}
+		}
+	}
+}
+
+.map_area{
+	position: relative;
+	margin-top: 80px;
+	#map{
+		height: 580px;
+		z-index: 1;
+	}	
+	.map_info{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		.map_address{
+			background-color: $blue-color;
+			padding: 50px 30px;
+			border-radius: 4px;
+			margin-top: 90px;
+			position: relative;
+			z-index: 2;
+			p{
+				color: $map_text;
+				font-size: 15px;
+				font-weight: 400;
+				line-height: 30px;
+				margin:{
+					top: 25px;
+				}
+			}
+		}
+	}
+	@media(max-width: 991px){
+		&{
+			margin-top: 50px;
+		}
+	}
+}
+.social_area{
+	.social_item{
+		padding:{
+			top: 35px;
+			bottom: 35px;
+		}
+		text-align: center;
+		.btn_social{
+			&, &:hover, &:focus, &:active, &:visited{
+				background-color: transparent;
+				border: 2px solid $white_color;
+				color: $white_color;
+				font-size: 13px;
+				font-weight: 700;
+				letter-spacing: 5px;
+				border-radius: 0px;
+				width: 320px;
+				padding: 15px;
+				@media(max-width: 1366px){
+					&{
+						width: 250px;
+					}
+				}
+				@media(max-width: 1200px){
+					&{
+						width: 200px;
+					}
+				}
+				@media(max-width: 991px){
+					&{
+						width: 160px;
+						padding: 12px;
+						font-size: 10px;
+					}
+				}
+			}
+		}
+		&.facebook_area{
+			background-color: $facebook_bg;
+		}
+		&.twitter_area{
+			background-color: $twitter_bg;
+		}
+		&.g_plus_area{
+			background-color: $g_plus_bg;
+		}
+		&.youtube_area{
+			background-color: $youtube_bg;
+		}
+	}
+}
+.contact_form{
+	padding:{
+		top: 110px;
+	}
+	.contact_text{
+		padding-bottom: 55px;
+	}
+	form{
+		.form-group{
+			.form-control{
+				&, &:focus{
+					background-color: $contact_input_bg;
+					height: 80px;
+					border-radius: 4px;
+					box-shadow: none;
+					border: 0px;
+					outline: 0;
+					padding: 30px;
+				}
+				&::-webkit-input-placeholder {
+					color: $contact_input_color;
+					font-size: 13px;
+					font-weight: 700;
+					text-transform: uppercase; 
+				}
+				&:-moz-placeholder {
+					color: $contact_input_color;
+					font-size: 13px;
+					font-weight: 700;
+					text-transform: uppercase; 
+				}
+				&::-moz-placeholder {
+					color: $contact_input_color;
+					font-size: 13px;
+					font-weight: 700;
+					text-transform: uppercase; 
+				}
+				&:-ms-input-placeholder {
+					color: $contact_input_color;
+					font-size: 13px;
+					font-weight: 700;
+					text-transform: uppercase; 
+				}
+				&#Message{
+					height: 220px;
+					resize: none;
+				}				
+			}
+		}
+	}
+	@media(max-width: 991px){
+		&{
+			padding-top: 50px;
+			.contact_text{
+				padding-bottom: 30px;
+			}
+		}
+	}
+}
+

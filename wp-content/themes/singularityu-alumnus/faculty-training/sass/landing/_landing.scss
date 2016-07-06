@@ -1,0 +1,145 @@
+.landing_caption{
+	background-image: url(../images/slider/01.jpg);
+	background-size: cover;
+	position: relative;
+	.landing_caption_overlay{
+		padding:{
+			top: 300px;
+			bottom: 300px;
+		}
+		background-color: rgba(0,0,0,.6);
+		@media(max-width: 991px){
+			&{
+				padding:{
+					top: 230px;
+					bottom: 140px;
+				}
+			}
+		}
+		@media(max-width: 768px){
+			&{
+				padding-top: 150px;
+			}
+		}
+	}
+	.inner_landing_caption{
+		h2{
+			color: $white_color;
+			font-size: 40px;
+			font-family: $roboto-font;
+			font-weight: 400;
+			line-height: 50px;
+			margin:{
+				top: 0px;
+				bottom: 25px;
+			}
+		}
+		p{
+			color: $landing_captio_text;
+			font-size: 16px;
+			line-height: 30px;
+			font-family: $arial-font;
+			font-weight: 400;
+			margin: 0px;
+		}
+		.landing_form{
+			padding: 40px 30px;
+			background-color: rgba(0, 174, 218, .8);
+			margin-top: 40px;
+			h2{
+				color: $white_color;
+				font-size: 20px;
+				font-family: $roboto-font;
+				font-weight: 400;
+				margin: 0px;
+				line-height: 20px;
+			}
+			form{
+				padding-right: 70px;
+				position: relative;
+				margin-top: 20px;
+				.form-group{
+					position: relative;
+					.icon{
+						position: absolute;
+						top: 13px;
+						left: 20px;
+						i{
+							font-size: 14px;
+						}
+					}
+					.form-control{
+						&, &:focus{
+							background-color: $white_color;
+							border-radius: 0px;
+							box-shadow: none;
+							outline: 0;
+							height: 45px;
+							border: 0px;
+							padding-left: 45px;
+						}
+						&::-webkit-input-placeholder { 
+							color: $speaker_left_text;
+							font-size: 14px;
+							font-weight: 400;
+							font-family: $roboto-font; 
+						}
+						&:-moz-placeholder { 
+							color: $speaker_left_text;
+							font-size: 14px;
+							font-weight: 400;
+							font-family: $roboto-font; 
+						}
+						&::-moz-placeholder { 
+							color: $speaker_left_text;
+							font-size: 14px;
+							font-weight: 400;
+							font-family: $roboto-font; 
+						}
+						&:-ms-input-placeholder { 
+							color: $speaker_left_text;
+							font-size: 14px;
+							font-weight: 400;
+							font-family: $roboto-font; 
+						}						
+					}
+				}
+				.btn_sl{
+					&, &:focus, &:visited, &:active{
+						color: $white_color;
+						font-size: 20px;
+						background-color: $landing_btn_bg;
+						width: 60px;
+						height: 45px;
+						position: absolute;
+						top: 0;
+						right: 0;
+						border-radius: 0px;
+						box-shadow: none;
+						outline: 0;
+						@include transition (.5s);
+						@media(max-width: 500px){
+							&{
+								position: relative;
+								width: 100%;
+							}
+						}
+					}
+					&:hover{
+						background-color: $blue-color-hover;
+					}
+				}
+				@media(max-width: 500px){
+					.col-xs-6{
+						width: 100%;
+					}
+					&{
+						padding-right: 0px;
+					}
+				}
+
+			}
+			
+		}
+	}
+}

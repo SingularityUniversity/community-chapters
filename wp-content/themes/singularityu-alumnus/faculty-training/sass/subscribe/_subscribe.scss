@@ -1,0 +1,90 @@
+.subscribe{
+	background-image: url(../images/background/subscribe.jpg);
+	background-size: cover;
+	font-family: $roboto-font;
+	.subscribe_overlay{
+		background-color: rgba(0,0,0, .8);
+		padding:{
+			top: 220px;
+			bottom: 220px;
+		}
+		.inner_subscribe{
+			h3{
+				color: $subscribe_heading_color;
+				font-size: 50px;
+				font-weight: 300;
+				margin: 0px;
+			}
+			h4{
+				color: $white_color;
+				font-size: 50px;
+				font-weight: 700;
+				margin:{
+					top: 5px;
+					bottom: 20px;
+				}
+			}
+			form{
+				margin-bottom: 30px;
+				.form-control{
+					&, &:focus{
+						height: 65px;
+						background-color: $subscribe_input_bg;
+						border: 0px;
+						border-radius: 5px;
+						outline: 0;
+						box-shadow: none;
+						text-align: center;
+					}
+					&::-webkit-input-placeholder {
+					 	color: $subscribe_input_placeholder;
+					 	display: block;
+					 	text-align: center;
+					 	font-weight: 400;
+					 	font-style: italic; 
+					}
+					&:-moz-placeholder {
+					 	color: $subscribe_input_placeholder;
+					 	display: block;
+					 	text-align: center;
+					 	font-weight: 400;
+					 	font-style: italic; 
+					}
+					&::-moz-placeholder {
+						 color: $subscribe_input_placeholder;
+						 display: block;
+						 text-align: center;
+						 font-weight: 400;
+						 font-style: italic; 
+					}
+					&:-ms-input-placeholder {
+				 		color: $subscribe_input_placeholder;
+				 		display: block;
+				 		text-align: center;
+				 		font-weight: 400;
+				 		font-style: italic; 
+					}					
+				}
+
+			}
+			@media(max-width: 768px){
+				&{
+					h3{
+						font-size: 30px;
+					}
+					h4{
+						font-size: 30px;
+					}
+				}
+			}
+		}
+		@media(max-width: 991px){
+			&{
+				padding:{
+					top: 50px;
+					bottom: 50px;
+				}
+			}
+		}
+	}
+}

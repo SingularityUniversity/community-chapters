@@ -1,0 +1,122 @@
+/*=========================
+Template Name: zEvent7 - Event and Conference Template
+Author: Westilian - Kamrujaman Shohel
+Author URI: http://jaman.me/
+===========================*/
+
+/*
+=======================================================================
+[Table of contents]
+=========================================================================
+
+01. PLUGINS
+02. SLIDER
+03. INFO BOX  
+04. ABOUT  
+05. SCHEDULE
+06. SUBSCRIBE
+07. SPEAKERS
+08. FAQ
+09. SPONSER
+10. PRICING
+11. REGISTER
+12. BLOG
+13. CONTACT
+14. FOOTER 
+
+
+*/
+
+
+
+
+
+
+
+
+/*---------------------------------------
+PLUGINS            
+-----------------------------------------*/
+
+@import "lib/spinner";
+@import "lib/owl.carousel";
+@import "lib/owl.theme.scss";
+@import "lib/magnific-popup";
+@import "lib/settings";
+@import "lib/layers";
+@import "lib/navigation";
+@import "lib/menuzord";
+
+
+/*---------------------------------------
+COMMON STYLES            
+-----------------------------------------*/
+
+@import "common/variables";
+@import "common/mixins";
+@import "common/common";
+@import "common/menu";
+@import "common/buttons";
+/*---------------------------------------
+SLIDER         
+-----------------------------------------*/
+@import "slider/slider";
+@import "page-header/page-header";
+@import "landing/landing";
+@import "counter/counter";
+/*---------------------------------------
+INFO BOX       
+-----------------------------------------*/
+@import "info-box/info-box";
+/*---------------------------------------
+ABOUT         
+-----------------------------------------*/
+@import "about/about";
+@import "about/vision";
+@import "about/photos";
+@import "about/fun-facts";
+/*---------------------------------------
+SCHEDULE         
+-----------------------------------------*/
+@import "schedule/left-schedule";
+@import "schedule/schedule-sidebar";
+/*---------------------------------------
+SUBSCRIBE         
+-----------------------------------------*/
+@import "subscribe/subscribe";
+/*---------------------------------------
+SPEAKERS         
+-----------------------------------------*/
+@import "speakers/speakers";
+/*---------------------------------------
+FAQ         
+-----------------------------------------*/
+@import "faq/faq";
+/*---------------------------------------
+SPONSER         
+-----------------------------------------*/
+@import "sponser/sponser";
+/*---------------------------------------
+PRICING         
+-----------------------------------------*/
+@import "pricing/pricing";
+/*---------------------------------------
+REGISTER         
+-----------------------------------------*/
+@import "register/register";
+/*---------------------------------------
+BLOG         
+-----------------------------------------*/
+@import "blog/recent-blog";
+@import "blog/blog-single";
+@import "blog/blog-page";
+@import "blog/sidebar";
+/*---------------------------------------
+CONTACT         
+-----------------------------------------*/
+@import "contact/contact";
+/*---------------------------------------
+FOOTER         
+-----------------------------------------*/
+@import "footer/footer";
+

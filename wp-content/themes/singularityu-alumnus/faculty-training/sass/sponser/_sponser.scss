@@ -1,0 +1,53 @@
+.sponser{
+	background-image: url(../images/background/sponser.jpg);
+	background-size: cover;
+	.sponser_overlay{
+		background-color: rgba(0,0,0,.98);
+		padding:{
+			top: 115px;
+			bottom: 115px;
+		}
+		.inner_sponser{
+			padding-top: 80px;
+			.sponser_link{
+				padding-left: 80px;
+				ul{
+					margin: 0;
+					padding: 0;
+					list-style: none;
+					li{
+						a{
+							color: $white_color;
+							font-size: 16px;
+							line-height: 45px;
+							text-decoration: none;
+							font-family: $arial-font;
+							text-transform: capitalize;
+							@include transition(.5s);
+							&:hover{
+								color: $blue-color;
+							}
+						}
+					}
+				}
+				@media(max-width: 768px){
+					&{
+						text-align: center;
+						padding-left: 0px;
+					}
+				}
+			}
+		}
+		@media(max-width: 991px){
+			&{
+				padding:{
+					top: 50px;
+					bottom: 50px;
+				}
+				.inner_sponser{
+					padding-top: 50px;
+				}
+			}
+		}
+	}
+}

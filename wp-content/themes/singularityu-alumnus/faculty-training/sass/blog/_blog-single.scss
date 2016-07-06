@@ -1,0 +1,138 @@
+.blog_single_content{
+	img{
+		width: 100%;
+	}
+	h2{
+		margin:{
+			top: 30px;
+			bottom: 10px;
+		}
+		font-family: $roboto-font;
+		a{
+			text-decoration: none;
+			color: $blog_title_color;
+			font-size: 20px;
+			font-weight: 400;
+		}
+	}
+	h4{
+		margin:{
+			top: 0px;
+			bottom: 30px;
+		}
+		color: $tab_menu_link;
+		font-size: 13px;
+		font-weight: 700;	
+		font-family: $roboto-font;		
+		a{
+			color: $tab_menu_link;
+			font-size: 13px;
+			font-weight: 700;
+			text-decoration: none;
+		}
+	}
+	p{
+		color: $blog_text;
+		font-size: 15px;
+		font-family: $arial-font;
+		line-height: 30px;
+		font-weight: 400;
+
+	}
+	blockquote{
+		border-left: 5px solid $blue-color;
+		p{
+			color: $blockquote_color;
+			font-size: 20px;
+			font-weight: 400;
+			font-family: $roboto-font;
+			font-style: italic;
+		}
+
+	}
+
+}
+
+.blog_single_comment{
+	padding:{
+		top: 50px;
+		bottom: 50px;
+	}
+	border-bottom: 1px solid $comment_border;
+	.media{
+		.media-left{
+			padding-right: 30px;
+			img{
+				border-radius: 50%;
+				width: 80px;
+				height: 80px;
+			}
+		}
+		.media-body{
+			h4{
+				margin:{
+					top: 0px;
+					bottom: 15px;
+				}
+				a{
+					color: $comment_link;
+					font-size: 13px;
+					font-family: $roboto-font;	
+					font-weight: 700;
+					text-decoration: none;
+					text-transform: uppercase;
+				}
+			}
+			p{
+				color: $comment_text_color;
+				font-size: 15px;
+				font-weight: 400;
+				font-family: $arial-font;
+				margin: 0px;
+			}
+		}
+	}
+}
+.comment_form{
+	padding:{
+		top: 80px;
+		bottom: 80px;
+	}
+	h2{
+		color: $comment_form_title;
+		font-size: 20px;
+		font-family: $roboto-font;	;
+		font-weight: 400;
+		text-transform: uppercase;
+		margin: 0px;
+	}
+	form{
+		padding-top: 40px;
+		.form-group{
+			label{
+				color: $label_color;
+				font-size: 13px;
+				font-weight: 400;
+				font-family: $roboto-font;
+				span{
+					color: $required_color;
+				}
+			}
+			.form-control{
+				&, &:focus{
+					border: 1px solid $comment_input_border;
+					height: 60px;
+					border-radius: 4px;
+					box-shadow: none;
+					outline: 0;
+				}
+				&#Comment{
+					height: 165px;
+				}
+			}
+		}
+		.btn{
+			margin-top: 20px;
+		}		
+	}
+}

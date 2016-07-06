@@ -1,0 +1,49 @@
+.schedule_sidebar{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 30%;
+	height: 100%;
+	background-color: $schedule_sidebar_bg;
+	padding-top: 150px;
+	.single_info_s_icon{
+		padding-bottom: 60px;
+		img{
+			width: 40px;
+			margin: 0 auto;
+		}
+		h5{
+			color: $sidebar_right_info_title;
+			font-size: 13px;
+			font-weight: 700;
+			margin:{
+				top: 15px;
+				bottom: 5px;
+			}
+		}
+		h6{
+			color: $vision_text;
+			font-size: 15px;
+			margin: 0px;
+		}
+		@media(max-width: 1200px){
+			&{
+				width: 33.33333%;
+				float: left;
+			}
+		}
+		@media(max-width: 450px){
+			&{
+				width: 50%;
+			}
+		}
+	}
+	@media(max-width: 1200px){
+		&{
+			position: relative;
+			width: auto;
+			height: auto !important;
+			padding-top: 60px;
+		}
+	}
+}

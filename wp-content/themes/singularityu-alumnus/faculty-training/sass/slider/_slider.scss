@@ -1,0 +1,27 @@
+.tp-dottedoverlay.twoxtwo{
+	background-image: none;
+	background-color: rgba(0,0,0,.6);
+}
+
+.h-title-big{
+	color: $white_color;
+	font-size: 40px;
+	font-family: $roboto-condensed-font;
+	text-transform: uppercase;	
+	font-weight: 700;
+	background-color: $scroll_nav_color;
+	padding: 3px 12px !important;	
+}
+.p-desc{
+	color: $white_color;
+	font-size: 25px;
+	font-family: $roboto-condensed-font;
+	text-transform: uppercase;
+	font-weight: 700;
+	background-color: $blue-color;
+	padding: 3px 12px !important;
+}
+.hermes .tp-bullet{
+	width: 10px;
+	height: 10px;
+}
